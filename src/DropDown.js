@@ -11,54 +11,34 @@ const DropDown = () => {
   const [showMenu, setShowMenu] = useState(false);
   const { ref, isVisible, setIsVisible } = useVisible(false);
 
-  const onClick = () => {
-    if (!showMenu && !isVisible) {
-      setShowMenu(true);
-      setIsVisible(true);
-    } else {
-      setShowMenu(false);
-      setIsVisible(false);
-    }
-  };
-  console.log("ISVISIBLE", isVisible);
-  console.log("SHOWMENU", showMenu);
-
-  // useEffect(() => {
-  //   if (isVisible === false) {
-  //     setShowMenu(false);
-  //     console.log("ISVISIBLE", isVisible);
-  //     console.log("SHOWMENU", showMenu);
-  //   }
-  // });
+  console.log(isVisible);
 
   return (
     <Wrapper>
-      <Menu onClick={(e) => onClick()}>
+      <Menu ref={ref} onClick={(e) => setIsVisible(!isVisible)}>
         <MenuIcon />
+        {isVisible ? (
+          <MenuList>
+            <MenuItem onClick={(e) => setIsVisible(!isVisible)}>
+              <LinkTo to={"/"}>Home</LinkTo>
+            </MenuItem>
+            <MenuItem onClick={(e) => setIsVisible(!isVisible)}>
+              <LinkTo to={"/Editor"}>Editor</LinkTo>
+            </MenuItem>
+            <MenuItem>
+              <LinkTo to={"/Editor"}>Editor</LinkTo>
+            </MenuItem>
+            <MenuItem>
+              <LinkTo to={"/Editor"}>Editor</LinkTo>
+            </MenuItem>
+            <MenuItem>
+              <LinkTo to={"/Editor"}>Editor</LinkTo>
+            </MenuItem>
+          </MenuList>
+        ) : (
+          <></>
+        )}
       </Menu>
-
-      {isVisible && showMenu ? (
-        <MenuList>
-          {isVisible && <div style={{ position: "absolute" }} ref={ref}></div>}
-          <MenuItem onClick={(e) => setIsVisible(!isVisible)}>
-            <LinkTo to={"/"}>Home</LinkTo>
-          </MenuItem>
-          <MenuItem onClick={(e) => setIsVisible(!isVisible)}>
-            <LinkTo to={"/Editor"}>Editor</LinkTo>
-          </MenuItem>
-          <MenuItem>
-            <LinkTo to={"/Editor"}>Editor</LinkTo>
-          </MenuItem>
-          <MenuItem>
-            <LinkTo to={"/Editor"}>Editor</LinkTo>
-          </MenuItem>
-          <MenuItem>
-            <LinkTo to={"/Editor"}>Editor</LinkTo>
-          </MenuItem>
-        </MenuList>
-      ) : (
-        <></>
-      )}
     </Wrapper>
   );
 };
