@@ -23,6 +23,7 @@ const Wrapper = styled.div`
 
   align-content: center;
   align-items: center;
+  flex-shrink: 0;
 `;
 
 const Title = styled.h1`

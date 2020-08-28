@@ -9,28 +9,28 @@ import Preview from "./Output";
 import HomePage from "./HomePage";
 import Header from "./Header";
 import Footer from "./Footer";
+import Profile from "./Profile";
 function App() {
   return (
-    <Wrapper>
-      <BrowserRouter>
-        <Header />
-        <Switch>
-          <Route exact path="/">
-            <HomePage />
-          </Route>
-          <Route path="/Editor">
-            <TextEditor />
-          </Route>
-          <Route path="/Output" component={Preview}></Route>
-        </Switch>
-        <Footer />
-      </BrowserRouter>
-    </Wrapper>
+    <BrowserRouter>
+      <Header />
+      <Switch>
+        <Route exact path="/">
+          <HomePage />
+        </Route>
+        <Route path="/Editor">
+          <TextEditor />
+        </Route>
+        <Route path="/Output" component={Preview}></Route>
+        <Route path="/Profile">
+          <Profile />
+        </Route>
+      </Switch>
+      <Footer />
+    </BrowserRouter>
   );
 }
 
-const Wrapper = styled.div`
-  max-height: 100vh;
-`;
+const Wrapper = styled.div``;
 
 export default App;

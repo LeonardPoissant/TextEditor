@@ -17,6 +17,7 @@ import mediaBlockRenderer from "./entities/mediaBlockRenderer";
 import InsertLinkIcon from "@material-ui/icons/InsertLink";
 import ImageIcon from "@material-ui/icons/Image";
 import YouTubeIcon from "@material-ui/icons/YouTube";
+import CloseIcon from "@material-ui/icons/Close";
 
 import styled from "styled-components";
 
@@ -51,6 +52,12 @@ const TextEditor = () => {
   const [okToDisplay, setOkToDisplay] = useState(false);
   const [readyToEdit, setReadyToEdit] = useState(false);
   const [clear, setClear] = useState(false);
+
+  const [isBold, setIsBold] = useState(false);
+
+  const [isItalic, setIsItalic] = useState(false);
+
+  const [isUnderline, setIsUnderline] = useState(false);
 
   // References to the corresponding DOM nodes when new input is rendered.
   const Inputref = useRef(null);
@@ -128,15 +135,18 @@ const TextEditor = () => {
 
   const toggleBold = (e) => {
     e.preventDefault();
+    setIsBold(!isBold);
     onChange(RichUtils.toggleInlineStyle(editorState, "BOLD"));
   };
   const toggleItalic = (e) => {
     e.preventDefault();
+    setIsItalic(!isItalic);
     onChange(RichUtils.toggleInlineStyle(editorState, "ITALIC"));
   };
 
   const toggleUnderLine = (e) => {
     e.preventDefault();
+    setIsUnderline(!isUnderline);
     onChange(RichUtils.toggleInlineStyle(editorState, "UNDERLINE"));
   };
 
@@ -242,6 +252,12 @@ const TextEditor = () => {
     promptForMedia("VIDEOTYPE");
   };
 
+  const handleClose = () => {
+    setPromptForImageURL(false);
+    setPromptForVideoURL(false);
+    setActive(false);
+  };
+
   const handleKeyCommand = (command, editorState) => {
     const newState = RichUtils.handleKeyCommand(editorState, command);
     if (newState) {
@@ -255,34 +271,51 @@ const TextEditor = () => {
   return (
     <Wrapper active={active}>
       <ToolBar>
-        <BoldButton onMouseDown={toggleBold}>
+        <ChangeStyleButton
+          onMouseDown={toggleBold}
+          style={isBold ? { backgroundColor: "grey" } : { backgroundColor: "" }}
+        >
           <b>B</b>
-        </BoldButton>
-        <ItalicButton onMouseDown={toggleItalic}>
+        </ChangeStyleButton>
+        <ChangeStyleButton
+          onMouseDown={toggleItalic}
+          style={
+            isItalic ? { backgroundColor: "grey" } : { backgroundColor: "" }
+          }
+        >
           {" "}
           <i>I</i>
-        </ItalicButton>
-        <UnderlineButton onMouseDown={toggleUnderLine}>
+        </ChangeStyleButton>
+        <ChangeStyleButton
+          onMouseDown={toggleUnderLine}
+          style={
+            isUnderline ? { backgroundColor: "grey" } : { backgroundColor: "" }
+          }
+        >
           <u>U</u>
-        </UnderlineButton>
-        <EmbedLinkButton onMouseDown={addLink}>
+        </ChangeStyleButton>
+        <EmbedButton onMouseDown={addLink}>
           <InsertLinkIcon
             style={{
               fontSize: 20,
             }}
           />
-        </EmbedLinkButton>
-        <EmbedImageButton onMouseDown={addImage}>
+        </EmbedButton>
+        <EmbedButton onMouseDown={addImage}>
           <ImageIcon
             style={{
               fontSize: 20,
             }}
           />
-        </EmbedImageButton>
+        </EmbedButton>
 
         {showURLInput ? (
           <AddMediaWindow>
-            {" "}
+            <CloseWindow>
+              <CloseWindowButton onClick={() => handleClose()}>
+                <CloseIcon />
+              </CloseWindowButton>
+            </CloseWindow>
             <UrlInput
               onChange={handleURL}
               ref={linkRef}
@@ -297,13 +330,13 @@ const TextEditor = () => {
           <></>
         )}
 
-        <EmbedVideoButton onMouseDown={addVideo}>
+        <EmbedButton onMouseDown={addVideo}>
           <YouTubeIcon
             style={{
               fontSize: 20,
             }}
           />
-        </EmbedVideoButton>
+        </EmbedButton>
       </ToolBar>
       {okToDisplay ? (
         <TextArea onMouseDown={toggleEditing}>
@@ -325,10 +358,15 @@ const TextEditor = () => {
 
         <PostContent>POST </PostContent>
       </LinksToPreviewAndPostDiv>
-      <MediaWrapper>
-        {promptForVideoURL || promptForImageURL ? (
-          <AddMediaWindow active={active}>
-            {" "}
+
+      {promptForVideoURL || promptForImageURL ? (
+        <AddMediaWindow active={active}>
+          <CloseWindow>
+            <CloseWindowButton onClick={() => handleClose()}>
+              <CloseIcon />
+            </CloseWindowButton>
+          </CloseWindow>
+          <HandleInputDiv>
             <UrlInput
               onChange={handleURL}
               ref={promptForVideoURL ? videoRef : imageRef}
@@ -346,23 +384,27 @@ const TextEditor = () => {
             >
               OK
             </ConfirmUrlButton>
-          </AddMediaWindow>
-        ) : (
-          <></>
-        )}
-      </MediaWrapper>
+          </HandleInputDiv>
+        </AddMediaWindow>
+      ) : (
+        <></>
+      )}
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
-  height: 100vh;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   ${({ active }) =>
     active &&
     `
     background: rgb(242, 242, 242);
     pointer-events: none;
-  `}
+  `};
 `;
 
 const TextArea = styled.div`
@@ -379,44 +421,53 @@ const TextArea = styled.div`
 const ToolBar = styled.div`
   display: flex;
   flex-direction: row;
+  padding: 6px;
+  justify-content: space-around;
+  border-left: solid;
+  border-top: solid;
+  border-right: solid;
+  border-color: rgb(161, 161, 161);
+  border-width: 1px;
 `;
 
-const BoldButton = styled.button`
+const ChangeStyleButton = styled.button`
   height: 25px;
   width: 25px;
+  margin: 4px;
+  border-style: none;
+
+  ${({ isClicked }) =>
+    isClicked &&
+    `
+    background-color: rgb(242, 242, 242);
+  `};
 `;
 
-const ItalicButton = styled.button`
-  height: 25px;
-  width: 25px;
-`;
-const UnderlineButton = styled.button`
-  height: 25px;
-  width: 25px;
-`;
-
-const EmbedLinkButton = styled.button`
+const EmbedButton = styled.button`
   height: 25px;
   width: 25px;
   padding: 0px 0px;
+  margin: 4px;
+  border-style: none;
 `;
 
-const EmbedImageButton = styled.button`
-  height: 25px;
-  width: 25px;
-  padding: 0px 0px;
+const CloseWindow = styled.div`
+  display: flex;
+  justify-content: flex-end;
 `;
 
-const EmbedVideoButton = styled.button`
-  width: 25px;
-  height: 25px;
-  padding: 0px 0px;
+const CloseWindowButton = styled.button`
+  border-style: none;
+  background-color: white;
+  outline: none;
+  cursor: pointer;
 `;
 
 const LinksToPreviewAndPostDiv = styled.div`
   display: flex;
   justify-content: space-between;
   width: 500px;
+  padding: 10px;
 `;
 
 const SeePreview = styled(Link)`
@@ -448,24 +499,29 @@ const MediaWrapper = styled.div`
 `;
 
 const AddMediaWindow = styled.div`
-  height: 200px;
+  height: 150px;
   width: 300px;
   border-radius: 4px;
-  /*border-style: solid;
-  border-width: 1px;*/
-  box-shadow: 5px 10px rgb(204, 204, 204);
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  box-shadow: 5px 10px rgb(204, 204, 204);
+  display: flex;
   z-index: 10;
-  position: absolute;
+
   ${({ active }) =>
     active &&
     `
     background: white;
     pointer-events:auto;
   `}
+`;
+
+const HandleInputDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  height: 50%;
 `;
 
 const UrlInput = styled.input``;

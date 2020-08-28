@@ -30,8 +30,7 @@ const Preview = (props) => {
   console.log(localStorage);
 
   return (
-    <>
-      <div>PREVIEW</div>
+    <Wrapper>
       <EditorWrapper>
         {okToDisplay ? (
           <Editor
@@ -44,18 +43,27 @@ const Preview = (props) => {
         )}
       </EditorWrapper>
       <BackToEditor to={"/Editor"}>Back to Editor </BackToEditor>
-    </>
+      <div></div>
+    </Wrapper>
   );
 };
 
-const EditorWrapper = styled.div`
-  justify-content: center;
-  align-items: center;
+const Wrapper = styled.div`
+  min-height: 80vh;
   display: flex;
+  justify-content: space-around;
+  align-items: center;
+`;
+
+const EditorWrapper = styled.div`
+  height: 100%;
+  padding-left: 160px;
 `;
 
 const BackToEditor = styled(Link)`
   text-decoration: none;
+  margin-right: 900px;
+  position: fixed;
   color: black;
   border-style: solid;
   border-width: 1px;

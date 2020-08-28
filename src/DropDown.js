@@ -17,36 +17,27 @@ const DropDown = () => {
     <Wrapper>
       <Menu ref={ref} onClick={(e) => setIsVisible(!isVisible)}>
         <MenuIcon />
-        {isVisible ? (
-          <MenuList>
-            <MenuItem onClick={(e) => setIsVisible(!isVisible)}>
-              <LinkTo to={"/"}>Home</LinkTo>
-            </MenuItem>
-            <MenuItem onClick={(e) => setIsVisible(!isVisible)}>
-              <LinkTo to={"/Editor"}>Editor</LinkTo>
-            </MenuItem>
-            <MenuItem>
-              <LinkTo to={"/Editor"}>Editor</LinkTo>
-            </MenuItem>
-            <MenuItem>
-              <LinkTo to={"/Editor"}>Editor</LinkTo>
-            </MenuItem>
-            <MenuItem>
-              <LinkTo to={"/Editor"}>Editor</LinkTo>
-            </MenuItem>
-          </MenuList>
-        ) : (
-          <></>
-        )}
       </Menu>
+      {isVisible ? (
+        <MenuList>
+          <MenuItem onClick={(e) => setIsVisible(!isVisible)}>
+            <LinkTo to={"/"}>Home</LinkTo>
+          </MenuItem>
+          <MenuItem onClick={(e) => setIsVisible(!isVisible)}>
+            <LinkTo to={"/Editor"}>Editor</LinkTo>
+          </MenuItem>
+          <MenuItem onClick={(e) => setIsVisible(!isVisible)}>
+            <LinkTo to={"/Profile"}>Profile</LinkTo>
+          </MenuItem>
+        </MenuList>
+      ) : (
+        <></>
+      )}
     </Wrapper>
   );
 };
 
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
+const Wrapper = styled.div``;
 
 const Menu = styled.button`
   margin: 0px;
@@ -57,15 +48,20 @@ const Menu = styled.button`
 
 const MenuList = styled.ul`
   list-style: none;
-
-  float: left;
-  padding-top: 25px;
+  position: absolute;
+  padding: 0px;
   margin: 0px;
-
+  z-index: 1000;
   border-style: solid;
+  border-width: 1px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 `;
 
-const MenuItem = styled.li``;
+const MenuItem = styled.li`
+  padding: 6px;
+`;
 
 const LinkTo = styled(Link)`
   text-decoration: none;
