@@ -11,8 +11,6 @@ const DropDown = () => {
   const [showMenu, setShowMenu] = useState(false);
   const { ref, isVisible, setIsVisible } = useVisible(false);
 
-  console.log(isVisible);
-
   return (
     <Wrapper>
       <Menu ref={ref} onClick={(e) => setIsVisible(!isVisible)}>
