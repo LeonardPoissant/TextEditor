@@ -4,9 +4,13 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
+import EditorProvider from "./Utils/EditorContext";
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <EditorProvider>
+      <App />
+    </EditorProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

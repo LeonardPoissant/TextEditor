@@ -11,8 +11,6 @@ const getSrc = ({ src }) => {
   if (isYoutube(src)) {
     const { srcID } = getYoutubeSrc(src);
 
-    console.log("SRCID", srcID);
-
     return `${YOUTUBE_PREFIX}${srcID}`;
   }
   if (isVimeo(src)) {

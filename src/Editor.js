@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import {
   EditorState,
   RichUtils,
@@ -21,324 +21,35 @@ import YouTubeIcon from "@material-ui/icons/YouTube";
 import CloseIcon from "@material-ui/icons/Close";
 import styled from "styled-components";
 
+import { EditorContext } from "./Utils/EditorContext";
+
+import ToolBar from "./ToolBar";
+
 const TextEditor = () => {
-  const link = (props) => {
-    const { url } = props.contentState.getEntity(props.entityKey).getData();
-    return <a href={url}>{props.children}</a>;
-  };
-  const findLinkEntities = (contentBlock, callback, contentState) => {
-    contentBlock.findEntityRanges((character) => {
-      const entityKey = character.getEntity();
-      return (
-        entityKey !== null &&
-        contentState.getEntity(entityKey).getType() === "LINK"
-      );
-    }, callback);
-  };
-  const decorator = new CompositeDecorator([
-    {
-      strategy: findLinkEntities,
-      component: link,
-    },
-  ]);
-
-  const [editorState, setEditorState] = useState({});
-  const [showURLInput, setShowURLInput] = useState(false);
-  const [promptForImageURL, setPromptForImageURL] = useState(false);
-  const [promptForVideoURL, setPromptForVideoURL] = useState(false);
-  const [URLValue, setURLValue] = useState("");
-  const [URLType, setURLType] = useState("");
-  const [active, setActive] = useState(false);
-  const [okToDisplay, setOkToDisplay] = useState(false);
-  const [readyToEdit, setReadyToEdit] = useState(false);
-  const [clear, setClear] = useState(false);
-  const [currentStyle, setCurrentStyle] = useState({});
-  const [hasStyle, setHasStyle] = useState(false);
-
-  const [isBold, setIsBold] = useState(false);
-
-  const [isItalic, setIsItalic] = useState(false);
-
-  const [isUnderline, setIsUnderline] = useState(false);
+  const {
+    editorState,
+    onChange,
+    clearLocalStorage,
+    handleKeyCommand,
+    okToDisplay,
+    active,
+  } = useContext(EditorContext);
 
   const [focus, setFocus] = useState(null);
 
-  const [test, setTest] = useState(false);
-
   // References to the corresponding DOM nodes when new input is rendered.
   const Inputref = useRef(null);
-  const linkRef = useRef();
-  const imageRef = useRef();
-  const videoRef = useRef();
 
   //Keeps the focus on the input field (the Editor) when pressing a button  and creates the ref for conditional rendering
 
   useEffect(() => {
     setFocus(Inputref.current && Inputref.current.focus());
   });
-
-  //Manages the focus for new input fields
-
-  useEffect(() => {
-    if (showURLInput) {
-      linkRef.current.focus();
-    } else if (promptForImageURL) {
-      imageRef.current.focus();
-    } else if (promptForVideoURL) {
-      videoRef.current.focus();
-    }
-  }, [showURLInput, promptForImageURL, promptForVideoURL]);
-
-  //Local Storage functions
-
-  // Create the Editor whith either already input content (On page change or refresh we rerender with that) or no content stored in the localStorage.
-
-  useEffect(() => {
-    const content = localStorage.getItem("content");
-
-    if (content) {
-      setOkToDisplay(true);
-      setEditorState(
-        EditorState.createWithContent(convertFromRaw(JSON.parse(content)))
-      );
-    } else {
-      setOkToDisplay(true);
-      setEditorState(EditorState.createEmpty(decorator));
-    }
-  }, []);
-
-  /*useEffect(() => {
-    const selectionState = SelectionState.createEmpty();
-    //const selectionStateWithNewFocusOffset = selection.set("focusOffset", 1);
-
-    console.log("SELECTION", selectionState);
-  }, []);*/
-
-  //Method to store on localStorage
-
-  const saveContent = (content) => {
-    window.localStorage.setItem(
-      "content",
-      JSON.stringify(convertToRaw(content))
-    );
-  };
-
-  //OnChange, content is stored on the localStorage and editorState is updated.
-
-  const onChange = (editorState) => {
-    const contentState = editorState.getCurrentContent();
-    const inlineStyle = editorState.getCurrentInlineStyle();
-    const isBold = inlineStyle.has("BOLD");
-    const isItalic = inlineStyle.has("ITALIC");
-    const isUnderline = inlineStyle.has("UNDERLINE");
-
-    saveContent(contentState);
-    setEditorState(editorState);
-    setCurrentStyle(inlineStyle);
-    setIsBold(isBold);
-    setIsItalic(isItalic);
-    setIsUnderline(isUnderline);
-  };
-
-  //OnClick, reset relevant localStorage
-
-  const clearLocalStorage = () => {
-    setClear(true);
-    localStorage.clear("content");
-    setEditorState(EditorState.createEmpty(decorator));
-  };
-
-  const toggleBold = (e) => {
-    e.preventDefault();
-    onChange(RichUtils.toggleInlineStyle(editorState, "BOLD"));
-  };
-  const toggleItalic = (e) => {
-    e.preventDefault();
-    setIsItalic(!isItalic);
-    onChange(RichUtils.toggleInlineStyle(editorState, "ITALIC"));
-  };
-
-  const toggleUnderLine = (e) => {
-    e.preventDefault();
-    setIsUnderline(!isUnderline);
-    onChange(RichUtils.toggleInlineStyle(editorState, "UNDERLINE"));
-  };
-
-  const handleURL = (e) => {
-    e.preventDefault();
-    const { value } = e.target;
-    setURLValue(value);
-  };
-
-  const addLink = (e) => {
-    e.preventDefault();
-    setActive(true);
-    setEditorState(editorState);
-
-    const selection = editorState.getSelection();
-    console.log("ADDLINLSELECTION", selection);
-
-    if (!selection.isCollapsed()) {
-      const contentState = editorState.getCurrentContent();
-      const startKey = editorState.getSelection().getStartKey();
-      const startOffset = editorState.getSelection().getStartOffset();
-      const blockWithLinkAtBeginning = contentState.getBlockForKey(startKey);
-      const linkKey = blockWithLinkAtBeginning.getEntityAt(startOffset);
-      console.log("LINK", linkKey);
-      let url = "";
-      if (linkKey) {
-        const linkInstance = contentState.getEntity(linkKey);
-        url = linkInstance.getData().url;
-      }
-      setShowURLInput(true);
-
-      setURLValue(url);
-    }
-  };
-
-  const confirmLink = (e) => {
-    e.preventDefault();
-    setEditorState(editorState);
-    setURLValue(URLValue);
-    const contentState = editorState.getCurrentContent();
-    const contentStateWithEntity = contentState.createEntity(
-      "LINK",
-      "MUTABLE",
-      { url: URLValue }
-    );
-    console.log("IMHERE", URLValue);
-    const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
-    console.log(entityKey);
-    const newEditorState = EditorState.set(editorState, {
-      currentContent: contentStateWithEntity,
-    });
-    console.log("IM HERRRRRRRE", newEditorState);
-    setEditorState(
-      RichUtils.toggleLink(
-        newEditorState,
-        newEditorState.getSelection(),
-        entityKey
-      )
-    );
-    console.log("CONFIRM LINK", editorState);
-    setShowURLInput(false);
-    setURLValue("");
-    console.log(URLValue);
-    setActive(false);
-  };
-
-  const promptForMedia = (type) => {
-    setEditorState(editorState);
-    setURLValue("");
-    setURLType(type);
-  };
-
-  const confirmMedia = (e) => {
-    e.preventDefault();
-    setEditorState(editorState);
-    setURLValue(URLValue);
-    const embedURL = URLValue.replace("watch?v=", "embed/");
-    setURLType(URLType);
-    const contentState = editorState.getCurrentContent();
-    const contentStateWithEntity = contentState.createEntity(
-      URLType,
-      "IMMUTABLE",
-      { src: embedURL }
-    );
-
-    const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
-    const newEditorState = EditorState.set(
-      editorState,
-      { currentContent: contentStateWithEntity },
-      "create-entity"
-    );
-    setEditorState(
-      AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, " ")
-    );
-    setPromptForImageURL(false);
-    setPromptForVideoURL(false);
-    setActive(false);
-  };
-
-  const addImage = () => {
-    setPromptForImageURL(true);
-    setActive(true);
-    promptForMedia("image");
-  };
-
-  const addVideo = () => {
-    setPromptForVideoURL(true);
-    console.log(promptForVideoURL);
-    setActive(true);
-    promptForMedia("VIDEOTYPE");
-  };
-
-  const handleClose = () => {
-    setPromptForImageURL(false);
-    setPromptForVideoURL(false);
-    setShowURLInput(false);
-    setActive(false);
-  };
-
-  const handleKeyCommand = (command, editorState) => {
-    const newState = RichUtils.handleKeyCommand(editorState, command);
-    if (newState) {
-      onChange(newState);
-
-      return true;
-    }
-    return false;
-  };
+  console.log(editorState);
 
   return (
     <Wrapper active={active}>
-      <ToolBar>
-        <ChangeStyleButton
-          onMouseDown={(e) => toggleBold(e)}
-          style={isBold ? { backgroundColor: "grey" } : { backgroundColor: "" }}
-        >
-          <b>B</b>
-        </ChangeStyleButton>
-        <ChangeStyleButton
-          onMouseDown={toggleItalic}
-          style={
-            isItalic ? { backgroundColor: "grey" } : { backgroundColor: "" }
-          }
-        >
-          {" "}
-          <i>I</i>
-        </ChangeStyleButton>
-        <ChangeStyleButton
-          onMouseDown={toggleUnderLine}
-          style={
-            isUnderline ? { backgroundColor: "grey" } : { backgroundColor: "" }
-          }
-        >
-          <u>U</u>
-        </ChangeStyleButton>
-        <EmbedButton onMouseDown={addLink}>
-          <InsertLinkIcon
-            style={{
-              fontSize: 20,
-            }}
-          />
-        </EmbedButton>
-        <EmbedButton onMouseDown={addImage}>
-          <ImageIcon
-            style={{
-              fontSize: 20,
-            }}
-          />
-        </EmbedButton>
-
-        <EmbedButton onMouseDown={addVideo}>
-          <YouTubeIcon
-            style={{
-              fontSize: 20,
-            }}
-          />
-        </EmbedButton>
-      </ToolBar>
+      <ToolBar />
       {okToDisplay ? (
         <TextArea onClick={setFocus}>
           <Editor
@@ -359,61 +70,6 @@ const TextEditor = () => {
 
         <PostContent>POST </PostContent>
       </LinksToPreviewAndPostDiv>
-
-      {promptForVideoURL || promptForImageURL ? (
-        <AddMediaWindow active={active}>
-          <CloseWindow>
-            <CloseWindowButton onClick={() => handleClose()}>
-              <CloseIcon />
-            </CloseWindowButton>
-          </CloseWindow>
-          <HandleInputDiv>
-            <UrlInput
-              onChange={handleURL}
-              ref={promptForVideoURL ? videoRef : imageRef}
-              value={URLValue}
-              placeholder={
-                promptForVideoURL
-                  ? "Copy video url here"
-                  : "Copy image url here"
-              }
-            ></UrlInput>
-            <ConfirmUrlButton
-              className="INPUT BUITTOM"
-              disabled={URLValue ? false : true}
-              onClick={confirmMedia}
-            >
-              OK
-            </ConfirmUrlButton>
-          </HandleInputDiv>
-        </AddMediaWindow>
-      ) : (
-        <></>
-      )}
-      {showURLInput ? (
-        <AddMediaWindow active={active}>
-          <CloseWindow>
-            <CloseWindowButton onClick={() => handleClose()}>
-              <CloseIcon />
-            </CloseWindowButton>
-          </CloseWindow>
-          <HandleInputDiv>
-            <UrlInput
-              onChange={handleURL}
-              ref={linkRef}
-              value={URLValue}
-              placeholder={"Copy link url here"}
-            ></UrlInput>
-            <ConfirmUrlButton
-              className="INPUT BUITTOM"
-              disabled={URLValue ? false : true}
-              onClick={confirmLink}
-            ></ConfirmUrlButton>
-          </HandleInputDiv>
-        </AddMediaWindow>
-      ) : (
-        <></>
-      )}
     </Wrapper>
   );
 };
@@ -439,11 +95,13 @@ const TextArea = styled.div`
   border-style: solid;
   border-color: rgb(161, 161, 161);
   border-width: 1px;
-
   display: flex;
+  @media (max-width: 736px) {
+    width: 100%;
+  } ;
 `;
 
-const ToolBar = styled.div`
+/*const ToolBar = styled.div`
   display: flex;
   flex-direction: row;
   padding: 6px;
@@ -453,6 +111,25 @@ const ToolBar = styled.div`
   border-right: solid;
   border-color: rgb(161, 161, 161);
   border-width: 1px;
+  @media (max-width: 736px) {
+    display: none;
+  }
+`;*/
+
+const ToolBarForDevices = styled.div`
+  display: none;
+  @media (max-width: 736px) {
+    display: flex;
+    flex-direction: row;
+    padding: 6px;
+    justify-content: space-around;
+    border-left: solid;
+    border-top: solid;
+    border-right: solid;
+    border-color: rgb(161, 161, 161);
+    border-width: 1px;
+    -webkit-overflow-scrolling: touch;
+  }
 `;
 
 const ChangeStyleButton = styled.button`
@@ -493,6 +170,9 @@ const LinksToPreviewAndPostDiv = styled.div`
   justify-content: space-between;
   width: 500px;
   padding: 10px;
+  @media (max-width: 736px) {
+    width: 100%;
+  }
 `;
 
 const SeePreview = styled(Link)`
