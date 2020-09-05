@@ -25,6 +25,7 @@ export default ({ children }) => {
   const [okToDisplay, setOkToDisplay] = useState(false);
   const [clear, setClear] = useState(false);
   const [currentStyle, setCurrentStyle] = useState({});
+  const [promptForLink, setPromptForLink] = useState(false);
 
   const link = (props) => {
     const { url } = props.contentState.getEntity(props.entityKey).getData();
@@ -58,9 +59,11 @@ export default ({ children }) => {
       setEditorState(
         EditorState.createWithContent(convertFromRaw(JSON.parse(content)))
       );
+      console.log("WITHCONTENT", editorState);
     } else {
       setOkToDisplay(true);
       setEditorState(EditorState.createEmpty(decorator));
+      console.log("WITHOUT", editorState);
     }
   }, []);
 
@@ -73,7 +76,7 @@ export default ({ children }) => {
     );
   };
   const clearLocalStorage = () => {
-    setClear(true);
+    setClear(!clear);
     localStorage.clear("content");
     setEditorState(EditorState.createEmpty(decorator));
   };
@@ -128,10 +131,10 @@ export default ({ children }) => {
     setURLValue(value);
   };
 
-  const addLink = (e) => {
-    e.preventDefault();
+  const addLink = () => {
     setActive(!active);
     setEditorState(editorState);
+    setPromptForLink(!promptForLink);
 
     const selection = editorState.getSelection();
 
@@ -152,8 +155,7 @@ export default ({ children }) => {
       setURLValue(url);
     }
   };
-  const confirmLink = (e) => {
-    e.preventDefault();
+  const confirmLink = () => {
     setEditorState(editorState);
     setURLValue(URLValue);
     const contentState = editorState.getCurrentContent();
@@ -176,8 +178,9 @@ export default ({ children }) => {
         entityKey
       )
     );
-    console.log("CONFIRM LINK", editorState);
+
     setPromptForURL(!promptForURL);
+    setPromptForLink(!promptForLink);
 
     setActive(!active);
   };
@@ -201,13 +204,12 @@ export default ({ children }) => {
     promptForMedia("VIDEOTYPE");
   };
 
-  const confirmMedia = (e) => {
-    e.preventDefault();
+  const confirmMedia = () => {
     setEditorState(editorState);
     setURLValue(URLValue);
-    console.log("CONFIRM MEDIA", URLValue);
+
     const embedURL = URLValue.replace("watch?v=", "embed/");
-    console.log("CONFIRM MEDIA", embedURL);
+
     setURLType(URLType);
     const contentState = editorState.getCurrentContent();
     const contentStateWithEntity = contentState.createEntity(
@@ -261,6 +263,7 @@ export default ({ children }) => {
         confirmMedia,
         handleClose,
         active,
+        promptForLink,
       }}
     >
       {children}

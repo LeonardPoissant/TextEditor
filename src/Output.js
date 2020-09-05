@@ -1,16 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Editor, convertFromRaw, convertToRaw, EditorState } from "draft-js";
 import { Link } from "react-router-dom";
 
 import styled from "styled-components";
+import { EditorContext } from "./Utils/EditorContext";
 
 import mediaBlockRenderer from "./entities/mediaBlockRenderer";
 
-const Preview = (props) => {
+const Preview = () => {
+  const { editorState, okToDisplay, onChange } = useContext(EditorContext);
   const [editorPreviewState, setEditorPreviewState] = useState({});
-  const [okToDisplay, setOkToDisplay] = useState(false);
+  //const [okToDisplay, setOkToDisplay] = useState(false);
 
-  useEffect(() => {
+  /*useEffect(() => {
     const content = localStorage.getItem("content");
 
     console.log("content", typeof content);
@@ -25,9 +27,9 @@ const Preview = (props) => {
       setEditorPreviewState(EditorState.createEmpty());
       console.log("WITHOUT", editorPreviewState);
     }
-  }, []);
+  }, []);*/
 
-  console.log(localStorage);
+  //console.log(localStorage);
 
   return (
     <Wrapper>
@@ -35,8 +37,9 @@ const Preview = (props) => {
         {okToDisplay ? (
           <Editor
             readOnly={true}
-            editorState={editorPreviewState}
+            editorState={editorState}
             blockRendererFn={mediaBlockRenderer}
+            onChange={onChange}
           />
         ) : (
           <div>Loading... </div>

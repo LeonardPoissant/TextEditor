@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 
-import { EditorState, RichUtils, AtomicBlockUtils } from "draft-js";
-
 import InsertLinkIcon from "@material-ui/icons/InsertLink";
 import ImageIcon from "@material-ui/icons/Image";
 import YouTubeIcon from "@material-ui/icons/YouTube";
@@ -29,6 +27,7 @@ const ToolBar = (props) => {
     confirmMedia,
     handleClose,
     active,
+    promptForLink,
   } = useContext(EditorContext);
   const [, setIsBold] = useState(false);
   const [, setIsItalic] = useState(false);
@@ -125,7 +124,7 @@ const ToolBar = (props) => {
             ></UrlInput>
             <ConfirmUrlButton
               disabled={URLValue ? false : true}
-              onClick={addImage || addVideo ? confirmMedia : confirmLink}
+              onClick={promptForLink ? confirmLink : confirmMedia}
             >
               OK
             </ConfirmUrlButton>
