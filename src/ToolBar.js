@@ -117,6 +117,9 @@ const ToolBar = () => {
               OK
             </ConfirmUrlButton>
           </HandleInputDiv>
+          <Message>
+            * try a different url if your media is not displayed
+          </Message>
         </AddMediaWindow>
       ) : (
         <></>
@@ -202,22 +205,6 @@ const CloseWindowButton = styled.button`
   cursor: pointer;
 `;
 
-const ToolBarForDevices = styled.div`
-  display: none;
-  @media (max-width: 736px) {
-    display: flex;
-    flex-direction: row;
-    padding: 6px;
-    justify-content: space-around;
-    border-left: solid;
-    border-top: solid;
-    border-right: solid;
-    border-color: rgb(161, 161, 161);
-    border-width: 1px;
-    -webkit-overflow-scrolling: touch;
-  }
-`;
-
 const AddMediaWindow = styled.div`
   position: absolute;
   height: 150px;
@@ -260,4 +247,11 @@ const CollapseWarning = styled(Collapse)`
   z-index: 1;
 `;
 const WarningMessage = styled(Alert)``;
+
+const Message = styled.div`
+  width: 100%;
+  font-size: 15px;
+  margin-top: 15px;
+`;
+
 export default ToolBar;

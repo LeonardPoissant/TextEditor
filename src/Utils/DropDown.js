@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 
 function useVisible(initialIsVisible) {
   const [isVisible, setIsVisible] = useState(initialIsVisible);

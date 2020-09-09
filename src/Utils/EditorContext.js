@@ -52,7 +52,7 @@ export default ({ children }) => {
   // Create the Editor whith either already input content (On page change or refresh we rerender with that) or no content stored in the localStorage.
 
   useEffect(() => {
-    const content = localStorage.getItem("content");
+    const content = sessionStorage.getItem("content");
 
     if (content) {
       const convertedContent = convertFromRaw(JSON.parse(content));
@@ -66,21 +66,21 @@ export default ({ children }) => {
     }
   }, []);
 
-  // store on localStorage
+  // store on sessionStorage
 
   const saveContent = (content) => {
-    window.localStorage.setItem(
+    window.sessionStorage.setItem(
       "content",
       JSON.stringify(convertToRaw(content))
     );
   };
   const clearLocalStorage = () => {
     setClear(!clear);
-    localStorage.clear("content");
+    sessionStorage.clear("content");
     setEditorState(EditorState.createEmpty(decorator));
   };
 
-  //OnChange, content is stored on the localStorage, editorState is updated.
+  //OnChange, content is stored on the sessionStorage, editorState is updated.
   const onChange = (editorState) => {
     const contentState = editorState.getCurrentContent();
     const inlineStyle = editorState.getCurrentInlineStyle();

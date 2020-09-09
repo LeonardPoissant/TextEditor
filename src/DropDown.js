@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import MenuIcon from "@material-ui/icons/Menu";
@@ -6,7 +6,6 @@ import MenuIcon from "@material-ui/icons/Menu";
 import useVisible from "./Utils/DropDown";
 
 const DropDown = () => {
-  const [showMenu, setShowMenu] = useState(false);
   const { ref, isVisible, setIsVisible } = useVisible(false);
 
   return (

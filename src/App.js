@@ -10,6 +10,7 @@ import HomePage from "./HomePage";
 import Header from "./Header";
 import Footer from "./Footer";
 import Profile from "./Profile";
+import About from "./About";
 function App() {
   return (
     <BrowserRouter>
@@ -22,6 +23,9 @@ function App() {
         <Route path="/Preview" component={Preview}></Route>
         <Route path="/Profile">
           <Profile />
+        </Route>
+        <Route path="/About">
+          <About />
         </Route>
       </Switch>
       <Footer />

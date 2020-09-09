@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import styled from "styled-components";
 
@@ -11,6 +12,11 @@ const Footer = () => {
   return (
     <Wrapper>
       <FooterContent>
+        <LinkToPagesWrapper>
+          <LinkToPages to={"/"}>Home</LinkToPages>
+          <LinkToPages to={"/Editor"}>Editor</LinkToPages>
+          <LinkToPages to={"/About"}>About</LinkToPages>
+        </LinkToPagesWrapper>
         <Image src={logo} width={"15%"} height={"5%"} />
         <LinksToSocial>
           <LinkTo href="https://github.com/LeonardPoissant">
@@ -44,6 +50,7 @@ const FooterContent = styled.div`
 
 const Image = styled.img`
   margin-top: 30px;
+  padding: 10px;
 `;
 
 const Logo = styled.img``;
@@ -57,5 +64,19 @@ const LinksToSocial = styled.div`
   flex-direction: column;
   margin-top: 30px;
   padding-left: 15px;
+`;
+
+const LinkToPagesWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+
+  margin-top: 19px;
+`;
+
+const LinkToPages = styled(Link)`
+  text-decoration: none;
+  color: black;
+  padding: 2px;
 `;
 export default Footer;

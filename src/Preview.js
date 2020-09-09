@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Editor, convertFromRaw, convertToRaw, EditorState } from "draft-js";
+import React, { useContext } from "react";
+import { Editor } from "draft-js";
 import { Link } from "react-router-dom";
 
 import styled from "styled-components";
@@ -13,6 +13,9 @@ const Preview = () => {
 
   return (
     <Wrapper>
+      <BackToeditorForDesktop to={{ pathname: "/Editor" }}>
+        BACK TO EDITOR
+      </BackToeditorForDesktop>
       <div></div>
 
       <EditorWrapper className="EDIWRAP">
@@ -34,8 +37,8 @@ const Preview = () => {
 
         <PostContent>POST </PostContent>
       </LinksToPreviewAndPostDiv>
-
       <div></div>
+      <PostContentForDesktop>POST</PostContentForDesktop>
     </Wrapper>
   );
 };
@@ -51,6 +54,12 @@ const Wrapper = styled.div`
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
+  }
+`;
+
+const Testdiv = styled.div`
+  @media (max-width: 736px) {
+    display: none;
   }
 `;
 
@@ -95,13 +104,30 @@ const BackToEditor = styled(Link)`
     }
   }
 `;
+
+const BackToeditorForDesktop = styled(Link)`
+  text-decoration: none;
+  margin-right: 900px;
+  position: fixed;
+  color: black;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 3px;
+  padding: 6px;
+  :hover {
+    background-color: rgb(214, 210, 210);
+  }
+  @media (max-width: 736px) {
+    display: none;
+  }
+`;
+
 const LinksToPreviewAndPostDiv = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 500px;
-  padding: 10px;
+  display: none;
   @media (max-width: 736px) {
     width: 100%;
+    display: flex;
+    justify-content: space-around;
   }
 `;
 const PostContent = styled(Link)`
@@ -113,6 +139,24 @@ const PostContent = styled(Link)`
   padding: 6px;
   :hover {
     background-color: rgb(214, 210, 210);
+  }
+`;
+
+const PostContentForDesktop = styled(Link)`
+  position: fixed;
+  margin-left: 900px;
+  text-decoration: none;
+  color: black;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 3px;
+  padding: 6px;
+  :hover {
+    background-color: rgb(214, 210, 210);
+  }
+
+  @media (max-width: 736px) {
+    display: none;
   }
 `;
 
