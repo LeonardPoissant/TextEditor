@@ -3,7 +3,6 @@ import React from "react";
 import styled from "styled-components";
 
 import DropDown from "./DropDown";
-import logo from "./Assets/logo.png";
 
 const Header = () => {
   return (

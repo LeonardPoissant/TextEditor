@@ -3,9 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import MenuIcon from "@material-ui/icons/Menu";
 
-import OutsideMenuClick from "./Utils/ComponentsUtils";
-
-import useVisible from "./Utils/ComponentsUtils";
+import useVisible from "./Utils/DropDown";
 
 const DropDown = () => {
   const [showMenu, setShowMenu] = useState(false);

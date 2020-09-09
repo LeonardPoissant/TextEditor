@@ -4,12 +4,15 @@ import InsertLinkIcon from "@material-ui/icons/InsertLink";
 import ImageIcon from "@material-ui/icons/Image";
 import YouTubeIcon from "@material-ui/icons/YouTube";
 import CloseIcon from "@material-ui/icons/Close";
+import Alert from "@material-ui/lab/Alert";
+import IconButton from "@material-ui/core/IconButton";
+import Collapse from "@material-ui/core/Collapse";
 
 import styled from "styled-components";
 
 import { EditorContext } from "./Utils/EditorContext";
 
-const ToolBar = (props) => {
+const ToolBar = () => {
   const {
     isBold,
     isItalic,
@@ -28,18 +31,14 @@ const ToolBar = (props) => {
     handleClose,
     active,
     promptForLink,
+    warning,
+    open,
+    setOpen,
   } = useContext(EditorContext);
-  const [, setIsBold] = useState(false);
-  const [, setIsItalic] = useState(false);
-  const [, setIsUnderline] = useState(false);
-  const [, setEditorState] = useState({});
-  //const [active, setActive] = useState(false);
-  const [, setPromptForURL] = useState(false);
-  //const [URLValue, setURLValue] = useState("");
-  const [URLType, setURLType] = useState("");
 
-  const linkRef = useRef();
-  const imageRef = useRef();
+  const [, setWarning] = useState(false);
+  const [, setPromptForLink] = useState(false);
+
   const videoRef = useRef();
 
   useEffect(() => {
@@ -48,17 +47,8 @@ const ToolBar = (props) => {
     }
   }, [promptForURL]);
 
-  //Manages the focus for new input fields
-
-  /*useEffect(() => {
-    if (showURLInput) {
-      linkRef.current.focus();
-    } else if (promptForImageURL) {
-      imageRef.current.focus();
-    } else if (promptForVideoURL) {
-      videoRef.current.focus();
-    }
-  }, [showURLInput, promptForImageURL, promptForVideoURL]);*/
+  console.log("warning", warning);
+  console.log("open", open);
 
   return (
     <Wrapper>
@@ -115,16 +105,14 @@ const ToolBar = (props) => {
           </CloseWindow>
           <HandleInputDiv>
             <UrlInput
-              onChange={handleURL}
+              onChange={(e) => handleURL(e)}
               ref={videoRef}
               value={URLValue}
-              placeholder={
-                promptForURL ? "Copy video url here" : "Copy image url here"
-              }
+              placeholder={"Paste Url here"}
             ></UrlInput>
             <ConfirmUrlButton
               disabled={URLValue ? false : true}
-              onClick={promptForLink ? confirmLink : confirmMedia}
+              onClick={promptForLink ? confirmLink : (e) => confirmMedia(e)}
             >
               OK
             </ConfirmUrlButton>
@@ -133,30 +121,26 @@ const ToolBar = (props) => {
       ) : (
         <></>
       )}
-      {/* {promptForURL ? (
-        <AddMediaWindow active={active}>
-          <CloseWindow>
-            <CloseWindowButton onClick={() => handleClose()}>
-              <CloseIcon />
-            </CloseWindowButton>
-          </CloseWindow>
-          <HandleInputDiv>
-            <UrlInput
-              onChange={handleURL}
-              ref={linkRef}
-              value={URLValue}
-              placeholder={"Copy link url here"}
-            ></UrlInput>
-            <ConfirmUrlButton
-              className="INPUT BUITTOM"
-              disabled={URLValue ? false : true}
-              onClick={confirmLink}
-            ></ConfirmUrlButton>
-          </HandleInputDiv>
-        </AddMediaWindow>
-      ) : (
-        <></>
-      )}*/}
+
+      <CollapseWarning in={open}>
+        <WarningMessage
+          severity="error"
+          action={
+            <IconButton
+              aria-label="close"
+              color="inherit"
+              size="small"
+              onClick={() => {
+                setOpen(false);
+              }}
+            >
+              <CloseIcon fontSize="inherit" />
+            </IconButton>
+          }
+        >
+          Select the text you want to hyperlink first!
+        </WarningMessage>
+      </CollapseWarning>
     </Wrapper>
   );
 };
@@ -172,7 +156,16 @@ const Wrapper = styled.div`
   border-color: rgb(161, 161, 161);
   border-width: 1px;
   @media (max-width: 736px) {
-    display: none;
+    display: flex;
+    flex-direction: row;
+    padding: 6px;
+    justify-content: space-around;
+    border-left: solid;
+    border-top: solid;
+    border-right: solid;
+    border-color: rgb(161, 161, 161);
+    border-width: 1px;
+    -webkit-overflow-scrolling: touch;
   }
 `;
 
@@ -208,19 +201,6 @@ const CloseWindowButton = styled.button`
   outline: none;
   cursor: pointer;
 `;
-
-/*const ToolBar = styled.div`
-  display: flex;
-  flex-direction: row;
-  padding: 6px;
-  justify-content: space-around;
-  border-left: solid;
-  border-top: solid;
-  border-right: solid;
-  border-color: rgb(161, 161, 161);
-  border-width: 1px;
-  
-`;*/
 
 const ToolBarForDevices = styled.div`
   display: none;
@@ -272,4 +252,12 @@ const ConfirmUrlButton = styled.button`
   width: 70px;
 `;
 
+const CollapseWarning = styled(Collapse)`
+  display: flex;
+  align-items: center;
+  position: fixed;
+  margin-top: 38px;
+  z-index: 1;
+`;
+const WarningMessage = styled(Alert)``;
 export default ToolBar;

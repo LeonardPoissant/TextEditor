@@ -26,6 +26,8 @@ export default ({ children }) => {
   const [clear, setClear] = useState(false);
   const [currentStyle, setCurrentStyle] = useState({});
   const [promptForLink, setPromptForLink] = useState(false);
+  const [warning, setWarning] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const link = (props) => {
     const { url } = props.contentState.getEntity(props.entityKey).getData();
@@ -47,23 +49,20 @@ export default ({ children }) => {
     },
   ]);
 
-  console.log(decorator);
-
   // Create the Editor whith either already input content (On page change or refresh we rerender with that) or no content stored in the localStorage.
 
   useEffect(() => {
     const content = localStorage.getItem("content");
 
     if (content) {
+      const convertedContent = convertFromRaw(JSON.parse(content));
       setOkToDisplay(true);
       setEditorState(
-        EditorState.createWithContent(convertFromRaw(JSON.parse(content)))
+        EditorState.createWithContent(convertedContent, decorator)
       );
-      console.log("WITHCONTENT", editorState);
     } else {
       setOkToDisplay(true);
       setEditorState(EditorState.createEmpty(decorator));
-      console.log("WITHOUT", editorState);
     }
   }, []);
 
@@ -132,13 +131,13 @@ export default ({ children }) => {
   };
 
   const addLink = () => {
-    setActive(!active);
     setEditorState(editorState);
     setPromptForLink(!promptForLink);
 
     const selection = editorState.getSelection();
 
     if (!selection.isCollapsed()) {
+      setActive(!active);
       const contentState = editorState.getCurrentContent();
       const startKey = editorState.getSelection().getStartKey();
       const startOffset = editorState.getSelection().getStartOffset();
@@ -153,6 +152,9 @@ export default ({ children }) => {
       setPromptForURL(!promptForURL);
 
       setURLValue(url);
+    } else {
+      setWarning(!warning);
+      setOpen(!open);
     }
   };
   const confirmLink = () => {
@@ -189,6 +191,7 @@ export default ({ children }) => {
     setEditorState(editorState);
     setURLValue("");
     setURLType(type);
+    console.log(type);
   };
 
   const addImage = () => {
@@ -204,13 +207,18 @@ export default ({ children }) => {
     promptForMedia("VIDEOTYPE");
   };
 
-  const confirmMedia = () => {
+  const confirmMedia = (e) => {
+    e.preventDefault();
     setEditorState(editorState);
     setURLValue(URLValue);
 
+    console.log("PRE_EMBED", URLValue);
+
     const embedURL = URLValue.replace("watch?v=", "embed/");
+    console.log("EMBEDED", embedURL);
 
     setURLType(URLType);
+
     const contentState = editorState.getCurrentContent();
     const contentStateWithEntity = contentState.createEntity(
       URLType,
@@ -264,6 +272,11 @@ export default ({ children }) => {
         handleClose,
         active,
         promptForLink,
+        findLinkEntities,
+        link,
+        warning,
+        open,
+        setOpen,
       }}
     >
       {children}

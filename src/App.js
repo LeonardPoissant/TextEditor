@@ -5,7 +5,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import styled from "styled-components";
 
 import TextEditor from "./Editor";
-import Preview from "./Output";
+import Preview from "./Preview";
 import HomePage from "./HomePage";
 import Header from "./Header";
 import Footer from "./Footer";
@@ -18,10 +18,8 @@ function App() {
         <Route exact path="/">
           <HomePage />
         </Route>
-        <Route path="/Editor">
-          <TextEditor />
-        </Route>
-        <Route path="/Output" component={Preview}></Route>
+        <Route path="/Editor" component={TextEditor}></Route>
+        <Route path="/Preview" component={Preview}></Route>
         <Route path="/Profile">
           <Profile />
         </Route>
@@ -30,7 +28,5 @@ function App() {
     </BrowserRouter>
   );
 }
-
-const Wrapper = styled.div``;
 
 export default App;

@@ -7,7 +7,7 @@ const VIMEO_PREFIX = "https://player.vimeo.com/video/";
 
 const getSrc = ({ src }) => {
   const { isYoutube, getYoutubeSrc, isVimeo, getVimeoSrc } = utils;
-  console.log("HERE?", src);
+
   if (isYoutube(src)) {
     const { srcID } = getYoutubeSrc(src);
 
@@ -36,8 +36,6 @@ const Image = (props) => {
   }
   return null;
 };
-// IF VIDEO IS FROM YOUTUBE, YOU HAVE THE CHANGE THE watch?v= WITH embed/
-//IF FROM VIMEO WE NEED TO CHANGE SOMETHING TOO. FIND OUT WHAT IT IS
 
 const Video = (props) => {
   if (!!props.src) {
@@ -50,7 +48,6 @@ const Media = (props) => {
   const entity = props.contentState.getEntity(props.block.getEntityAt(0));
   const { src } = entity.getData();
   getSrc(src);
-  //const src = getSrc(props.block);
   const type = entity.getType();
 
   let media;
@@ -58,7 +55,7 @@ const Media = (props) => {
   if (type === "image") {
     media = <Image src={src} />;
   } else if (type === "VIDEOTYPE") {
-    media = <Video src={src} />;
+    media = <Video src={src} crossorigin="anonymous" />;
   }
   return media;
 };
