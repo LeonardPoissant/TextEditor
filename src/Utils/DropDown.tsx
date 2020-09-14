@@ -1,11 +1,11 @@
 import { useRef, useState, useEffect } from "react";
 
-function useVisible(initialIsVisible) {
+function useVisible(initialIsVisible: boolean) {
   const [isVisible, setIsVisible] = useState(initialIsVisible);
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement>(null);
 
-  const handleClickOutside = (event) => {
-    if (ref.current && !ref.current.contains(event.target)) {
+  const handleClickOutside = (event: MouseEvent) => {
+    if (ref.current && !ref.current.contains(event.target as Node)) {
       setIsVisible(false);
     }
   };

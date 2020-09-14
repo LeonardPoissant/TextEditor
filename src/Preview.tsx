@@ -35,10 +35,10 @@ const Preview = () => {
           Back to Editor{" "}
         </BackToEditor>
 
-        <PostContent>POST </PostContent>
+        <PostContent to={"/"}>POST </PostContent>
       </LinksToPreviewAndPostDiv>
       <div></div>
-      <PostContentForDesktop>POST</PostContentForDesktop>
+      <PostContentForDesktop to={"/"}>POST</PostContentForDesktop>
     </Wrapper>
   );
 };

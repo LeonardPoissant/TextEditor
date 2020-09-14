@@ -1,13 +1,33 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useContext,
+  RefObject,
+  ClassAttributes,
+} from "react";
 
 import { Link } from "react-router-dom";
-import Editor from "draft-js-plugins-editor";
+import { Editor } from "draft-js";
 import styled from "styled-components";
 
 import { EditorContext } from "./Utils/EditorContext";
 import ToolBar from "./ToolBar";
 import mediaBlockRenderer from "./entities/mediaBlockRenderer";
 import draftJsCss from "./Utils/EditorStyles";
+
+/*declare module "react" {
+  interface Attributes extends HTMLAttributes<HTMLDivElement> {
+    active: boolean;
+  }
+}*/
+interface WrapperProps {
+  active?: boolean;
+}
+
+interface EditorProps {
+  decorators?: Object;
+}
 
 const TextEditor = () => {
   const {
@@ -21,17 +41,18 @@ const TextEditor = () => {
     link,
   } = useContext(EditorContext);
 
-  const [focus, setFocus] = useState(null);
+  const [focus, setFocus] = useState();
 
   // References to the corresponding DOM nodes when new input is rendered.
-  const Inputref = useRef(null);
+  const Inputref = useRef(null) as any;
 
   //Keeps the focus on the input field (the Editor) when pressing a button  and creates the ref for conditional rendering
 
   useEffect(() => {
-    setFocus(Inputref.current && Inputref.current.focus());
+    Inputref.current! && Inputref.current.focus();
   });
 
+  //onClick={setFocus} TYPE SCRIPT THE ONCLICK ON THE TEXT AREA
   const customDecorator = [
     {
       strategy: findLinkEntities,
@@ -40,18 +61,18 @@ const TextEditor = () => {
   ];
 
   return (
-    <Wrapper active={active}>
+    <Wrapper active={active as any}>
       <ToolBar />
       {okToDisplay ? (
-        <TextArea onClick={setFocus}>
-          <Editor
+        <TextArea>
+          <StyledEditor
             blockRendererFn={mediaBlockRenderer}
             editorState={editorState}
             onChange={onChange}
             handleKeyCommand={handleKeyCommand}
-            decorators={customDecorator}
+            decorators={customDecorator as any}
             ref={!active ? Inputref : null}
-          ></Editor>
+          ></StyledEditor>
         </TextArea>
       ) : (
         <> </>
@@ -59,15 +80,15 @@ const TextEditor = () => {
 
       <LinksToPreviewAndPostDiv>
         <SeePreview to={{ pathname: "/Preview" }}>PREVIEW</SeePreview>
-        <ClearContent onClick={clearLocalStorage}>CLEAR</ClearContent>
+        <ClearContent onClick={() => clearLocalStorage()}>CLEAR</ClearContent>
 
-        <PostContent>POST </PostContent>
+        <PostContent to={"/"}>POST </PostContent>
       </LinksToPreviewAndPostDiv>
     </Wrapper>
   );
 };
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<WrapperProps>`
   height: 80vh;
   display: flex;
   flex-direction: column;
@@ -81,6 +102,8 @@ const Wrapper = styled.div`
   `};
   padding: 20px;
 `;
+
+const StyledEditor = styled(Editor)<EditorProps>``;
 
 const TextArea = styled.div`
   height: 250px;

@@ -10,7 +10,7 @@ const DropDown = () => {
 
   return (
     <Wrapper>
-      <Menu ref={ref} onClick={(e) => setIsVisible(!isVisible)}>
+      <Menu ref={ref as any} onClick={(e) => setIsVisible(!isVisible)}>
         <MenuIcon />
       </Menu>
       {isVisible ? (

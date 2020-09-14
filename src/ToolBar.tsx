@@ -12,6 +12,14 @@ import styled from "styled-components";
 
 import { EditorContext } from "./Utils/EditorContext";
 
+interface AddMediaWIndowProps {
+  active?: boolean;
+}
+
+interface ButtonStyleProps {
+  isClicked?: boolean;
+}
+
 const ToolBar = () => {
   const {
     isBold,
@@ -31,7 +39,6 @@ const ToolBar = () => {
     handleClose,
     active,
     promptForLink,
-    warning,
     open,
     setOpen,
   } = useContext(EditorContext);
@@ -39,16 +46,13 @@ const ToolBar = () => {
   const [, setWarning] = useState(false);
   const [, setPromptForLink] = useState(false);
 
-  const videoRef = useRef();
+  const videoRef = useRef() as any;
 
   useEffect(() => {
     if (promptForURL) {
       videoRef.current.focus();
     }
   }, [promptForURL]);
-
-  console.log("warning", warning);
-  console.log("open", open);
 
   return (
     <Wrapper>
@@ -59,28 +63,28 @@ const ToolBar = () => {
         <b>B</b>
       </ChangeStyleButton>
       <ChangeStyleButton
-        onMouseDown={toggleItalic}
+        onMouseDown={(e) => toggleItalic(e)}
         style={isItalic ? { backgroundColor: "grey" } : { backgroundColor: "" }}
       >
         {" "}
         <i>I</i>
       </ChangeStyleButton>
       <ChangeStyleButton
-        onMouseDown={toggleUnderLine}
+        onMouseDown={(e) => toggleUnderLine(e)}
         style={
           isUnderline ? { backgroundColor: "grey" } : { backgroundColor: "" }
         }
       >
         <u>U</u>
       </ChangeStyleButton>
-      <EmbedButton onMouseDown={addLink}>
+      <EmbedButton onMouseDown={() => addLink()}>
         <InsertLinkIcon
           style={{
             fontSize: 20,
           }}
         />
       </EmbedButton>
-      <EmbedButton onMouseDown={addImage}>
+      <EmbedButton onMouseDown={() => addImage()}>
         <ImageIcon
           style={{
             fontSize: 20,
@@ -88,7 +92,7 @@ const ToolBar = () => {
         />
       </EmbedButton>
 
-      <EmbedButton onMouseDown={addVideo}>
+      <EmbedButton onMouseDown={() => addVideo()}>
         <YouTubeIcon
           style={{
             fontSize: 20,
@@ -112,7 +116,9 @@ const ToolBar = () => {
             ></UrlInput>
             <ConfirmUrlButton
               disabled={URLValue ? false : true}
-              onClick={promptForLink ? confirmLink : (e) => confirmMedia(e)}
+              onClick={
+                promptForLink ? () => confirmLink() : (e) => confirmMedia(e)
+              }
             >
               OK
             </ConfirmUrlButton>
@@ -172,7 +178,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const ChangeStyleButton = styled.button`
+const ChangeStyleButton = styled.button<ButtonStyleProps>`
   height: 25px;
   width: 25px;
   margin: 4px;
@@ -205,7 +211,7 @@ const CloseWindowButton = styled.button`
   cursor: pointer;
 `;
 
-const AddMediaWindow = styled.div`
+const AddMediaWindow = styled.div<AddMediaWIndowProps>`
   position: absolute;
   height: 150px;
   width: 300px;

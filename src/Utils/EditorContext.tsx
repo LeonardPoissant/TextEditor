@@ -9,12 +9,93 @@ import {
   convertToRaw,
   convertFromRaw,
   SelectionState,
+  ContentBlock,
+  DraftHandleValue,
+  DraftEditorCommand,
 } from "draft-js";
 
-export const EditorContext = createContext(null);
+import getVideo from "./EditorUtils";
 
-export default ({ children }) => {
-  const [editorState, setEditorState] = useState({});
+type Props = {
+  children: React.ReactNode;
+  props: object;
+  editorState: EditorState;
+  e: MouseEvent;
+  isBold: boolean;
+  promptForUrl: boolean;
+};
+
+type EditorContextTypes = {
+  toggleBold: Function;
+  toggleUnderLine: Function;
+  toggleItalic: Function;
+  editorState: EditorState;
+  onChange(editorState: EditorState): void;
+  clearLocalStorage: Function;
+  handleKeyCommand?(
+    command: DraftEditorCommand,
+    editorState: EditorState,
+    eventTimeStamp: number
+  ): DraftHandleValue;
+  okToDisplay: boolean;
+  active: boolean;
+  findLinkEntities: Function;
+  link: Function;
+  saveContent: Function;
+  isBold: boolean;
+  isItalic: boolean;
+  isUnderline: boolean;
+  promptForURL: boolean;
+  handleURL: Function;
+  URLValue: string;
+  addLink: Function;
+  confirmLink: Function;
+  addImage: Function;
+  addVideo: Function;
+  confirmMedia: Function;
+  handleClose: Function;
+  promptForLink: boolean;
+  open: boolean;
+  setOpen: Function;
+};
+
+/* toggleBold: () => {},
+  toggleUnderLine: () => {},
+  toggleItalic: () => {},
+  editorState: EditorState;*/
+//export const EditorContext = createContext(null);
+export const EditorContext = createContext<EditorContextTypes>({
+  toggleBold: Function,
+  toggleUnderLine: Function,
+  toggleItalic: Function,
+  editorState: new EditorState(),
+  onChange: () => {},
+  clearLocalStorage: Function,
+  handleKeyCommand: Object,
+  okToDisplay: false,
+  active: false,
+  findLinkEntities: Function,
+  link: Function,
+  saveContent: Function,
+  isBold: false,
+  isItalic: false,
+  isUnderline: false,
+  promptForURL: false,
+  handleURL: Function,
+  URLValue: "",
+  addLink: Function,
+  confirmLink: Function,
+  addImage: Function,
+  addVideo: Function,
+  confirmMedia: Function,
+  handleClose: Function,
+  promptForLink: false,
+  open: false,
+  setOpen: Function,
+});
+
+export default ({ children }: Props) => {
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [promptForURL, setPromptForURL] = useState(false);
   const [URLValue, setURLValue] = useState("");
   const [URLType, setURLType] = useState("");
@@ -29,13 +110,17 @@ export default ({ children }) => {
   const [warning, setWarning] = useState(false);
   const [open, setOpen] = useState(false);
 
-  const link = (props) => {
+  const link = (props: any) => {
     const { url } = props.contentState.getEntity(props.entityKey).getData();
     return <a href={url}>{props.children}</a>;
   };
-  const findLinkEntities = (contentBlock, callback, contentState) => {
-    contentBlock.findEntityRanges((character) => {
-      const entityKey = character.getEntity();
+  const findLinkEntities = (
+    contentBlock: ContentBlock,
+    callback: any,
+    contentState: ContentState
+  ) => {
+    contentBlock.findEntityRanges((character: any) => {
+      const entityKey: string = character.getEntity();
       return (
         entityKey !== null &&
         contentState.getEntity(entityKey).getType() === "LINK"
@@ -48,6 +133,8 @@ export default ({ children }) => {
       component: link,
     },
   ]);
+
+  console.log("GETSRC", getVideo.getYoutubeSrc);
 
   // Create the Editor whith either already input content (On page change or refresh we rerender with that) or no content stored in the localStorage.
 
@@ -68,7 +155,7 @@ export default ({ children }) => {
 
   // store on sessionStorage
 
-  const saveContent = (content) => {
+  const saveContent = (content: ContentState) => {
     window.sessionStorage.setItem(
       "content",
       JSON.stringify(convertToRaw(content))
@@ -76,12 +163,12 @@ export default ({ children }) => {
   };
   const clearLocalStorage = () => {
     setClear(!clear);
-    sessionStorage.clear("content");
+    sessionStorage.clear();
     setEditorState(EditorState.createEmpty(decorator));
   };
 
   //OnChange, content is stored on the sessionStorage, editorState is updated.
-  const onChange = (editorState) => {
+  const onChange = (editorState: EditorState) => {
     const contentState = editorState.getCurrentContent();
     const inlineStyle = editorState.getCurrentInlineStyle();
     const isBold = inlineStyle.has("BOLD");
@@ -96,37 +183,37 @@ export default ({ children }) => {
     setIsUnderline(isUnderline);
   };
 
-  const handleKeyCommand = (command, editorState) => {
+  const handleKeyCommand = (command: string, editorState: EditorState) => {
     const newState = RichUtils.handleKeyCommand(editorState, command);
     if (newState) {
       onChange(newState);
 
-      return true;
+      return "handled";
     }
-    return false;
+    return "not-handled";
   };
 
-  const toggleBold = (e) => {
+  const toggleBold = (e: MouseEvent) => {
     e.preventDefault();
     setIsBold(!isBold);
     onChange(RichUtils.toggleInlineStyle(editorState, "BOLD"));
   };
 
-  const toggleItalic = (e) => {
+  const toggleItalic = (e: MouseEvent) => {
     e.preventDefault();
     setIsItalic(!isItalic);
     onChange(RichUtils.toggleInlineStyle(editorState, "ITALIC"));
   };
 
-  const toggleUnderLine = (e) => {
+  const toggleUnderLine = (e: MouseEvent) => {
     e.preventDefault();
     setIsUnderline(!isUnderline);
     onChange(RichUtils.toggleInlineStyle(editorState, "UNDERLINE"));
   };
 
-  const handleURL = (e) => {
+  const handleURL = (e: MouseEvent) => {
     e.preventDefault();
-    const { value } = e.target;
+    const { value }: any = e.target;
     setURLValue(value);
   };
 
@@ -187,7 +274,7 @@ export default ({ children }) => {
     setActive(!active);
   };
 
-  const promptForMedia = (type) => {
+  const promptForMedia = (type: string) => {
     setEditorState(editorState);
     setURLValue("");
     setURLType(type);
@@ -207,15 +294,11 @@ export default ({ children }) => {
     promptForMedia("VIDEOTYPE");
   };
 
-  const confirmMedia = (e) => {
+  const confirmMedia = (e: MouseEvent) => {
     e.preventDefault();
     setEditorState(editorState);
     setURLValue(URLValue);
-
-    console.log("PRE_EMBED", URLValue);
-
-    const embedURL = URLValue.replace("watch?v=", "embed/");
-    console.log("EMBEDED", embedURL);
+    const getYouTubeId = getVideo.getYoutubeSrc(URLValue);
 
     setURLType(URLType);
 
@@ -223,14 +306,14 @@ export default ({ children }) => {
     const contentStateWithEntity = contentState.createEntity(
       URLType,
       "IMMUTABLE",
-      { src: embedURL }
+      { src: "https://www.youtube.com/embed/" + getYouTubeId.srcID }
     );
 
     const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
     const newEditorState = EditorState.set(
       editorState,
-      { currentContent: contentStateWithEntity },
-      "create-entity"
+      { currentContent: contentStateWithEntity }
+      // "create-entity"
     );
     setEditorState(
       AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, " ")
@@ -267,14 +350,12 @@ export default ({ children }) => {
         confirmLink,
         addImage,
         addVideo,
-        handleURL,
         confirmMedia,
         handleClose,
         active,
         promptForLink,
         findLinkEntities,
         link,
-        warning,
         open,
         setOpen,
       }}
