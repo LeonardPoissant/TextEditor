@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useEffect, useRef, useContext } from "react";
 
 import InsertLinkIcon from "@material-ui/icons/InsertLink";
 import ImageIcon from "@material-ui/icons/Image";
@@ -10,7 +10,7 @@ import Collapse from "@material-ui/core/Collapse";
 
 import styled from "styled-components";
 
-import { EditorContext } from "./Utils/EditorContext";
+import { EditorContext } from "../Utils/EditorContext";
 
 interface AddMediaWIndowProps {
   active?: boolean;
@@ -42,9 +42,6 @@ const ToolBar = () => {
     open,
     setOpen,
   } = useContext(EditorContext);
-
-  const [, setWarning] = useState(false);
-  const [, setPromptForLink] = useState(false);
 
   const videoRef = useRef() as any;
 

@@ -1,20 +1,13 @@
-import React, {
-  useState,
-  useEffect,
-  useRef,
-  useContext,
-  RefObject,
-  ClassAttributes,
-} from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 
 import { Link } from "react-router-dom";
 import { Editor } from "draft-js";
 import styled from "styled-components";
 
-import { EditorContext } from "./Utils/EditorContext";
+import { EditorContext } from "../Utils/EditorContext";
 import ToolBar from "./ToolBar";
-import mediaBlockRenderer from "./entities/mediaBlockRenderer";
-import draftJsCss from "./Utils/EditorStyles";
+import mediaBlockRenderer from "../entities/mediaBlockRenderer";
+import draftJsCss from "../Utils/EditorStyles";
 
 /*declare module "react" {
   interface Attributes extends HTMLAttributes<HTMLDivElement> {
@@ -29,6 +22,10 @@ interface EditorProps {
   decorators?: Object;
 }
 
+interface OnClickAttribute {
+  onClick?: any;
+}
+
 const TextEditor = () => {
   const {
     editorState,
@@ -41,18 +38,15 @@ const TextEditor = () => {
     link,
   } = useContext(EditorContext);
 
-  const [focus, setFocus] = useState();
-
   // References to the corresponding DOM nodes when new input is rendered.
-  const Inputref = useRef(null) as any;
+  const editor = useRef<Editor>(null);
 
-  //Keeps the focus on the input field (the Editor) when pressing a button  and creates the ref for conditional rendering
+  //Keeps the focus on the editor when pressing a button
 
   useEffect(() => {
-    Inputref.current! && Inputref.current.focus();
+    editor.current && editor.current.focus();
   });
 
-  //onClick={setFocus} TYPE SCRIPT THE ONCLICK ON THE TEXT AREA
   const customDecorator = [
     {
       strategy: findLinkEntities,
@@ -60,18 +54,24 @@ const TextEditor = () => {
     },
   ];
 
+  const focusEditor = () => {
+    if (editor.current) {
+      editor.current.focus();
+    }
+  };
+
   return (
     <Wrapper active={active as any}>
       <ToolBar />
       {okToDisplay ? (
-        <TextArea>
+        <TextArea onClick={focusEditor}>
           <StyledEditor
             blockRendererFn={mediaBlockRenderer}
             editorState={editorState}
             onChange={onChange}
             handleKeyCommand={handleKeyCommand}
             decorators={customDecorator as any}
-            ref={!active ? Inputref : null}
+            ref={!active ? editor : null}
           ></StyledEditor>
         </TextArea>
       ) : (
@@ -81,7 +81,6 @@ const TextEditor = () => {
       <LinksToPreviewAndPostDiv>
         <SeePreview to={{ pathname: "/Preview" }}>PREVIEW</SeePreview>
         <ClearContent onClick={() => clearLocalStorage()}>CLEAR</ClearContent>
-
         <PostContent to={"/"}>POST </PostContent>
       </LinksToPreviewAndPostDiv>
     </Wrapper>
@@ -103,7 +102,9 @@ const Wrapper = styled.div<WrapperProps>`
   padding: 20px;
 `;
 
-const StyledEditor = styled(Editor)<EditorProps>``;
+const StyledEditor = styled(Editor)<EditorProps>`
+  width: 500px;
+`;
 
 const TextArea = styled.div`
   height: 250px;
@@ -113,13 +114,12 @@ const TextArea = styled.div`
   border-color: rgb(161, 161, 161);
   border-width: 1px;
   display: flex;
-  z-index: -1;
   & {
     ${draftJsCss}
   }
   @media (max-width: 736px) {
     width: 100%;
-  } ;
+  }
 `;
 
 const LinksToPreviewAndPostDiv = styled.div`

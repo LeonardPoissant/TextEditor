@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 
-import UnderConstruction from "./Assets/UnderConstruction.jpg";
+import UnderConstruction from "../Assets/UnderConstruction.jpg";
 
 const Profile = () => {
   return (
     <Wrapper>
-      <img src={UnderConstruction}></img>
+      <img src={UnderConstruction} alt="this page is under construction"></img>
     </Wrapper>
   );
 };

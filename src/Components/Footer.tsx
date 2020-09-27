@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 
 import styled from "styled-components";
 
-import GitHubLogo from "./Assets/GitHub-Logos/GitHub_Logo.png";
-import LinkedInLogo from "./Assets/LI-In-Bug.png";
+import GitHubLogo from "../Assets/GitHub-Logos/GitHub_Logo.png";
+import LinkedInLogo from "../Assets/LI-In-Bug.png";
 
-import logo from "./Assets/logo.png";
+import logo from "../Assets/logo.png";
 
 const Footer = () => {
   return (

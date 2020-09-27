@@ -1,12 +1,12 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Editor } from "draft-js";
 import { Link } from "react-router-dom";
 
 import styled from "styled-components";
-import { EditorContext } from "./Utils/EditorContext";
+import { EditorContext } from "../Utils/EditorContext";
 
-import mediaBlockRenderer from "./entities/mediaBlockRenderer";
-import draftJsCss from "./Utils/EditorStyles";
+import mediaBlockRenderer from "../entities/mediaBlockRenderer";
+import draftJsCss from "../Utils/EditorStyles";
 
 const Preview = () => {
   const { editorState, okToDisplay, onChange } = useContext(EditorContext);
@@ -35,10 +35,12 @@ const Preview = () => {
           Back to Editor{" "}
         </BackToEditor>
 
-        <PostContent to={"/"}>POST </PostContent>
+        <PostContent to={"/"}>PUBLISH </PostContent>
       </LinksToPreviewAndPostDiv>
       <div></div>
-      <PostContentForDesktop to={"/"}>POST</PostContentForDesktop>
+      <PostContentForDesktop to={{ pathname: "/", state: { publish: true } }}>
+        PUBLISH
+      </PostContentForDesktop>
     </Wrapper>
   );
 };
@@ -54,12 +56,6 @@ const Wrapper = styled.div`
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-  }
-`;
-
-const Testdiv = styled.div`
-  @media (max-width: 736px) {
-    display: none;
   }
 `;
 

@@ -8,8 +8,7 @@ const About = () => {
       <p>
         LitteraClip is a little project I made after graduating from the
         Concordia Bootcamp. Being a screenwriter in a previous life, I wanted to
-        bridge the gap between creating content and coding...so making a text
-        editor was a logical choice.
+        bridge the gap between creating content and coding so.... text editor !
       </p>
       <p>
         In this first iteration of LitteraClip I focused solely on the text

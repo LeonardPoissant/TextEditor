@@ -2,8 +2,6 @@ import React from "react";
 
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-import styled from "styled-components";
-
 import TextEditor from "./Editor";
 import Preview from "./Preview";
 import HomePage from "./HomePage";
@@ -16,9 +14,7 @@ function App() {
     <BrowserRouter>
       <Header />
       <Switch>
-        <Route exact path="/">
-          <HomePage />
-        </Route>
+        <Route exact path="/" component={HomePage}></Route>
         <Route path="/Editor" component={TextEditor}></Route>
         <Route path="/Preview" component={Preview}></Route>
         <Route path="/Profile">

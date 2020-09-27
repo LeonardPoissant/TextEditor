@@ -32,14 +32,14 @@ const mediaBlockRender = (block) => {
 
 const Image = (props) => {
   if (!!props.src) {
-    return <img src={props.src} />;
+    return <img src={props.src} alt={props.src} />;
   }
   return null;
 };
 
 const Video = (props) => {
   if (!!props.src) {
-    return <iframe controls src={props.src} />;
+    return <iframe controls src={props.src} title={props.src} />;
   }
   return null;
 };

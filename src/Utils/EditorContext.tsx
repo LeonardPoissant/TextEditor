@@ -8,7 +8,6 @@ import {
   ContentState,
   convertToRaw,
   convertFromRaw,
-  SelectionState,
   ContentBlock,
   DraftHandleValue,
   DraftEditorCommand,
@@ -133,8 +132,6 @@ export default ({ children }: Props) => {
       component: link,
     },
   ]);
-
-  console.log("GETSRC", getVideo.getYoutubeSrc);
 
   // Create the Editor whith either already input content (On page change or refresh we rerender with that) or no content stored in the localStorage.
 

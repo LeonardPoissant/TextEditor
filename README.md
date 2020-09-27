@@ -1,1 +1,16 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Littera-Clip
+
+Littera-Clipv1 was created using the draft.js framework from facebook.
+It is a text-editor meant to create content that you can share.
+The app is strictly FE for now, futur iterations will include a BE and more editing options.
+
+![Alt text](public/Demo1.png)
+
+## Motivation
+
+## Installation
+
+```bash
+yarn install
+
+```
