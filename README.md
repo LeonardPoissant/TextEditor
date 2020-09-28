@@ -21,7 +21,7 @@ Draft.js allows you to build any type of rich text input, whether you're only lo
 
 Draft.js was introduced at React.js Conf in February 2016.'
 
-I recommend watching this:
+I recommend watching this very interesting introduction:
 [https://www.youtube.com/watch?v=feUYwoLhE_4&feature=emb_title&ab_channel=FacebookDevelopers]
 
 ## Installation
