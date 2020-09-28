@@ -58,11 +58,6 @@ type EditorContextTypes = {
   setOpen: Function;
 };
 
-/* toggleBold: () => {},
-  toggleUnderLine: () => {},
-  toggleItalic: () => {},
-  editorState: EditorState;*/
-//export const EditorContext = createContext(null);
 export const EditorContext = createContext<EditorContextTypes>({
   toggleBold: Function,
   toggleUnderLine: Function,
@@ -104,7 +99,7 @@ export default ({ children }: Props) => {
   const [active, setActive] = useState(false);
   const [okToDisplay, setOkToDisplay] = useState(false);
   const [clear, setClear] = useState(false);
-  const [currentStyle, setCurrentStyle] = useState({});
+  const [, setCurrentStyle] = useState({});
   const [promptForLink, setPromptForLink] = useState(false);
   const [warning, setWarning] = useState(false);
   const [open, setOpen] = useState(false);
@@ -295,26 +290,44 @@ export default ({ children }: Props) => {
     e.preventDefault();
     setEditorState(editorState);
     setURLValue(URLValue);
-    const getYouTubeId = getVideo.getYoutubeSrc(URLValue);
-
     setURLType(URLType);
 
-    const contentState = editorState.getCurrentContent();
-    const contentStateWithEntity = contentState.createEntity(
-      URLType,
-      "IMMUTABLE",
-      { src: "https://www.youtube.com/embed/" + getYouTubeId.srcID }
-    );
+    if (URLType === "VIDEOTYPE") {
+      const getYouTubeId = getVideo.getYoutubeSrc(URLValue);
+      const contentState = editorState.getCurrentContent();
+      const contentStateWithEntity = contentState.createEntity(
+        URLType,
+        "IMMUTABLE",
+        { src: "http://www.youtube.com/embed/" + getYouTubeId.srcID }
+      );
+      const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
+      const newEditorState = EditorState.set(
+        editorState,
+        { currentContent: contentStateWithEntity }
+        // "create-entity"
+      );
+      setEditorState(
+        AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, " ")
+      );
+    } else if (URLType === "image") {
+      const contentState = editorState.getCurrentContent();
+      const contentStateWithEntity = contentState.createEntity(
+        URLType,
+        "IMMUTABLE",
+        { src: URLValue }
+      );
 
-    const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
-    const newEditorState = EditorState.set(
-      editorState,
-      { currentContent: contentStateWithEntity }
-      // "create-entity"
-    );
-    setEditorState(
-      AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, " ")
-    );
+      const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
+      const newEditorState = EditorState.set(
+        editorState,
+        { currentContent: contentStateWithEntity }
+        // "create-entity"
+      );
+      setEditorState(
+        AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, " ")
+      );
+    }
+
     setPromptForURL(!promptForURL);
     setActive(!active);
   };

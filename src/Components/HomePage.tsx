@@ -17,41 +17,48 @@ const HomePage = (props: any) => {
 
   return (
     <Wrapper>
-      <HomePageBody>
-        {publish === undefined ? (
-          <>
-            <p>
-              Hi! Welcome to Littera Clip, a blog editor created with the
-              draft.js framework.
-            </p>
-            <p>
-              Feel free to hop in the about section to learn more about this
-              project!
-            </p>
-          </>
-        ) : (
-          <EditorWrapper className="EDIWRAP">
-            {okToDisplay ? (
-              <Editor
-                readOnly={true}
-                editorState={editorState}
-                blockRendererFn={mediaBlockRenderer}
-                onChange={onChange}
-              />
-            ) : (
-              <div>Loading... </div>
-            )}
-          </EditorWrapper>
-        )}
-      </HomePageBody>
+      {publish === undefined ? (
+        <>
+          <p>
+            Hi! Welcome to Littera Clip, a blog editor created with the draft.js
+            framework.
+          </p>
+          <p>
+            Feel free to hop in the about section to learn more about this
+            project!
+          </p>
+        </>
+      ) : (
+        <EditorWrapper className="EDIWRAP">
+          {okToDisplay ? (
+            <Editor
+              readOnly={true}
+              editorState={editorState}
+              blockRendererFn={mediaBlockRenderer}
+              onChange={onChange}
+            />
+          ) : (
+            <div>Loading... </div>
+          )}
+        </EditorWrapper>
+      )}
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
   display: flex;
+  justify-content: center;
+  align-items: center;
   flex-direction: column;
   height: 80vh;
+  padding: 20px;
+  @media (max-width: 736px) {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+  }
 `;
 
 const HomePageBody = styled.div`

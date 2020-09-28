@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useEffect, useRef, useContext } from "react";
 
 import { Link } from "react-router-dom";
 import { Editor } from "draft-js";
@@ -9,21 +9,12 @@ import ToolBar from "./ToolBar";
 import mediaBlockRenderer from "../entities/mediaBlockRenderer";
 import draftJsCss from "../Utils/EditorStyles";
 
-/*declare module "react" {
-  interface Attributes extends HTMLAttributes<HTMLDivElement> {
-    active: boolean;
-  }
-}*/
 interface WrapperProps {
   active?: boolean;
 }
 
 interface EditorProps {
   decorators?: Object;
-}
-
-interface OnClickAttribute {
-  onClick?: any;
 }
 
 const TextEditor = () => {

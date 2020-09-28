@@ -1,17 +1,19 @@
 # Littera-Clip
 
-Littera-Clipv1 was created using the draft.js framework from facebook.
-It is a text-editor meant to create content that you can share.
-The app is strictly FE for now, but futur iterations will include a BE to publish/save content and more editing options.
+Littera-Clipv1 was developped using the draft.js framework from facebook.
+It is a rich text-editor meant to create content that you can share (eventually).
 
-![Alt text](public/Demo1.png)
+![Alt Text](https://i.gyazo.com/593fa76d80f404c48bdf07a941b9846b.gif)
+
+---
 
 ## Motivation
 
--'Why make a text-editor to post content Leonard ? There's plenty of better options out there...'
--'Oh you were finished ? Allow me to retort!'
-Marsellus Wallace quote end -
-The idea behind this project was to fill a gap between my previous career as a screenwriter and this new journey as a web dev I set my path on... so code a text-editor of my own that will allow for content publication! As a newb dev, it was fun to translate everything into functional components. That furthered my comprehension of React (Because all documentation is with class components).
+-'Why make a text-editor Leonard ? There's plenty of better options out there...'
+
+The idea behind this project was to fill a gap between my previous career as a screenwriter and this new journey as a web dev I set my path on... so code a text-editor of my own that will allow for content publication :) As a junior dev, it was fun to translate everything into functional components. That furthered my comprehension of React a lot.
+
+---
 
 ## How it works
 
@@ -22,7 +24,19 @@ Draft.js allows you to build any type of rich text input, whether you're only lo
 Draft.js was introduced at React.js Conf in February 2016.'
 
 I recommend watching this very interesting introduction:
-[https://www.youtube.com/watch?v=feUYwoLhE_4&feature=emb_title&ab_channel=FacebookDevelopers]
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=feUYwoLhE_4
+" target="_blank"><img src="http://img.youtube.com/vi/feUYwoLhE_4/0.jpg" 
+alt="Rich Text Editing with React" width="240" height="180" border="10" /></a>
+
+The app is strictly FE. The EditorState, an Immutable Record that represents the entire state of a Draft editor, is saved on sessionStorage for now.
+
+![Alt Text](https://i.gyazo.com/abd9ff74c521798b1b94336858885306.gif)
+
+More on immutable records here : https://web.archive.org/web/20150623131347/http://facebook.github.io:80/immutable-js/docs/#/Record
+
+Developed using React, TypeScript, draft.js and styled-components.
+
+---
 
 ## Installation
 
@@ -31,12 +45,14 @@ yarn install
 
 ```
 
-##FAQ
+---
 
-Is Littera-Clip mobile friendly ?
+## FAQ
 
-Although meant for desktop use first, it is possible to use it on mobile devices. As per the draft.js documentation, the framework is not yet fully supported on mobile, but the architects behind it are working torwards making that a reality.
+### What is to come ?
 
-Can I contribute to this project ?
+In futur iterations, I will be implementing a BE and adding more editing options.
 
-Of course.
+### Is Littera-Clip mobile friendly ?
+
+Although meant for desktop use first, it is possible to use it on mobile devices. As per the draft.js documentation, the framework is not yet fully supported on mobile, but the developers behind it are working torwards making that a reality.
