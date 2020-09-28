@@ -298,7 +298,7 @@ export default ({ children }: Props) => {
       const contentStateWithEntity = contentState.createEntity(
         URLType,
         "IMMUTABLE",
-        { src: "http://www.youtube.com/embed/" + getYouTubeId.srcID }
+        { src: "https://www.youtube.com/embed/" + getYouTubeId.srcID }
       );
       const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
       const newEditorState = EditorState.set(

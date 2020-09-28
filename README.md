@@ -19,9 +19,7 @@ The idea behind this project was to fill a gap between my previous career as a s
 
 'Draft.js is a framework for building rich text editors in React, powered by an immutable model and abstracting over cross-browser differences.
 
-Draft.js allows you to build any type of rich text input, whether you're only looking to support a few inline text styles or building a complex text editor for composing long-form articles.
-
-Draft.js was introduced at React.js Conf in February 2016.'
+Draft.js allows you to build any type of rich text input, whether you're only looking to support a few inline text styles or building a complex text editor for composing long-form articles. '
 
 I recommend watching this very interesting introduction:
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=feUYwoLhE_4

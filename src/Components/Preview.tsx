@@ -35,7 +35,9 @@ const Preview = () => {
           Back to Editor{" "}
         </BackToEditor>
 
-        <PostContent to={"/"}>PUBLISH </PostContent>
+        <PostContent to={{ pathname: "/", state: { publish: true } }}>
+          PUBLISH{" "}
+        </PostContent>
       </LinksToPreviewAndPostDiv>
       <div></div>
       <PostContentForDesktop to={{ pathname: "/", state: { publish: true } }}>

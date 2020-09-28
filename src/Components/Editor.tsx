@@ -72,7 +72,9 @@ const TextEditor = () => {
       <LinksToPreviewAndPostDiv>
         <SeePreview to={{ pathname: "/Preview" }}>PREVIEW</SeePreview>
         <ClearContent onClick={() => clearLocalStorage()}>CLEAR</ClearContent>
-        <PostContent to={"/"}>PUBLISH </PostContent>
+        <PostContent to={{ pathname: "/", state: { publish: true } }}>
+          PUBLISH{" "}
+        </PostContent>
       </LinksToPreviewAndPostDiv>
     </Wrapper>
   );
