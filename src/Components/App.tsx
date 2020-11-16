@@ -6,16 +6,20 @@ import TextEditor from "./Editor";
 import Preview from "./Preview";
 import HomePage from "./HomePage";
 import Header from "./Header";
+import Posts from "./Posts"
 import Footer from "./Footer";
 import Profile from "./Profile";
 import About from "./About";
+import SideMenu from "./SideMenu"
 function App() {
   return (
     <BrowserRouter>
       <Header />
+      <SideMenu/>
       <Switch>
         <Route exact path="/" component={HomePage}></Route>
         <Route path="/Editor" component={TextEditor}></Route>
+        <Route path="/Posts" component={Posts}></Route>
         <Route path="/Preview" component={Preview}></Route>
         <Route path="/Profile">
           <Profile />
