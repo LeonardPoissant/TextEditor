@@ -15,14 +15,14 @@ import * as serviceWorker from "./serviceWorker";
 import EditorProvider from "./Utils/EditorContext";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBZiI_5sDTd6MTKMLgj96eM4SATSMbnD40",
+  /*apiKey: "AIzaSyBZiI_5sDTd6MTKMLgj96eM4SATSMbnD40",
   authDomain: "pantry-1653b.firebaseapp.com",
   databaseURL: "https://pantry-1653b.firebaseio.com",
   projectId: "pantry-1653b",
   storageBucket: "pantry-1653b.appspot.com",
   messagingSenderId: "343891773598",
   appId: "1:343891773598:web:9533c2411f22e9de4f538f",
-  measurementId: "G-VVRZXDL7Z8"
+  measurementId: "G-VVRZXDL7Z8"*/
 };
 firebase.initializeApp(firebaseConfig);
 firebase.firestore();
