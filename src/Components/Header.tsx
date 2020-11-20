@@ -3,14 +3,23 @@ import React from "react";
 import styled from "styled-components";
 
 import DropDown from "./DropDown";
+import { useSelector } from "react-redux";
+
+import { RootState} from "../reducers/firebasereducer";
+import Avatar from "./Avatar"
 
 const Header = () => {
+
+  const user = useSelector((state:RootState)=>state.firebase.profile)
+ 
+
+  console.log('USER', user.displayName)
   return (
     <>
       <Wrapper>
         <DropDown />
-        <Title>Littera Clip</Title>
-        <div></div>
+        <Title>Pantry</Title>
+        <Avatar src={user.avatarUrl}/>
       </Wrapper>
     </>
   );

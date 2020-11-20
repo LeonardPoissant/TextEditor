@@ -16,7 +16,7 @@ const SideMenu =()=>{
             </li>
             <li>
                 <Link to={{ pathname: "/Editor" }}>Create new post</Link>
-               </li>
+            </li>
             <li></li>
             <li></li>
         </ul>

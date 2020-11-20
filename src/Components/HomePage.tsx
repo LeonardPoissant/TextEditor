@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { EditorContext } from "../Utils/EditorContext";
 import mediaBlockRenderer from "../entities/mediaBlockRenderer";
 import draftJsCss from "../Utils/EditorStyles";
+import SignIn from "./SignIn"
 
 const HomePage = (props: any) => {
   const { editorState, okToDisplay, onChange } = useContext(EditorContext);
@@ -17,6 +18,7 @@ const HomePage = (props: any) => {
 
   return (
     <Wrapper>
+      <SignIn/>
       {publish === undefined ? (
         <>
           <p>

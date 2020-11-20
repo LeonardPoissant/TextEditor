@@ -8,8 +8,12 @@ import { EditorContext } from "../Utils/EditorContext";
 import mediaBlockRenderer from "../entities/mediaBlockRenderer";
 import draftJsCss from "../Utils/EditorStyles";
 
+
+
+
 const Preview = () => {
   const { editorState, okToDisplay, onChange } = useContext(EditorContext);
+
 
   return (
     <Wrapper>
