@@ -16,6 +16,11 @@ const SignIn = () => {
         history.push("/");
       });
   };
+
+  const signOutWithGoogle =() =>{
+      firebase
+      .logout()
+  }
   return (
     <div>
       <h1>Sign In</h1>
@@ -26,6 +31,15 @@ const SignIn = () => {
         }}
       >
         Sign In with Google
+      </button>
+      <button
+      onClick={(event) =>{
+          event.preventDefault();
+          signOutWithGoogle();
+      }}
+      >
+          Sign out with Google
+
       </button>
     </div>
   );

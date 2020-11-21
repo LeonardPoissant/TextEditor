@@ -14,21 +14,28 @@ import * as serviceWorker from "./serviceWorker";
 
 import EditorProvider from "./Utils/EditorContext";
 
+require("dotenv").config();
+
+
+
+
+
 const firebaseConfig = {
-  /*apiKey: "AIzaSyBZiI_5sDTd6MTKMLgj96eM4SATSMbnD40",
-  authDomain: "pantry-1653b.firebaseapp.com",
-  databaseURL: "https://pantry-1653b.firebaseio.com",
-  projectId: "pantry-1653b",
-  storageBucket: "pantry-1653b.appspot.com",
-  messagingSenderId: "343891773598",
-  appId: "1:343891773598:web:9533c2411f22e9de4f538f",
-  measurementId: "G-VVRZXDL7Z8"*/
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  databaseURL: process.env.REACT_APP_DATABASE_URL,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_APP_ID,
+  measurementId: process.env.REACT_APP_MEASUREMENT_ID,
 };
 firebase.initializeApp(firebaseConfig);
 firebase.firestore();
 const rrfConfig={
   userProfile:"users"
 };
+
 
 const initialState ={};
 const store = createStore(rootReducer, initialState, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
