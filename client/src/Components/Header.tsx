@@ -13,7 +13,6 @@ const Header = () => {
   const user = useSelector((state:RootState)=>state.firebase.profile)
  
 
-  console.log('USER', user.displayName)
   return (
     <>
       <Wrapper>

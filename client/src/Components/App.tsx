@@ -10,7 +10,9 @@ import Posts from "./Posts"
 import Footer from "./Footer";
 import Profile from "./Profile";
 import About from "./About";
-import SideMenu from "./SideMenu"
+import SideMenu from "./SideMenu";
+import { RootState } from "../reducers/firebasereducer";
+import { useSelector } from "react-redux";
 function App() {
   return (
     <BrowserRouter>

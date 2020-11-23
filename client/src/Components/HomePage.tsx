@@ -12,7 +12,7 @@ const HomePage = (props: any) => {
 
   const publish = props.location.state;
 
-  console.log("IN HOMEPAGE ", editorState);
+
 
   //console.log("publish", publish.publish);
 
