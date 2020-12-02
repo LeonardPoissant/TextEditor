@@ -2,8 +2,24 @@ import React, { useContext } from "react";
 import { Editor } from "draft-js";
 import { Link } from "react-router-dom";
 
+import {
+  EditorState,
+  RichUtils,
+  AtomicBlockUtils,
+  CompositeDecorator,
+  ContentState,
+  convertToRaw,
+  convertFromRaw,
+  ContentBlock,
+  DraftHandleValue,
+  DraftEditorCommand,
+} from "draft-js";
+
 import styled from "styled-components";
 import { EditorContext } from "../Utils/EditorContext";
+
+import PostTest from "../Utils/EditorContext"
+
 
 import mediaBlockRenderer from "../entities/mediaBlockRenderer";
 import draftJsCss from "../Utils/EditorStyles";
@@ -12,7 +28,52 @@ import draftJsCss from "../Utils/EditorStyles";
 
 
 const Preview = () => {
-  const { editorState, okToDisplay, onChange } = useContext(EditorContext);
+  const { editorState, okToDisplay, onChange, PostTest} = useContext(EditorContext);
+
+  /*const PostTest = ()=>{
+    const convertedContent =  JSON.stringify(convertToRaw(e))
+    fetch("/test", {
+      method:"POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+       Post: convertedContent
+      }),
+    })
+    .then((res) => res.json())
+        .then((db) => {
+          console.log(db);
+
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+  }*/
+
+  /*const Test =(=>{
+   
+    fetch("/test", {
+      method:"POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+       Post: convertedContent
+      }),
+    })
+    .then((res) => res.json())
+        .then((db) => {
+          console.log(db);
+
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+  }*/
 
 
   return (
@@ -47,6 +108,7 @@ const Preview = () => {
       <PostContentForDesktop to={{ pathname: "/", state: { publish: true } }}>
         PUBLISH
       </PostContentForDesktop>
+      <button onClick={()=> PostTest()}>TESTTTT</button>
     </Wrapper>
   );
 };

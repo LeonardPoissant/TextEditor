@@ -11,16 +11,21 @@ import Footer from "./Footer";
 import Profile from "./Profile";
 import About from "./About";
 import SideMenu from "./SideMenu";
-import { RootState } from "../reducers/firebasereducer";
-import { useSelector } from "react-redux";
-function App() {
+
+
+
+import Test from "./Test";
+const  App =() =>{
+  
   return (
     <BrowserRouter>
       <Header />
       <SideMenu/>
       <Switch>
         <Route exact path="/" component={HomePage}></Route>
-        <Route path="/Editor" component={TextEditor}></Route>
+        <Route path="/Editor" >
+          <TextEditor/>
+        </Route>
         <Route path="/Posts" component={Posts}></Route>
         <Route path="/Preview" component={Preview}></Route>
         <Route path="/Profile">
@@ -28,6 +33,11 @@ function App() {
         </Route>
         <Route path="/About">
           <About />
+
+        </Route>
+        <Route path="/test">
+          <Test/>
+
         </Route>
       </Switch>
       <Footer />

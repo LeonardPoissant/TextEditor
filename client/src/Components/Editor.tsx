@@ -27,6 +27,9 @@ const TextEditor = () => {
     active,
     findLinkEntities,
     link,
+    PostTest,
+    title,
+    setTitle
   } = useContext(EditorContext);
 
   // References to the corresponding DOM nodes when new input is rendered.
@@ -53,6 +56,12 @@ const TextEditor = () => {
 
   return (
     <Wrapper active={active as any}>
+      <input 
+      placeholder="Choose a title"
+     value={title}
+     onChange={(e)=>setTitle(e.target.value)}
+      
+      ></input>
       <ToolBar />
       {okToDisplay ? (
         <TextArea onClick={focusEditor}>
@@ -76,6 +85,7 @@ const TextEditor = () => {
           PUBLISH{" "}
         </PostContent>
       </LinksToPreviewAndPostDiv>
+      <button onClick={()=> PostTest()}>TESTTTT</button>
     </Wrapper>
   );
 };

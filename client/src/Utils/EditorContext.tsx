@@ -13,6 +13,9 @@ import {
   DraftEditorCommand,
 } from "draft-js";
 
+
+import { useSelector } from "react-redux";
+
 import getVideo from "./EditorUtils";
 
 type Props = {
@@ -22,6 +25,7 @@ type Props = {
   e: MouseEvent;
   isBold: boolean;
   promptForUrl: boolean;
+  content: ContentState
 };
 
 type EditorContextTypes = {
@@ -56,6 +60,9 @@ type EditorContextTypes = {
   promptForLink: boolean;
   open: boolean;
   setOpen: Function;
+  PostTest: Function;
+  title:string
+  setTitle: Function;
 };
 
 export const EditorContext = createContext<EditorContextTypes>({
@@ -86,6 +93,9 @@ export const EditorContext = createContext<EditorContextTypes>({
   promptForLink: false,
   open: false,
   setOpen: Function,
+  PostTest: Function,
+  title: "",
+  setTitle: Function
 });
 
 export default ({ children }: Props) => {
@@ -103,6 +113,8 @@ export default ({ children }: Props) => {
   const [promptForLink, setPromptForLink] = useState(false);
   const [warning, setWarning] = useState(false);
   const [open, setOpen] = useState(false);
+  const [title, setTitle] = useState("");
+
 
   const link = (props: any) => {
     const { url } = props.contentState.getEntity(props.entityKey).getData();
@@ -158,6 +170,38 @@ export default ({ children }: Props) => {
     sessionStorage.clear();
     setEditorState(EditorState.createEmpty(decorator));
   };
+
+  const PostTest = ()=>{
+    const contentState = editorState.getCurrentContent();
+
+    
+    const convertedContent = convertToRaw(contentState)
+    setTitle(title)
+    const convertedTitle = JSON.stringify(title)
+    console.log('CONTENT',convertedContent)
+    console.log('TITLE',convertedTitle)
+    fetch("/test", {
+      method:"POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        title,
+        convertedContent,
+  
+      })
+    })
+    .then((res) => res.json())
+        .then((db) => {
+          console.log(db);
+
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+  }
 
   //OnChange, content is stored on the sessionStorage, editorState is updated.
   const onChange = (editorState: EditorState) => {
@@ -368,6 +412,9 @@ export default ({ children }: Props) => {
         link,
         open,
         setOpen,
+        PostTest,
+        title,
+        setTitle
       }}
     >
       {children}

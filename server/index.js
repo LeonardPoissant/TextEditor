@@ -1,10 +1,16 @@
 "use strict"
 
+
 const express =require("express");
-
 const morgan =require("morgan");
+const path = require("path");
 
 
+
+const { CreatePost, getPost } = require(path.join(
+    __dirname,
+    "./Handlers/test"
+  ));
 
 const PORT = 4000
 
@@ -28,5 +34,8 @@ app.use(express.static("./server"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use("/", express.static(__dirname + "/"));
+
+app.post("/test", CreatePost)
+app.get("/testGet", getPost)
 
 app.listen(PORT, ()=>console.info(`Listening on port ${PORT}`))

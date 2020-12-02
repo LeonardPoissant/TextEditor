@@ -1,24 +1,21 @@
 import React from "react";
-
 import styled from "styled-components";
+import { isLoaded, isEmpty } from "react-redux-firebase";
 
-import DropDown from "./DropDown";
-import { useSelector } from "react-redux";
-
-import { RootState} from "../reducers/firebasereducer";
 import Avatar from "./Avatar"
 
-const Header = () => {
+import DropDown from "./DropDown";
 
-  const user = useSelector((state:RootState)=>state.firebase.profile)
- 
+const Header = () => {
 
   return (
     <>
       <Wrapper>
         <DropDown />
         <Title>Pantry</Title>
-        <Avatar src={user.avatarUrl}/>
+
+        <div></div>
+        
       </Wrapper>
     </>
   );
@@ -27,7 +24,6 @@ const Header = () => {
 const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
-
   align-content: center;
   align-items: center;
   flex-shrink: 0;
