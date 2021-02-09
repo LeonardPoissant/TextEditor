@@ -1,10 +1,12 @@
+// @ts-nocheck
+
 import React, { useEffect, useRef, useContext } from "react";
 
 import { Link } from "react-router-dom";
 import { Editor } from "draft-js";
 import styled from "styled-components";
 
-import { EditorContext } from "../Utils/EditorContext";
+import { EditorContext } from "./Contexts/EditorContext";
 import ToolBar from "./ToolBar";
 import mediaBlockRenderer from "../entities/mediaBlockRenderer";
 import draftJsCss from "../Utils/EditorStyles";
@@ -29,7 +31,11 @@ const TextEditor = () => {
     link,
     PostTest,
     title,
-    setTitle
+    setTitle,
+    description,
+    setDescription,
+    category,
+    setCategory
   } = useContext(EditorContext);
 
   // References to the corresponding DOM nodes when new input is rendered.
@@ -39,7 +45,7 @@ const TextEditor = () => {
 
   useEffect(() => {
     editor.current && editor.current.focus();
-  });
+  }, []);
 
   const customDecorator = [
     {
@@ -48,23 +54,22 @@ const TextEditor = () => {
     },
   ];
 
-  const focusEditor = () => {
+  /*const focusEditor = () => {
     if (editor.current) {
       editor.current.focus();
     }
   };
+  onClick={focusEditor}
+  */
+
+  console.log('CATEGORYªß', category)
 
   return (
     <Wrapper active={active as any}>
-      <input 
-      placeholder="Choose a title"
-     value={title}
-     onChange={(e)=>setTitle(e.target.value)}
-      
-      ></input>
+
       <ToolBar />
       {okToDisplay ? (
-        <TextArea onClick={focusEditor}>
+        <TextArea >
           <StyledEditor
             blockRendererFn={mediaBlockRenderer}
             editorState={editorState}
@@ -75,8 +80,8 @@ const TextEditor = () => {
           ></StyledEditor>
         </TextArea>
       ) : (
-        <> </>
-      )}
+          <> </>
+        )}
 
       <LinksToPreviewAndPostDiv>
         <SeePreview to={{ pathname: "/Preview" }}>PREVIEW</SeePreview>
@@ -85,7 +90,7 @@ const TextEditor = () => {
           PUBLISH{" "}
         </PostContent>
       </LinksToPreviewAndPostDiv>
-      <button onClick={()=> PostTest()}>TESTTTT</button>
+      <button onClick={() => PostTest()}>TESTTTT</button>
     </Wrapper>
   );
 };
@@ -105,7 +110,7 @@ const Wrapper = styled.div<WrapperProps>`
   padding: 20px;
 `;
 
-const StyledEditor = styled(Editor)<EditorProps>`
+const StyledEditor = styled(Editor) <EditorProps>`
   width: 500px;
 `;
 

@@ -15,18 +15,19 @@ import SideMenu from "./SideMenu";
 
 
 import Test from "./Test";
-const  App =() =>{
-  
+import BlogHomePage from "./BlogHomePage";
+const App = () => {
+
   return (
     <BrowserRouter>
       <Header />
-      <SideMenu/>
+      <SideMenu />
       <Switch>
         <Route exact path="/" component={HomePage}></Route>
         <Route path="/Editor" >
-          <TextEditor/>
+          <TextEditor />
         </Route>
-        <Route path="/Posts" component={Posts}></Route>
+        <Route path="/Posts" component={BlogHomePage}></Route>
         <Route path="/Preview" component={Preview}></Route>
         <Route path="/Profile">
           <Profile />
@@ -36,7 +37,7 @@ const  App =() =>{
 
         </Route>
         <Route path="/test">
-          <Test/>
+          <Test />
 
         </Route>
       </Switch>

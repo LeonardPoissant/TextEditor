@@ -10,7 +10,7 @@ import Collapse from "@material-ui/core/Collapse";
 
 import styled from "styled-components";
 
-import { EditorContext } from "../Utils/EditorContext";
+import { EditorContext } from "./Contexts/EditorContext";
 
 interface AddMediaWIndowProps {
   active?: boolean;
@@ -125,8 +125,8 @@ const ToolBar = () => {
           </Message>
         </AddMediaWindow>
       ) : (
-        <></>
-      )}
+          <></>
+        )}
 
       <CollapseWarning in={open}>
         <WarningMessage

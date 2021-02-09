@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import React, { createContext, useState, useEffect } from "react";
 
 import {
@@ -16,7 +18,7 @@ import {
 
 import { useSelector } from "react-redux";
 
-import getVideo from "./EditorUtils";
+import getVideo from "../../Utils/EditorUtils";
 
 type Props = {
   children: React.ReactNode;
@@ -61,7 +63,7 @@ type EditorContextTypes = {
   open: boolean;
   setOpen: Function;
   PostTest: Function;
-  title:string
+  title: string
   setTitle: Function;
 };
 
@@ -70,7 +72,7 @@ export const EditorContext = createContext<EditorContextTypes>({
   toggleUnderLine: Function,
   toggleItalic: Function,
   editorState: new EditorState(),
-  onChange: () => {},
+  onChange: () => { },
   clearLocalStorage: Function,
   handleKeyCommand: Object,
   okToDisplay: false,
@@ -114,6 +116,9 @@ export default ({ children }: Props) => {
   const [warning, setWarning] = useState(false);
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [category, setCategory] = useState("");
+  const [date, setDate] = useState("")
 
 
   const link = (props: any) => {
@@ -171,35 +176,52 @@ export default ({ children }: Props) => {
     setEditorState(EditorState.createEmpty(decorator));
   };
 
-  const PostTest = ()=>{
+
+
+  useEffect(() => {
+    let current = new Date();
+    setDate(current.getDate().toString() + "/" + (current.getMonth() + 1).toString() + "/" + current.getFullYear().toString())
+  }, [])
+
+
+
+
+
+  const PostTest = () => {
     const contentState = editorState.getCurrentContent();
 
-    
+
     const convertedContent = convertToRaw(contentState)
     setTitle(title)
+    setDescription(description)
+    setCategory(category)
+
     const convertedTitle = JSON.stringify(title)
-    console.log('CONTENT',convertedContent)
-    console.log('TITLE',convertedTitle)
+    console.log('CONTENT', convertedContent)
+    console.log('TITLE', convertedTitle)
     fetch("/test", {
-      method:"POST",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
       },
       body: JSON.stringify({
         title,
+        description,
+        category,
+        date,
         convertedContent,
-  
+
       })
     })
-    .then((res) => res.json())
-        .then((db) => {
-          console.log(db);
+      .then((res) => res.json())
+      .then((db) => {
+        console.log('DB HERE', db);
 
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
   }
 
@@ -414,7 +436,11 @@ export default ({ children }: Props) => {
         setOpen,
         PostTest,
         title,
-        setTitle
+        setTitle,
+        description,
+        setDescription,
+        category,
+        setCategory
       }}
     >
       {children}

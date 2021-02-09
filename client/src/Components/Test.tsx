@@ -1,5 +1,5 @@
 
-import React, {useEffect, useState, useContext} from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Editor } from "draft-js";
 import mediaBlockRenderer from "../entities/mediaBlockRenderer";
 
@@ -15,25 +15,25 @@ import {
     ContentBlock,
     DraftHandleValue,
     DraftEditorCommand,
-  } from "draft-js";
+} from "draft-js";
 
-  import { EditorContext } from "../Utils/EditorContext";
+import { EditorContext } from "./Contexts/EditorContext";
 
-const Test =()=>{
+const Test = () => {
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
-    const { okToDisplay, onChange} = useContext(EditorContext);
+    const { okToDisplay, onChange } = useContext(EditorContext);
 
 
-    useEffect(()=>{
-console.log("here")
+    useEffect(() => {
+        console.log("here")
         fetch("/testGet")
-        .then((res)=> res.json())
-        .then((data)=>{
-            console.log('data',data.data[0].post.convertedContent)
-            const convertedState = convertFromRaw(data.data[0].post.convertedContent)
-            
-           setEditorState(EditorState.createWithContent(convertedState))
-        })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log('data', data.data[0].post.convertedContent)
+                const convertedState = convertFromRaw(data.data[0].post.convertedContent)
+
+                setEditorState(EditorState.createWithContent(convertedState))
+            })
     }, [])
 
     /*let execute = new Date ("2020-11-25T12:35:00-05:00")
@@ -86,17 +86,17 @@ var futureDate = new Date("2020-11-25T12:44:10-05:00");
 
     return (
         <div>
-        <Editor
-        readOnly={true}
-        editorState={editorState}
-        blockRendererFn={mediaBlockRenderer}
-        onChange={onChange}
-        >
+            <Editor
+                readOnly={true}
+                editorState={editorState}
+                blockRendererFn={mediaBlockRenderer}
+                onChange={onChange}
+            >
 
-        </Editor>
-        <div>IM HERE</div>
+            </Editor>
+            <div>IM HERE</div>
         </div>
-   )
+    )
 }
 
 export default Test;

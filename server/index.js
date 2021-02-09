@@ -1,32 +1,32 @@
 "use strict"
 
 
-const express =require("express");
-const morgan =require("morgan");
+const express = require("express");
+const morgan = require("morgan");
 const path = require("path");
 
 
 
-const { CreatePost, getPost } = require(path.join(
-    __dirname,
-    "./Handlers/test"
-  ));
+const { CreatePost, getPost, getPostMetaData } = require(path.join(
+  __dirname,
+  "./Handlers/test"
+));
 
 const PORT = 4000
 
-let app=express();
+let app = express();
 
 
-app.use((req, res, next)=>{
-    res.header(
-        "Access-Control-Allow-Methods",
-      "OPTIONS, HEAD, GET, PUT, POST, DELETE"
-    );
-    res.header(
-        "Access-Control-Allow-Headers",
-        "Origin, X-Requested-With, Content-Type, Accept"
-      );
-      next();
+app.use((req, res, next) => {
+  res.header(
+    "Access-Control-Allow-Methods",
+    "OPTIONS, HEAD, GET, PUT, POST, DELETE"
+  );
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
 });
 
 app.use(morgan("tiny"));
@@ -37,5 +37,6 @@ app.use("/", express.static(__dirname + "/"));
 
 app.post("/test", CreatePost)
 app.get("/testGet", getPost)
+app.get("/meta-post", getPostMetaData)
 
-app.listen(PORT, ()=>console.info(`Listening on port ${PORT}`))
+app.listen(PORT, () => console.info(`Listening on port ${PORT}`))

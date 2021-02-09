@@ -7,20 +7,20 @@ import ReactDOM from "react-dom";
 import App from "./Components/App";
 import * as serviceWorker from "./serviceWorker";
 
-import EditorProvider from "./Utils/EditorContext";
+import EditorProvider from "./Components/Contexts/EditorContext";
 
 
 ReactDOM.render(
   <React.StrictMode>
-  
-    
+
+
     <EditorProvider>
-    
+
       <App />
-   
+
     </EditorProvider>
-   
- 
+
+
   </React.StrictMode>
   ,
   document.getElementById("root")

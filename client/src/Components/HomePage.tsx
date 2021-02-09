@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Editor } from "draft-js";
 import styled from "styled-components";
 
-import { EditorContext } from "../Utils/EditorContext";
+import { EditorContext } from "./Contexts/EditorContext";
 import mediaBlockRenderer from "../entities/mediaBlockRenderer";
 import draftJsCss from "../Utils/EditorStyles";
 
@@ -29,19 +29,19 @@ const HomePage = (props: any) => {
           </p>
         </>
       ) : (
-        <EditorWrapper className="EDIWRAP">
-          {okToDisplay ? (
-            <Editor
-              readOnly={true}
-              editorState={editorState}
-              blockRendererFn={mediaBlockRenderer}
-              onChange={onChange}
-            />
-          ) : (
-            <div>Loading... </div>
-          )}
-        </EditorWrapper>
-      )}
+          <EditorWrapper className="EDIWRAP">
+            {okToDisplay ? (
+              <Editor
+                readOnly={true}
+                editorState={editorState}
+                blockRendererFn={mediaBlockRenderer}
+                onChange={onChange}
+              />
+            ) : (
+                <div>Loading... </div>
+              )}
+          </EditorWrapper>
+        )}
     </Wrapper>
   );
 };

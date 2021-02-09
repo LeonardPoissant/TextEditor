@@ -16,9 +16,9 @@ import {
 } from "draft-js";
 
 import styled from "styled-components";
-import { EditorContext } from "../Utils/EditorContext";
+import { EditorContext } from "./Contexts/EditorContext";
 
-import PostTest from "../Utils/EditorContext"
+import PostTest from "./Contexts/EditorContext"
 
 
 import mediaBlockRenderer from "../entities/mediaBlockRenderer";
@@ -28,7 +28,7 @@ import draftJsCss from "../Utils/EditorStyles";
 
 
 const Preview = () => {
-  const { editorState, okToDisplay, onChange, PostTest} = useContext(EditorContext);
+  const { editorState, okToDisplay, onChange, PostTest } = useContext(EditorContext);
 
   /*const PostTest = ()=>{
     const convertedContent =  JSON.stringify(convertToRaw(e))
@@ -92,8 +92,8 @@ const Preview = () => {
             onChange={onChange}
           />
         ) : (
-          <div>Loading... </div>
-        )}
+            <div>Loading... </div>
+          )}
       </EditorWrapper>
       <LinksToPreviewAndPostDiv>
         <BackToEditor className="BACKTO EDI" to={{ pathname: "/Editor" }}>
@@ -108,7 +108,7 @@ const Preview = () => {
       <PostContentForDesktop to={{ pathname: "/", state: { publish: true } }}>
         PUBLISH
       </PostContentForDesktop>
-      <button onClick={()=> PostTest()}>TESTTTT</button>
+      <button onClick={() => PostTest()}>TESTTTT</button>
     </Wrapper>
   );
 };
