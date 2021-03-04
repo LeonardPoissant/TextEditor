@@ -4,17 +4,17 @@ import React from "react";
 
 import styled from "styled-components";
 
-//add image per cat
+import Logo from "../Assets/logo.png"
 
 const BlogPostBanner = (props) => {
 
-    console.log('IN BANNER', props)
+
 
 
     return (
         <Wrapper>
 
-            <div>I AM AN IMAGE</div>
+            <Thumnail src={Logo}></Thumnail>
             <DetailsContainer>
                 <div>{props.title}</div>
                 <div>{props.description}</div>
@@ -51,4 +51,12 @@ align-items:flex-end;
 justify-content:space-between;
 
 `;
+
+const Thumnail = styled.img`
+width:15%;
+height:80px;
+padding: 15px;
+
+`
+
 

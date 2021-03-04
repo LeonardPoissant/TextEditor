@@ -1,6 +1,7 @@
 // @ts-nocheck
 
 import React, { createContext, useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 import {
   EditorState,
@@ -15,8 +16,6 @@ import {
   DraftEditorCommand,
 } from "draft-js";
 
-
-import { useSelector } from "react-redux";
 
 import getVideo from "../../Utils/EditorUtils";
 
@@ -119,6 +118,20 @@ export default ({ children }: Props) => {
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [date, setDate] = useState("")
+  const [pageNumber, setPageNumber] = useState(1);
+  //const location = useLocation();
+
+  const [page, setTest] = useState(0)
+
+  const aTest = () => {
+    setTest(page + 1)
+  }
+
+
+
+  useEffect(() => {
+    setPageNumber(pageNumber + 1)
+  }, [])
 
 
   const link = (props: any) => {
@@ -440,7 +453,12 @@ export default ({ children }: Props) => {
         description,
         setDescription,
         category,
-        setCategory
+        setCategory,
+        pageNumber,
+        page,
+        aTest,
+        setTest
+
       }}
     >
       {children}

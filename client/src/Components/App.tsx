@@ -11,7 +11,8 @@ import Footer from "./Footer";
 import Profile from "./Profile";
 import About from "./About";
 import SideMenu from "./SideMenu";
-
+import BlogPostPage from "./BlogPostPage";
+import CreateNewPost from "./CreateNewPostPage"
 
 
 import Test from "./Test";
@@ -25,13 +26,14 @@ const App = () => {
       <Switch>
         <Route exact path="/" component={HomePage}></Route>
         <Route path="/Editor" >
-          <TextEditor />
+          <CreateNewPost />
         </Route>
-        <Route path="/Posts" component={BlogHomePage}></Route>
+        <Route path="/Posts/:page" component={BlogHomePage}></Route>
         <Route path="/Preview" component={Preview}></Route>
         <Route path="/Profile">
           <Profile />
         </Route>
+        <Route path="Post/:id/:title" component={BlogPostPage}></Route>
         <Route path="/About">
           <About />
 

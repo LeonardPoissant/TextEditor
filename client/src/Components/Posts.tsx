@@ -1,46 +1,76 @@
 // @ts-nocheck
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 
-import styled from "styled-components"
+import styled from "styled-components";
+import { Link, useParams } from "react-router-dom";
+
 
 import BlogPostBanner from "./BlogPostBanner";
 
-
+import { EditorContext } from "./Contexts/EditorContext";
 
 const Posts = () => {
+    const {
+
+
+
+        page,
+        aTest
+    } = useContext(EditorContext);
     const [posts, setPosts] = useState([])
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [catgerory, setCategory] = useState("");
     const [date, setDate] = useState("");
+    const [id, setId] = useState("")
+    const location = useParams()
+
+
 
     useEffect(() => {
-        console.log("here")
-        fetch("/meta-post")
+
+        fetch(`/posts/${page}`)
             .then((res) => res.json())
             .then((data) => {
+                console.log('data', data)
                 setPosts(data.data)
             })
-    }, [])
+    }, [page])
 
-    console.log('hereTESTPOST', posts)
+    console.log('test-------------------', page)
+
+
+    useEffect(() => {
+
+        posts.map((post) => {
+            setId(post._id.toString())
+        })
+
+    }, [posts])
+
+    const handleClick = () => {
+
+    }
+
+    //if (posts[0] != undefined) { console.log('-ID', posts[0]._id) }
+
+
 
     return (
         <Wrapper className="HERE?">
-            {posts.map(post => (
+            { posts[0] != undefined ? posts.map((post, index) => (
+                <Link to={`/Post/${post._id}/${post.title}`} key={post._id}>
+                    <BlogPostBanner
+
+                        title={post.title}
+                        description={post.description}
+                        category={post.category}
+                        date={post.date}
+                    />
+                </Link>
 
 
-                <BlogPostBanner
-                    key={post._id}
-                    title={post.title}
-                    description={post.description}
-                    category={post.category}
-                    date={post.date}
-                />
-
-
-            ))}
-
+            )) : <div></div>}
         </Wrapper>
     )
 

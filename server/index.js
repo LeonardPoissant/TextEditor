@@ -7,7 +7,7 @@ const path = require("path");
 
 
 
-const { CreatePost, getPost, getPostMetaData } = require(path.join(
+const { CreatePost, getPost, getPostMetaData, getSinglePost, getNextPostsPage } = require(path.join(
   __dirname,
   "./Handlers/test"
 ));
@@ -37,6 +37,8 @@ app.use("/", express.static(__dirname + "/"));
 
 app.post("/test", CreatePost)
 app.get("/testGet", getPost)
-app.get("/meta-post", getPostMetaData)
+app.get("/posts/:page", getPostMetaData)
+app.get("posts/:page", getNextPostsPage)
+app.get("/post/:id/:title", getSinglePost)
 
 app.listen(PORT, () => console.info(`Listening on port ${PORT}`))
