@@ -6,36 +6,18 @@ const uri = process.env.MONGO_URI;
 
 
 const CreatePost = async (req, res) => {
-
-
-  const client = new MongoClient("mongodb+srv://Leonard:d1234567@cluster0.owjm6.mongodb.net/<dbname>?retryWrites=true&w=majority", {
-    useUnifiedTopology: true,
-    useNewUrlParser: true,
-  });
-
-
+  const db = req.db.db('test');
   const post = req.body
-
   const id = new ObjectID
 
-
-
-
   try {
-
-    await client.connect();
-    const db = client.db('test');
-
     const createDB = await db
       .collection("Post")
       .insertOne({
         post,
         id
       }
-
       );
-
-    client.close();
     res.status(201).json({
       status: 201,
       data: post
@@ -52,23 +34,11 @@ const CreatePost = async (req, res) => {
 };
 
 const getPostMetaData = async (req, res) => {
-  const client = new MongoClient("mongodb+srv://Leonard:d1234567@cluster0.owjm6.mongodb.net/<dbname>?retryWrites=true&w=majority", {
-    useUnifiedTopology: true,
-    useNewUrlParser: true,
-  });
-
-
-  const param = req.params
-
-
-
+  const db = req.db.db('test');
   const pageNumber = req.params.page;
   const nPerPage = 5;
 
-  console.log('PARAM', (pageNumber - 1) * nPerPage)
   try {
-    await client.connect();
-    const db = client.db('test');
     const projection = { ObjectId: 1, title: 1, description: 1, category: 1, date: 1 };
     const posts = await db
       .collection("Post")
@@ -92,20 +62,33 @@ const getPostMetaData = async (req, res) => {
   }
 }
 
-const getNextPostsPage = async (req, res) => {
-  const client = new MongoClient("mongodb+srv://Leonard:d1234567@cluster0.owjm6.mongodb.net/<dbname>?retryWrites=true&w=majority", {
-    useUnifiedTopology: true,
-    useNewUrlParser: true,
-  });
-  try {
+const getNumOfDocuments = async (req, res) => {
+  const db = req.db.db('test');
 
-    await client.connect();
-    const db = client.db('test');
+  try {
+    const numOfDocuments = await db.collection("Post").estimatedDocumentCount()
+    res.status(201).json({
+      status: 201,
+      data: numOfDocuments
+    });
+  } catch (err) {
+    res.status(500).json({
+      data: "post,",
+      message: "Something went wrong",
+      err: err,
+    });
+
+  }
+
+}
+
+const getNextPostsPage = async (req, res) => {
+  const db = req.db.db('test');
+  try {
     const createDB = await db
       .collection("Post")
       .find().toArray()
 
-    client.close();
     res.status(201).json({
       status: 201,
       data: createDB
@@ -122,20 +105,13 @@ const getNextPostsPage = async (req, res) => {
 }
 
 const getPost = async (req, res) => {
-  const client = new MongoClient("mongodb+srv://Leonard:d1234567@cluster0.owjm6.mongodb.net/<dbname>?retryWrites=true&w=majority", {
-    useUnifiedTopology: true,
-    useNewUrlParser: true,
-  });
+  const db = req.db.db('test');
 
   try {
-
-    await client.connect();
-    const db = client.db('test');
     const createDB = await db
       .collection("Post")
       .find().toArray()
 
-    client.close();
     res.status(201).json({
       status: 201,
       data: createDB
@@ -154,13 +130,15 @@ const getPost = async (req, res) => {
 }
 
 const getSinglePost = async (req, res) => {
-  const client = new MongoClient("mongodb+srv://Leonard:d1234567@cluster0.owjm6.mongodb.net/<dbname>?retryWrites=true&w=majority", {
-    useUnifiedTopology: true,
-    useNewUrlParser: true,
-  });
-
+  const db = req.db.db('test');
   const get = req.params
   console.log(get)
+
+  try {
+
+  } catch (err) {
+    console.log('er0', err)
+  }
 }
 
 module.exports = {
@@ -168,5 +146,6 @@ module.exports = {
   getPost,
   getPostMetaData,
   getSinglePost,
-  getNextPostsPage
+  getNextPostsPage,
+  getNumOfDocuments
 }

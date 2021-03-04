@@ -15,7 +15,34 @@ const GoToNextPage = () => {
 
     let history = useHistory()
 
-    const [pageNumber, setPageNumber] = useState(0)
+    const [numOfPages, setNumOfPages] = useState(0)
+
+    let n = 5
+
+    let arrayOfPages;
+
+    if (numOfPages % n != 0) {
+        arrayOfPages = [...Array(numOfPages % n + 1).keys()]
+    } else {
+        arrayOfPages = [...Array(numOfPages % n).keys()]
+    }
+    console.log(numOfPages % n)
+    console.log('ARRA', arrayOfPages)
+
+
+
+
+    useEffect(() => {
+        fetch(`/posts`)
+            .then((res) => res.json())
+            .then((data) => {
+
+                setNumOfPages(data.data)
+            })
+
+    }, [])
+
+
 
 
 
@@ -37,6 +64,14 @@ const GoToNextPage = () => {
         <>
             <div onClick={() => handleNextPage()} > Next Page</div>
             <div onClick={() => handlePreviousPage()} > Previous Page</div>
+
+            {arrayOfPages.map((page, index) => (
+                <div key={index}>{page}</div>
+            ))}
+
+
+
+
         </>
     )
 }
