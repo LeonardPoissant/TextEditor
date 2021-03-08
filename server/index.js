@@ -66,7 +66,6 @@ MongoClient.connect("mongodb+srv://Leonard:d1234567@cluster0.owjm6.mongodb.net/t
 // Reuse database object in request handlers
 app.get("/", async function (req, res) {
 
-
   const count = await req.db.db('test').collection("Post").estimatedDocumentCount()
 
   console.log('count----', count)

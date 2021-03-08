@@ -43,10 +43,9 @@ const getPostMetaData = async (req, res) => {
     const posts = await db
       .collection("Post")
       .find({}, { projection }).skip(pageNumber > 0 ? ((pageNumber - 1) * nPerPage) : 0).limit(5).sort({ 'date': 1 }).toArray()
-    // LIMIT NUM OF RETURNS PER PAGE
-    //.aggregate([{ limit: 2 }]).toArray()
-    //.sort({ 'date': 1 })
-    console.log('POSTS', posts)
+
+    //.limit(5).sort({ 'date': 1 }).toArray()
+
     res.status(201).json({
       status: 201,
       data: posts
@@ -65,11 +64,34 @@ const getPostMetaData = async (req, res) => {
 const getNumOfDocuments = async (req, res) => {
   const db = req.db.db('test');
 
+  let n = 5
+
+  let arrayOfPages;
+
+  /*if (numOfPages % n != 0) {
+    arrayOfPages = [...Array(numOfPages % n + 1).keys()]
+  } else {
+    arrayOfPages = [...Array(numOfPages % n).keys()]
+  }*/
+
+
   try {
     const numOfDocuments = await db.collection("Post").estimatedDocumentCount()
+
+    if (numOfDocuments % n != 0) {
+      arrayOfPages = [...Array(numOfDocuments % n + 1).keys('a')]
+    } else {
+      arrayOfPages = [...Array(numOfDocuments % n).keys('a')]
+    }
+
+    console.log(arrayOfPages)
+
+
+
+
     res.status(201).json({
       status: 201,
-      data: numOfDocuments
+      data: arrayOfPages
     });
   } catch (err) {
     res.status(500).json({
