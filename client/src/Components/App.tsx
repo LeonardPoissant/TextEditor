@@ -6,7 +6,7 @@ import TextEditor from "./Editor";
 import Preview from "./Preview";
 import HomePage from "./HomePage";
 import Header from "./Header";
-import Posts from "./Posts"
+import Posts from "./BlogHomePage/Posts"
 import Footer from "./Footer";
 import Profile from "./Profile";
 import About from "./About";
@@ -16,13 +16,13 @@ import CreateNewPost from "./CreateNewPostPage"
 
 
 import Test from "./Test";
-import BlogHomePage from "./BlogHomePage";
+import BlogHomePage from "./BlogHomePage/BlogHomePage";
 const App = () => {
 
   return (
     <BrowserRouter>
       <Header />
-      <SideMenu />
+
       <Switch>
         <Route exact path="/" component={HomePage}></Route>
         <Route path="/Editor" >

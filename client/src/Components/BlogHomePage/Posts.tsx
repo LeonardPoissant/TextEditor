@@ -7,7 +7,7 @@ import { Link, useParams } from "react-router-dom";
 
 import BlogPostBanner from "./BlogPostBanner";
 
-import { EditorContext } from "./Contexts/EditorContext";
+import { EditorContext } from "../Contexts/EditorContext";
 
 const Posts = () => {
     const {
@@ -37,7 +37,7 @@ const Posts = () => {
             })
     }, [page])
 
-    console.log('test-------------------', page)
+
 
 
     useEffect(() => {
@@ -59,7 +59,7 @@ const Posts = () => {
     return (
         <Wrapper className="HERE?">
             { posts[0] != undefined ? posts.map((post, index) => (
-                <Link to={`/Post/${post._id}/${post.title}`} key={post._id}>
+                <StyledLink to={`/Post/${post._id}/${post.title}`} key={post._id}>
                     <BlogPostBanner
 
                         title={post.title}
@@ -67,7 +67,7 @@ const Posts = () => {
                         category={post.category}
                         date={post.date}
                     />
-                </Link>
+                </StyledLink>
 
 
             )) : <div></div>}
@@ -83,6 +83,14 @@ const Wrapper = styled.div`
     justify-content: center;
     align-items: center;
     flex-direction: column;
-
+    min-height: 60vh;
+padding:30px;
 
 `;
+
+
+const StyledLink = styled(Link)`
+text-decoration:none;
+
+`;
+

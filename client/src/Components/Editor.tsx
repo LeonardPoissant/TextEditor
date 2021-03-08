@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { Editor } from "draft-js";
 import styled from "styled-components";
 
-import { EditorContext } from "./Contexts/EditorContext";
+import { EditorContext } from "../Contexts/EditorContext"
 import ToolBar from "./ToolBar";
 import mediaBlockRenderer from "../entities/mediaBlockRenderer";
 import draftJsCss from "../Utils/EditorStyles";
@@ -35,7 +35,8 @@ const TextEditor = () => {
     description,
     setDescription,
     category,
-    setCategory
+    setCategory,
+
   } = useContext(EditorContext);
 
   // References to the corresponding DOM nodes when new input is rendered.
@@ -62,7 +63,6 @@ const TextEditor = () => {
   onClick={focusEditor}
   */
 
-  console.log('CATEGORYªß', category)
 
   return (
     <Wrapper active={active as any}>

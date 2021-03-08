@@ -10,7 +10,7 @@ import Collapse from "@material-ui/core/Collapse";
 
 import styled from "styled-components";
 
-import { EditorContext } from "./Contexts/EditorContext";
+import { EditorContext } from "../Contexts/EditorContext";
 
 interface AddMediaWIndowProps {
   active?: boolean;

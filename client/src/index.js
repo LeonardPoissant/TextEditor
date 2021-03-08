@@ -6,8 +6,9 @@ import ReactDOM from "react-dom";
 
 import App from "./Components/App";
 import * as serviceWorker from "./serviceWorker";
+import './index.css';
 
-import EditorProvider from "./Components/Contexts/EditorContext";
+import EditorProvider from "./Contexts/EditorContext";
 
 
 ReactDOM.render(

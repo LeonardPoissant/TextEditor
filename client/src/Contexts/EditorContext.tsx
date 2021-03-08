@@ -17,7 +17,7 @@ import {
 } from "draft-js";
 
 
-import getVideo from "../../Utils/EditorUtils";
+import getVideo from "../Utils/EditorUtils";
 
 type Props = {
   children: React.ReactNode;
@@ -121,11 +121,20 @@ export default ({ children }: Props) => {
   const [pageNumber, setPageNumber] = useState(1);
   //const location = useLocation();
 
-  const [page, setTest] = useState(0)
+  const [page, setPage] = useState(1)
+
+  const [test, setTest] = useState(false)
 
   const aTest = () => {
-    setTest(page + 1)
+    setPage(page + 1)
   }
+
+  useEffect(() => {
+
+    setTest(true)
+  }, [])
+
+  let abc = "testset"
 
 
 
@@ -163,13 +172,18 @@ export default ({ children }: Props) => {
   useEffect(() => {
     const content = sessionStorage.getItem("content");
 
+    console.log('CONTENT', content)
+
     if (content) {
+      console.log('FIR STcontetIF----', content)
       const convertedContent = convertFromRaw(JSON.parse(content));
       setOkToDisplay(true);
       setEditorState(
         EditorState.createWithContent(convertedContent, decorator)
       );
-    } else {
+    } else if (content === null) {
+
+      console.log('contetIF----', content)
       setOkToDisplay(true);
       setEditorState(EditorState.createEmpty(decorator));
     }
@@ -457,7 +471,9 @@ export default ({ children }: Props) => {
         pageNumber,
         page,
         aTest,
-        setTest
+        setPage,
+        test,
+        abc
 
       }}
     >

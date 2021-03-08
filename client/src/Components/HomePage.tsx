@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Editor } from "draft-js";
 import styled from "styled-components";
 
-import { EditorContext } from "./Contexts/EditorContext";
+import { EditorContext } from "../Contexts/EditorContext";
 import mediaBlockRenderer from "../entities/mediaBlockRenderer";
 import draftJsCss from "../Utils/EditorStyles";
 
@@ -17,6 +17,8 @@ const HomePage = (props: any) => {
 
   return (
     <Wrapper>
+
+
       {publish === undefined ? (
         <>
           <p>
@@ -69,6 +71,10 @@ const HomePageBody = styled.div`
   justify-content: center;
   padding-top: 100px;
 `;
+
+
+
+
 
 const EditorWrapper = styled.div`
   height: 250px;

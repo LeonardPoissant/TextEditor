@@ -17,7 +17,7 @@ import {
     DraftEditorCommand,
 } from "draft-js";
 
-import { EditorContext } from "./Contexts/EditorContext";
+import { EditorContext } from "../Contexts/EditorContext";
 
 const Test = () => {
     const [editorState, setEditorState] = useState(EditorState.createEmpty());

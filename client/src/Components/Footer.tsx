@@ -34,9 +34,8 @@ const Footer = () => {
 
 const Wrapper = styled.div`
   width: 100%;
-  bottom: 0;
-  position: relative;
-  height: 10vh;
+  
+
   border-top-style: solid;
   border-width: 1px;
 `;

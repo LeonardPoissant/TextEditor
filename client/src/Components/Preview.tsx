@@ -16,9 +16,9 @@ import {
 } from "draft-js";
 
 import styled from "styled-components";
-import { EditorContext } from "./Contexts/EditorContext";
+import { EditorContext } from "../Contexts/EditorContext";
 
-import PostTest from "./Contexts/EditorContext"
+//import PostTest from "../Contexts/EditorContext"
 
 
 import mediaBlockRenderer from "../entities/mediaBlockRenderer";
