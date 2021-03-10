@@ -7,7 +7,7 @@ import { Link, useParams } from "react-router-dom";
 
 import BlogPostBanner from "./BlogPostBanner";
 
-import { EditorContext } from "../Contexts/EditorContext";
+import { EditorContext } from "../../Contexts/EditorContext";
 
 const Posts = () => {
     const {

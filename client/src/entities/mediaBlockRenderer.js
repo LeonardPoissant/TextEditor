@@ -1,6 +1,6 @@
 import React from "react";
 
-import utils from "../Utils/EditorUtils";
+import utils from "../Utils/UrlUtils";
 
 const YOUTUBE_PREFIX = "https://www.youtube.com/embed/";
 const VIMEO_PREFIX = "https://player.vimeo.com/video/";

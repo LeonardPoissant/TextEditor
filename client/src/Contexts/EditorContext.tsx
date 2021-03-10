@@ -17,7 +17,7 @@ import {
 } from "draft-js";
 
 
-import getVideo from "../Utils/EditorUtils";
+import getVideo from "../Utils/UrlUtils";
 
 type Props = {
   children: React.ReactNode;
@@ -107,6 +107,7 @@ export default ({ children }: Props) => {
   const [isBold, setIsBold] = useState(false);
   const [isItalic, setIsItalic] = useState(false);
   const [isUnderline, setIsUnderline] = useState(false);
+  const [isFontSize, setIsFontSize] = useState([])
   const [active, setActive] = useState(false);
   const [okToDisplay, setOkToDisplay] = useState(false);
   const [clear, setClear] = useState(false);
@@ -122,6 +123,7 @@ export default ({ children }: Props) => {
   //const location = useLocation();
 
   const [page, setPage] = useState(1)
+  const [focusEditor, setFocusEditor] = useState(false)
 
   const [test, setTest] = useState(false)
 
@@ -171,19 +173,13 @@ export default ({ children }: Props) => {
 
   useEffect(() => {
     const content = sessionStorage.getItem("content");
-
-    console.log('CONTENT', content)
-
     if (content) {
-      console.log('FIR STcontetIF----', content)
       const convertedContent = convertFromRaw(JSON.parse(content));
       setOkToDisplay(true);
       setEditorState(
         EditorState.createWithContent(convertedContent, decorator)
       );
     } else if (content === null) {
-
-      console.log('contetIF----', content)
       setOkToDisplay(true);
       setEditorState(EditorState.createEmpty(decorator));
     }
@@ -260,12 +256,17 @@ export default ({ children }: Props) => {
     const isItalic = inlineStyle.has("ITALIC");
     const isUnderline = inlineStyle.has("UNDERLINE");
 
+    console.log('INLINE', inlineStyle)
+
+
     saveContent(contentState);
     setEditorState(editorState);
     setCurrentStyle(inlineStyle);
     setIsBold(isBold);
     setIsItalic(isItalic);
     setIsUnderline(isUnderline);
+
+
   };
 
   const handleKeyCommand = (command: string, editorState: EditorState) => {
@@ -276,6 +277,32 @@ export default ({ children }: Props) => {
       return "handled";
     }
     return "not-handled";
+  };
+
+
+
+  const toggleFontSizeStyle = (e, fontSize) => {
+    //e.stopPropagation()
+
+    e.preventDefault();
+    //setFocusEditor(!focusEditor)
+
+    //const fontSize = e.target.value
+
+    console.log(fontSize)
+
+    const newState = RichUtils.toggleInlineStyle(editorState, fontSize);
+    setEditorState(newState);
+
+    //onChange(RichUtils.toggleInlineStyle(editorState, fontSize))
+
+    /*setIsFontSize(!isFontSize)
+
+
+    console.log('inlinseStyloe', fontSize)
+
+    onChange(RichUtils.toggleInlineStyle(editorState, fontSize))*/
+
   };
 
   const toggleBold = (e: MouseEvent) => {
@@ -431,6 +458,13 @@ export default ({ children }: Props) => {
     setActive(!active);
   };
 
+  const test12 = (e) => {
+
+    console.log('e', e)
+
+    console.log('erhhh')
+  }
+
   return (
     <EditorContext.Provider
       value={{
@@ -473,7 +507,10 @@ export default ({ children }: Props) => {
         aTest,
         setPage,
         test,
-        abc
+        abc,
+        toggleFontSizeStyle,
+        test12,
+        focusEditor
 
       }}
     >

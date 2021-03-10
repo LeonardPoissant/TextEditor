@@ -22,7 +22,7 @@ import { EditorContext } from "../Contexts/EditorContext";
 
 
 import mediaBlockRenderer from "../entities/mediaBlockRenderer";
-import draftJsCss from "../Utils/EditorStyles";
+import draftJsCss from "../Utils/EditorCss";
 
 
 

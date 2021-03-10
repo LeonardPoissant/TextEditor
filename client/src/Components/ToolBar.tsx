@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useEffect, useRef, useContext } from "react";
 
 import InsertLinkIcon from "@material-ui/icons/InsertLink";
@@ -7,6 +8,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import Alert from "@material-ui/lab/Alert";
 import IconButton from "@material-ui/core/IconButton";
 import Collapse from "@material-ui/core/Collapse";
+import FontSizeDropDown from "./FontSizeDropDown";
 
 import styled from "styled-components";
 
@@ -20,7 +22,7 @@ interface ButtonStyleProps {
   isClicked?: boolean;
 }
 
-const ToolBar = () => {
+const ToolBar = (props) => {
   const {
     isBold,
     isItalic,
@@ -41,9 +43,13 @@ const ToolBar = () => {
     promptForLink,
     open,
     setOpen,
+    toggleFontSizeStyle,
+
   } = useContext(EditorContext);
 
   const videoRef = useRef() as any;
+
+
 
   useEffect(() => {
     if (promptForURL) {
@@ -51,11 +57,25 @@ const ToolBar = () => {
     }
   }, [promptForURL]);
 
+  console.log(props.editor)
+
+  const getFocus = () => {
+
+
+    props.editor.current && props.editor.current.focus();
+
+    //console.log('FOCUS--', editor.current.focus())
+  }
+
+  // onMouseDown={(e) => toggleBold(e)}
+  //style={isBold ? { backgroundColor: "grey" } : { backgroundColor: "" }}
+
   return (
     <Wrapper>
       <ChangeStyleButton
         onMouseDown={(e) => toggleBold(e)}
         style={isBold ? { backgroundColor: "grey" } : { backgroundColor: "" }}
+
       >
         <b>B</b>
       </ChangeStyleButton>
@@ -147,6 +167,8 @@ const ToolBar = () => {
           Select the text you want to hyperlink first!
         </WarningMessage>
       </CollapseWarning>
+
+      <FontSizeDropDown onToggle={toggleFontSizeStyle} />
     </Wrapper>
   );
 };

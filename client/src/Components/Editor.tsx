@@ -9,7 +9,8 @@ import styled from "styled-components";
 import { EditorContext } from "../Contexts/EditorContext"
 import ToolBar from "./ToolBar";
 import mediaBlockRenderer from "../entities/mediaBlockRenderer";
-import draftJsCss from "../Utils/EditorStyles";
+import draftJsCss from "../Utils/EditorCss";
+import customStylemap from "../Utils/CustomStyleMap"
 
 interface WrapperProps {
   active?: boolean;
@@ -30,23 +31,16 @@ const TextEditor = () => {
     findLinkEntities,
     link,
     PostTest,
-    title,
-    setTitle,
-    description,
-    setDescription,
-    category,
-    setCategory,
-
+    focusEditor
   } = useContext(EditorContext);
 
-  // References to the corresponding DOM nodes when new input is rendered.
-  const editor = useRef<Editor>(null);
+  const editor = useRef(null);
 
-  //Keeps the focus on the editor when pressing a button
+
 
   useEffect(() => {
     editor.current && editor.current.focus();
-  }, []);
+  }, [focusEditor]);
 
   const customDecorator = [
     {
@@ -54,29 +48,37 @@ const TextEditor = () => {
       component: link,
     },
   ];
+  const getFocus = () => {
 
-  /*const focusEditor = () => {
-    if (editor.current) {
-      editor.current.focus();
-    }
-  };
-  onClick={focusEditor}
-  */
+    editor.current && editor.current.focus();
+
+    console.log('FOCUS--', editor.current.focus())
+  }
+
+
 
 
   return (
     <Wrapper active={active as any}>
 
-      <ToolBar />
+      { /*<input ref={editor}></input>*/}
+      <button onClick={() => getFocus()}>GET DA FOCUS</button>
+
+
+
+      <ToolBar focusEditor={() => getFocus()} editor={editor} />
       {okToDisplay ? (
-        <TextArea >
+        <TextArea onClick={() => getFocus()} >
           <StyledEditor
             blockRendererFn={mediaBlockRenderer}
+            customStyleMap={customStylemap}
             editorState={editorState}
             onChange={onChange}
             handleKeyCommand={handleKeyCommand}
-            decorators={customDecorator as any}
-            ref={!active ? editor : null}
+            decorators={customDecorator}
+            ref={editor}
+
+
           ></StyledEditor>
         </TextArea>
       ) : (

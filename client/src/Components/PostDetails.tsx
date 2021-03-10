@@ -1,6 +1,6 @@
 // @ts-nocheck
 import React, { useContext, useState } from "react";
-import { EditorContext } from "./Contexts/EditorContext";
+import { EditorContext } from "../Contexts/EditorContext";
 
 import styled from "styled-components";
 

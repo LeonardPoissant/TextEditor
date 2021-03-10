@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import MenuIcon from "@material-ui/icons/Menu";
 
-import useVisible from "../Utils/DropDown";
+import useVisible from "../Hooks/UseVisible";
 
 const DropDown = () => {
   const { ref, isVisible, setIsVisible } = useVisible(false);
@@ -26,8 +26,8 @@ const DropDown = () => {
           </MenuItem>
         </MenuList>
       ) : (
-        <></>
-      )}
+          <></>
+        )}
     </Wrapper>
   );
 };

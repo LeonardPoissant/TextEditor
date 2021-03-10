@@ -4,7 +4,7 @@ import React, { useContext, useState } from "react"
 
 import styled from "styled-components"
 
-import { EditorContext } from "../../Contexts/EditorContext";
+import { EditorContext } from "../../../Contexts/EditorContext";
 
 
 const PageNavigationIcon = (props) => {

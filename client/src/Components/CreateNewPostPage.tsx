@@ -6,10 +6,11 @@ import TextEditor from "./Editor";
 import PostDetails from "./PostDetails";
 
 const CreateNewPost = () => {
-
+    //  
     return (<div>
         <TextEditor />
         <PostDetails />
+
     </div>)
 };
 

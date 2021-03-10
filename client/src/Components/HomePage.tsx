@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import { EditorContext } from "../Contexts/EditorContext";
 import mediaBlockRenderer from "../entities/mediaBlockRenderer";
-import draftJsCss from "../Utils/EditorStyles";
+import draftJsCss from "../Utils/EditorCss";
 
 const HomePage = (props: any) => {
   const { editorState, okToDisplay, onChange } = useContext(EditorContext);

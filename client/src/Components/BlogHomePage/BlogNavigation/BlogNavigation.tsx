@@ -5,7 +5,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link, useParams, useHistory } from "react-router-dom";
 import styled from "styled-components"
 
-import { EditorContext } from "../../Contexts/EditorContext";
+import { EditorContext } from "../../../Contexts/EditorContext";
 import PageNavigationIcon from "./PageNumberStyle";
 import NavigationIcon from "./NavigationIcon"
 import LeftArrow from "../Assets/left-arrow-5737.svg"

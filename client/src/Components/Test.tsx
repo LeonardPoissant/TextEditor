@@ -1,7 +1,9 @@
-
-import React, { useEffect, useState, useContext } from "react";
+// @ts-nocheck
+import React, { useEffect, useState, useContext, useRef } from "react";
 import { Editor } from "draft-js";
 import mediaBlockRenderer from "../entities/mediaBlockRenderer";
+
+import styled from "styled-components"
 
 
 import {
@@ -23,80 +25,37 @@ const Test = () => {
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
     const { okToDisplay, onChange } = useContext(EditorContext);
 
+    const editor = useRef(null)
 
-    useEffect(() => {
-        console.log("here")
-        fetch("/testGet")
-            .then((res) => res.json())
-            .then((data) => {
-                console.log('data', data.data[0].post.convertedContent)
-                const convertedState = convertFromRaw(data.data[0].post.convertedContent)
+    const getFocus = () => {
 
-                setEditorState(EditorState.createWithContent(convertedState))
-            })
-    }, [])
-
-    /*let execute = new Date ("2020-11-25T12:35:00-05:00")
-
-   const runFunction = ()=>{
-
-    console.log('datte', new Date)
-  
-                    fetch("/testGet")
-                    .then((res)=> res.json())
-                    .then((data)=>{
-                        console.log('data',data.data[0].post.convertedContent)
-                        const convertedState = convertFromRaw(data.data[0].post.convertedContent)
-                        setEditorState(EditorState.createWithContent(convertedState))
-                    })
-    
-   }
-
-   function scheduleExecution(futureDate:any, callback:any) {
-    // Set an intermediary timeout at every 1 hour interval, to avoid the
-    // 32 bit limitation in setting the timeout delay
-    var maxInterval = 60 * 60 * 1000;
-    var now:any = new Date();
-
-    if ((futureDate - now) > maxInterval) {
-        // Wait for maxInterval milliseconds, but make
-        // sure we don't go over the scheduled date
-        setTimeout(
-            //@ts-ignore
-            function() { scheduleExecution(futureDate!); },
-            Math.min(futureDate - now, maxInterval));
-    } else {
-        // Set final timeout
-        setTimeout(callback, futureDate - now);
+        console.log(' I HAVE FOCUS')
     }
-}
 
-// This example uses time zone UTC-5. Make sure to use the
-// correct offset for your local time zone
-var futureDate = new Date("2020-11-25T12:44:10-05:00");
-/*scheduleExecution(futureDate, function() {
-    fetch("/testGet")
-                    .then((res)=> res.json())
-                    .then((data)=>{
-                        console.log('data',data.data[0].post.convertedContent)
-                        const convertedState = convertFromRaw(data.data[0].post.convertedContent)
-                        setEditorState(EditorState.createWithContent(convertedState))
-                    })
-});*/
 
     return (
-        <div>
+        <Area>
             <Editor
                 readOnly={true}
                 editorState={editorState}
                 blockRendererFn={mediaBlockRenderer}
                 onChange={onChange}
+                ref={editor}
+                onFocus={() => getFocus()}
+
             >
 
             </Editor>
-            <div>IM HERE</div>
-        </div>
+        </Area>
     )
 }
+
+const Area = styled.div`
+width:500px;
+height:100px;
+padding-top:600px;
+padding-left:600px;
+
+`;
 
 export default Test;
