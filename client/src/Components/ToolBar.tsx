@@ -9,6 +9,7 @@ import Alert from "@material-ui/lab/Alert";
 import IconButton from "@material-ui/core/IconButton";
 import Collapse from "@material-ui/core/Collapse";
 import FontSizeDropDown from "./FontSizeDropDown";
+import ColorDropDown from "./ColorPicker"
 
 import styled from "styled-components";
 
@@ -44,6 +45,7 @@ const ToolBar = (props) => {
     open,
     setOpen,
     toggleFontSizeStyle,
+    toggleTextColor
 
   } = useContext(EditorContext);
 
@@ -57,7 +59,6 @@ const ToolBar = (props) => {
     }
   }, [promptForURL]);
 
-  console.log(props.editor)
 
   const getFocus = () => {
 
@@ -169,6 +170,8 @@ const ToolBar = (props) => {
       </CollapseWarning>
 
       <FontSizeDropDown onToggle={toggleFontSizeStyle} />
+
+      <ColorDropDown onToggle={toggleTextColor} />
     </Wrapper>
   );
 };

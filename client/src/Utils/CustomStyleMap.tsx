@@ -37,6 +37,20 @@ const customStyleMap = {
         fontSize: "48px"
     },
 
+    color_black: {
+        color: "#000000"
+    },
+    color_red: {
+        color: "#DC143C"
+    },
+
+    color_yellow: {
+        color: "#0062ff"
+    },
+
+    color_blue: {
+        color: "#bbbbbb"
+    },
 }
 
 export default customStyleMap

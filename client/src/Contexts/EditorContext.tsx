@@ -305,6 +305,15 @@ export default ({ children }: Props) => {
 
   };
 
+  const toggleTextColor = (e, color) => {
+    e.preventDefault()
+
+    console.log('COLOR----', color)
+
+    const newState = RichUtils.toggleInlineStyle(editorState, color);
+    setEditorState(newState);
+  }
+
   const toggleBold = (e: MouseEvent) => {
     e.preventDefault();
     setIsBold(!isBold);
@@ -510,7 +519,8 @@ export default ({ children }: Props) => {
         abc,
         toggleFontSizeStyle,
         test12,
-        focusEditor
+        focusEditor,
+        toggleTextColor
 
       }}
     >

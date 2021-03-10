@@ -23,6 +23,7 @@ import { EditorContext } from "../Contexts/EditorContext";
 
 import mediaBlockRenderer from "../entities/mediaBlockRenderer";
 import draftJsCss from "../Utils/EditorCss";
+import customStylemap from "../Utils/CustomStyleMap"
 
 
 
@@ -90,6 +91,7 @@ const Preview = () => {
             editorState={editorState}
             blockRendererFn={mediaBlockRenderer}
             onChange={onChange}
+            customStyleMap={customStylemap}
           />
         ) : (
             <div>Loading... </div>

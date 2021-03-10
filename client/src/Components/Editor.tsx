@@ -52,7 +52,6 @@ const TextEditor = () => {
 
     editor.current && editor.current.focus();
 
-    console.log('FOCUS--', editor.current.focus())
   }
 
 
