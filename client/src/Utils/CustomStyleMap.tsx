@@ -45,11 +45,11 @@ const customStyleMap = {
     },
 
     color_yellow: {
-        color: "#0062ff"
+        color: "#FFD700"
     },
 
     color_blue: {
-        color: "#bbbbbb"
+        color: "#191970"
     },
 }
 

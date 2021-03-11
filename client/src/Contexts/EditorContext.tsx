@@ -14,10 +14,15 @@ import {
   ContentBlock,
   DraftHandleValue,
   DraftEditorCommand,
+  Modifier,
 } from "draft-js";
 
 
 import getVideo from "../Utils/UrlUtils";
+
+import fontSizeStyle from "../Utils/InlineStyles/FontSize";
+
+import customStyleMap from "../Utils/CustomStyleMap"
 
 type Props = {
   children: React.ReactNode;
@@ -107,7 +112,7 @@ export default ({ children }: Props) => {
   const [isBold, setIsBold] = useState(false);
   const [isItalic, setIsItalic] = useState(false);
   const [isUnderline, setIsUnderline] = useState(false);
-  const [isFontSize, setIsFontSize] = useState([])
+  const [isFontSize, setIsFontSize] = useState(false)
   const [active, setActive] = useState(false);
   const [okToDisplay, setOkToDisplay] = useState(false);
   const [clear, setClear] = useState(false);
@@ -120,7 +125,8 @@ export default ({ children }: Props) => {
   const [category, setCategory] = useState("");
   const [date, setDate] = useState("")
   const [pageNumber, setPageNumber] = useState(1);
-  //const location = useLocation();
+  const [fontSizes, setFontSizes] = useState([fontSizeStyle])
+  const [currentColor, setCurrentColor] = useState("")
 
   const [page, setPage] = useState(1)
   const [focusEditor, setFocusEditor] = useState(false)
@@ -255,8 +261,8 @@ export default ({ children }: Props) => {
     const isBold = inlineStyle.has("BOLD");
     const isItalic = inlineStyle.has("ITALIC");
     const isUnderline = inlineStyle.has("UNDERLINE");
-
-    console.log('INLINE', inlineStyle)
+    const isFontSize = inlineStyle.has("font_size_36")
+    console.log('here')
 
 
     saveContent(contentState);
@@ -265,6 +271,7 @@ export default ({ children }: Props) => {
     setIsBold(isBold);
     setIsItalic(isItalic);
     setIsUnderline(isUnderline);
+    setIsFontSize(isFontSize)
 
 
   };
@@ -282,36 +289,76 @@ export default ({ children }: Props) => {
 
 
   const toggleFontSizeStyle = (e, fontSize) => {
-    //e.stopPropagation()
-
     e.preventDefault();
-    //setFocusEditor(!focusEditor)
 
-    //const fontSize = e.target.value
+    const selection = editorState.getSelection();
 
-    console.log(fontSize)
+    // allow one fontSize at a time. Turn off all active fontSizes.
+    const nextContentState = Object.keys(customStyleMap)
+      .reduce((contentState, fontSize) => {
+        return Modifier.removeInlineStyle(contentState, selection, fontSize)
+      }, editorState.getCurrentContent());
 
-    const newState = RichUtils.toggleInlineStyle(editorState, fontSize);
-    setEditorState(newState);
+    let nextEditorState = EditorState.push(
+      editorState,
+      nextContentState,
+      'change-inline-style'
+    );
 
-    //onChange(RichUtils.toggleInlineStyle(editorState, fontSize))
+    const currentStyle = editorState.getCurrentInlineStyle();
 
-    /*setIsFontSize(!isFontSize)
+    // Unset style override for current fontSize.
+    if (selection.isCollapsed()) {
+      nextEditorState = currentStyle.reduce((state, fontSize) => {
+        return RichUtils.toggleInlineStyle(state, fontSize);
+      }, nextEditorState);
+    }
 
-
-    console.log('inlinseStyloe', fontSize)
-
-    onChange(RichUtils.toggleInlineStyle(editorState, fontSize))*/
-
+    // If the fontSize is being toggled on, apply it.
+    if (!currentStyle.has(fontSize)) {
+      nextEditorState = RichUtils.toggleInlineStyle(
+        nextEditorState,
+        fontSize
+      );
+    }
+    onChange(nextEditorState);
   };
 
-  const toggleTextColor = (e, color) => {
-    e.preventDefault()
+  const toggleTextColor = async (e, colorStyle) => {
+    e.preventDefault();
 
-    console.log('COLOR----', color)
+    const selection = editorState.getSelection();
 
-    const newState = RichUtils.toggleInlineStyle(editorState, color);
-    setEditorState(newState);
+    // Let's just allow one color at a time. Turn off all active colors.
+    const nextContentState = Object.keys(customStyleMap)
+      .reduce((contentState, color) => {
+        return Modifier.removeInlineStyle(contentState, selection, color)
+      }, editorState.getCurrentContent());
+
+    let nextEditorState = EditorState.push(
+      editorState,
+      nextContentState,
+      'change-inline-style'
+    );
+
+    const currentStyle = editorState.getCurrentInlineStyle();
+
+    // Unset style override for current color.
+    if (selection.isCollapsed()) {
+      nextEditorState = currentStyle.reduce((state, color) => {
+        return RichUtils.toggleInlineStyle(state, color);
+      }, nextEditorState);
+    };
+
+    // If the color is being toggled on, apply it.
+    if (!currentStyle.has(colorStyle)) {
+      nextEditorState = RichUtils.toggleInlineStyle(
+        nextEditorState,
+        colorStyle
+      );
+    }
+
+    onChange(nextEditorState);
   }
 
   const toggleBold = (e: MouseEvent) => {
