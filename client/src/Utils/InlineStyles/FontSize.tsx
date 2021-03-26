@@ -11,7 +11,7 @@ const fontSizeStyle = [
     { label: "24pt", style: "font_size_24" },
     { label: "29pt", style: "font_size_29" },
     { label: "33pt", style: "font_size_33" },
-    { label: "34.5pt", style: "font_size_34_5" },
+    { label: "34pt", style: "font_size_34" },
     { label: "36pt", style: "font_size_36" },
 
 ]

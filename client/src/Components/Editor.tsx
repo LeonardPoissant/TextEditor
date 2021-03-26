@@ -12,6 +12,7 @@ import mediaBlockRenderer from "../entities/mediaBlockRenderer";
 import draftJsCss from "../Utils/EditorCss";
 import customStylemap from "../Utils/CustomStyleMap"
 
+
 interface WrapperProps {
   active?: boolean;
 }
@@ -31,16 +32,18 @@ const TextEditor = () => {
     findLinkEntities,
     link,
     PostTest,
-    focusEditor
+    focusEditor,
+    state,
+    openFsDropDown,
+    openColorPicker,
+    selectedIndex,
   } = useContext(EditorContext);
 
   const editor = useRef(null);
 
-
-
   useEffect(() => {
     editor.current && editor.current.focus();
-  }, [focusEditor]);
+  }, [openFsDropDown, openColorPicker, selectedIndex]);
 
   const customDecorator = [
     {
@@ -60,11 +63,6 @@ const TextEditor = () => {
   return (
     <Wrapper active={active as any}>
 
-      { /*<input ref={editor}></input>*/}
-      <button onClick={() => getFocus()}>GET DA FOCUS</button>
-
-
-
       <ToolBar focusEditor={() => getFocus()} editor={editor} />
       {okToDisplay ? (
         <TextArea onClick={() => getFocus()} >
@@ -75,6 +73,9 @@ const TextEditor = () => {
             onChange={onChange}
             handleKeyCommand={handleKeyCommand}
             decorators={customDecorator}
+            onFocus={getFocus}
+
+
             ref={editor}
 
 

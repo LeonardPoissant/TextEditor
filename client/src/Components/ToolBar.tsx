@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, { useEffect, useRef, useContext } from "react";
+import React, { useEffect, useRef, useContext, useState } from "react";
 
 import InsertLinkIcon from "@material-ui/icons/InsertLink";
 import ImageIcon from "@material-ui/icons/Image";
@@ -9,7 +9,10 @@ import Alert from "@material-ui/lab/Alert";
 import IconButton from "@material-ui/core/IconButton";
 import Collapse from "@material-ui/core/Collapse";
 import FontSizeDropDown from "./FontSizeDropDown";
-import ColorDropDown from "./ColorPicker"
+import ColorDropDown from "./ColorPicker";
+
+import ColorPicker from "./ReactColor";
+import ColorPickerV2 from "./ColorPicker/ColorPickerV2"
 
 import styled from "styled-components";
 
@@ -45,11 +48,19 @@ const ToolBar = (props) => {
     open,
     setOpen,
     toggleFontSizeStyle,
-    toggleTextColor
+    toggleTextColor,
+    openFsDropDown,
+    setOpenFsDropDown,
+    openColorPicker,
+    setOpenColorPicker,
+    color
 
   } = useContext(EditorContext);
 
   const videoRef = useRef() as any;
+
+
+
 
 
 
@@ -68,116 +79,141 @@ const ToolBar = (props) => {
     //console.log('FOCUS--', editor.current.focus())
   }
 
-  // onMouseDown={(e) => toggleBold(e)}
-  //style={isBold ? { backgroundColor: "grey" } : { backgroundColor: "" }}
+  const handleOpenFsDropDown = () => {
+    if (openColorPicker) {
+      setOpenColorPicker(!openColorPicker)
+    }
+    setOpenFsDropDown(!openFsDropDown)
+  }
+
+  const handleOpenColorPicker = () => {
+    if (openFsDropDown) {
+      setOpenFsDropDown(!openFsDropDown)
+    }
+    setOpenColorPicker(!openColorPicker)
+  }
+
+
 
   return (
-    <Wrapper>
-      <ChangeStyleButton
-        onMouseDown={(e) => toggleBold(e)}
-        style={isBold ? { backgroundColor: "grey" } : { backgroundColor: "" }}
+    <ParentWrapper>
+      <Wrapper className="I AM A CLASS NAME">
 
-      >
-        <b>B</b>
-      </ChangeStyleButton>
-      <ChangeStyleButton
-        onMouseDown={(e) => toggleItalic(e)}
-        style={isItalic ? { backgroundColor: "grey" } : { backgroundColor: "" }}
-      >
-        {" "}
-        <i>I</i>
-      </ChangeStyleButton>
-      <ChangeStyleButton
-        onMouseDown={(e) => toggleUnderLine(e)}
-        style={
-          isUnderline ? { backgroundColor: "grey" } : { backgroundColor: "" }
-        }
-      >
-        <u>U</u>
-      </ChangeStyleButton>
-      <EmbedButton onMouseDown={() => addLink()}>
-        <InsertLinkIcon
-          style={{
-            fontSize: 20,
-          }}
-        />
-      </EmbedButton>
-      <EmbedButton onMouseDown={() => addImage()}>
-        <ImageIcon
-          style={{
-            fontSize: 20,
-          }}
-        />
-      </EmbedButton>
+        <ChangeStyleButton
+          onMouseDown={(e) => toggleBold(e)}
+          style={isBold ? { backgroundColor: "grey" } : { backgroundColor: "" }}
 
-      <EmbedButton onMouseDown={() => addVideo()}>
-        <YouTubeIcon
-          style={{
-            fontSize: 20,
-          }}
-        />
-      </EmbedButton>
-
-      {promptForURL ? (
-        <AddMediaWindow active={active}>
-          <CloseWindow>
-            <CloseWindowButton onClick={() => handleClose()}>
-              <CloseIcon />
-            </CloseWindowButton>
-          </CloseWindow>
-          <HandleInputDiv>
-            <UrlInput
-              onChange={(e) => handleURL(e)}
-              ref={videoRef}
-              value={URLValue}
-              placeholder={"Paste Url here"}
-            ></UrlInput>
-            <ConfirmUrlButton
-              disabled={URLValue ? false : true}
-              onClick={
-                promptForLink ? () => confirmLink() : (e) => confirmMedia(e)
-              }
-            >
-              OK
-            </ConfirmUrlButton>
-          </HandleInputDiv>
-          <Message>
-            * try a different url if your media is not displayed
-          </Message>
-        </AddMediaWindow>
-      ) : (
-          <></>
-        )}
-
-      <CollapseWarning in={open}>
-        <WarningMessage
-          severity="error"
-          action={
-            <IconButton
-              aria-label="close"
-              color="inherit"
-              size="small"
-              onClick={() => {
-                setOpen(false);
-              }}
-            >
-              <CloseIcon fontSize="inherit" />
-            </IconButton>
+        >
+          <b>B</b>
+        </ChangeStyleButton>
+        <ChangeStyleButton
+          onMouseDown={(e) => toggleItalic(e)}
+          style={isItalic ? { backgroundColor: "grey" } : { backgroundColor: "" }}
+        >
+          {" "}
+          <i>I</i>
+        </ChangeStyleButton>
+        <ChangeStyleButton
+          onMouseDown={(e) => toggleUnderLine(e)}
+          style={
+            isUnderline ? { backgroundColor: "grey" } : { backgroundColor: "" }
           }
         >
-          Select the text you want to hyperlink first!
+          <u>U</u>
+        </ChangeStyleButton>
+        <EmbedButton onMouseDown={() => addLink()}>
+          <InsertLinkIcon
+            style={{
+              fontSize: 20,
+            }}
+          />
+        </EmbedButton>
+        <EmbedButton onMouseDown={() => addImage()}>
+          <ImageIcon
+            style={{
+              fontSize: 20,
+            }}
+          />
+        </EmbedButton>
+
+        <EmbedButton onMouseDown={() => addVideo()}>
+          <YouTubeIcon
+            style={{
+              fontSize: 20,
+            }}
+          />
+        </EmbedButton>
+
+        <div onClick={() => handleOpenFsDropDown()}>T</div>
+        <div onClick={() => handleOpenColorPicker()} style={{ color: color }}>C</div>
+
+        {promptForURL ? (
+          <AddMediaWindow active={active}>
+            <CloseWindow>
+              <CloseWindowButton onClick={() => handleClose()}>
+                <CloseIcon />
+              </CloseWindowButton>
+            </CloseWindow>
+            <HandleInputDiv>
+              <UrlInput
+                onChange={(e) => handleURL(e)}
+                ref={videoRef}
+                value={URLValue}
+                placeholder={"Paste Url here"}
+              ></UrlInput>
+              <ConfirmUrlButton
+                disabled={URLValue ? false : true}
+                onClick={
+                  promptForLink ? () => confirmLink() : (e) => confirmMedia(e)
+                }
+              >
+                OK
+            </ConfirmUrlButton>
+            </HandleInputDiv>
+            <Message>
+              * try a different url if your media is not displayed
+          </Message>
+          </AddMediaWindow>
+        ) : (
+            <></>
+          )}
+
+        <CollapseWarning in={open}>
+          <WarningMessage
+            severity="error"
+            action={
+              <IconButton
+                aria-label="close"
+                color="inherit"
+                size="small"
+                onClick={() => {
+                  setOpen(false);
+                }}
+              >
+                <CloseIcon fontSize="inherit" />
+              </IconButton>
+            }
+          >
+            Select the text you want to hyperlink first!
         </WarningMessage>
-      </CollapseWarning>
-
-      <FontSizeDropDown onToggle={toggleFontSizeStyle} />
-
-      <ColorDropDown onToggle={toggleTextColor} />
-    </Wrapper>
+        </CollapseWarning>
+        <StylesWrapper>
+          <DropDownWrapper>
+            {openFsDropDown ? <FontSizeDropDown onToggle={toggleFontSizeStyle} /> : <></>}
+            {openColorPicker ? <ColorPickerV2 onToggle={toggleTextColor} /> : <></>}
+          </DropDownWrapper>
+        </StylesWrapper>
+      </Wrapper>
+    </ParentWrapper>
   );
 };
 
 const Wrapper = styled.div`
+position:relative;
+
   display: flex;
+  width:500px;
+  height:100px;
   flex-direction: row;
   padding: 6px;
   justify-content: space-around;
@@ -200,7 +236,19 @@ const Wrapper = styled.div`
   }
 `;
 
+const ParentWrapper = styled.div`
+display:flex;
+flex-direction:column;
+
+`;
+
+const StylesWrapper = styled.div`
+
+`;
+
+
 const ChangeStyleButton = styled.button<ButtonStyleProps>`
+
   height: 25px;
   width: 25px;
   margin: 4px;
@@ -281,5 +329,11 @@ const Message = styled.div`
   font-size: 15px;
   margin-top: 15px;
 `;
+
+const DropDownWrapper = styled.div`
+display:flex;
+flex-direction:column;
+`;
+
 
 export default ToolBar;

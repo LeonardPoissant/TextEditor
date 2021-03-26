@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import React, { useContext } from "react";
 import { Editor } from "draft-js";
 import { Link } from "react-router-dom";

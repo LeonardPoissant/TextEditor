@@ -127,11 +127,75 @@ export default ({ children }: Props) => {
   const [pageNumber, setPageNumber] = useState(1);
   const [fontSizes, setFontSizes] = useState([fontSizeStyle])
   const [currentColor, setCurrentColor] = useState("")
+  const [, setCustomStyleMap] = useState(customStyleMap)
 
   const [page, setPage] = useState(1)
   const [focusEditor, setFocusEditor] = useState(false)
 
   const [test, setTest] = useState(false)
+  const [openFsDropDown, setOpenFsDropDown] = useState(false)
+  const [openColorPicker, setOpenColorPicker] = useState(false)
+  const [color, setColor] = useState("")
+  const [selectedIndex, setSelectedIndex] = useState(0)
+
+
+  const [state, setState] = useState({
+    background: '#fff',
+  })
+
+
+
+
+
+  const handleChangeComplete = (colors, e) => {
+    e.preventDefault()
+    setState({ background: colors.hex });
+    //Object.assign(customStyleMap, { color_test: { color: colors.hex } })
+    console.log('123', customStyleMap)
+    const selection = editorState.getSelection();
+
+    // Let's just allow one color at a time. Turn off all active colors.
+    /*const nextContentState = Object.keys(customStyleMap)
+      .reduce((contentState, color) => {
+
+        return Modifier.removeInlineStyle(contentState, selection, color)
+      }, editorState.getCurrentContent());
+
+
+    let nextEditorState = EditorState.push(
+      editorState,
+      nextContentState,
+      'change-inline-style'
+    );
+
+    const currentStyle = editorState.getCurrentInlineStyle();
+
+    // Unset style override for current color.
+    if (!selection.isCollapsed()) {
+      console.log('here???')
+      nextEditorState = currentStyle.reduce((state, color) => {
+        console.log('COLRO', color)
+        return RichUtils.toggleInlineStyle(state, color);
+      }, nextEditorState);
+    };
+
+    // If the color is being toggled on, apply it.
+    if (currentStyle.has(colors.hex)) {
+      console.log('HAS?', colors.hex)
+      nextEditorState = RichUtils.toggleInlineStyle(
+        nextEditorState,
+        { color_test: colors.hex }
+      );
+    }*/
+
+    const newState = RichUtils.toggleInlineStyle(editorState, colors.hex)
+
+    setEditorState(newState)
+  };
+
+  useEffect(() => {
+
+  }, [state])
 
   const aTest = () => {
     setPage(page + 1)
@@ -261,8 +325,20 @@ export default ({ children }: Props) => {
     const isBold = inlineStyle.has("BOLD");
     const isItalic = inlineStyle.has("ITALIC");
     const isUnderline = inlineStyle.has("UNDERLINE");
-    const isFontSize = inlineStyle.has("font_size_36")
-    console.log('here')
+
+
+
+
+
+    if (inlineStyle._map._map._root != undefined) {
+
+      let arrayOfStyles = inlineStyle._map._map._root.entries
+
+      //arrayOfStyles.map(style => console.log(style[0]))
+
+
+    }
+
 
 
     saveContent(contentState);
@@ -271,8 +347,6 @@ export default ({ children }: Props) => {
     setIsBold(isBold);
     setIsItalic(isItalic);
     setIsUnderline(isUnderline);
-    setIsFontSize(isFontSize)
-
 
   };
 
@@ -290,6 +364,8 @@ export default ({ children }: Props) => {
 
   const toggleFontSizeStyle = (e, fontSize) => {
     e.preventDefault();
+
+
 
     const selection = editorState.getSelection();
 
@@ -322,10 +398,14 @@ export default ({ children }: Props) => {
       );
     }
     onChange(nextEditorState);
+    setOpenFsDropDown(!openFsDropDown)
   };
 
   const toggleTextColor = async (e, colorStyle) => {
     e.preventDefault();
+    setColor(colorStyle)
+
+
 
     const selection = editorState.getSelection();
 
@@ -335,17 +415,24 @@ export default ({ children }: Props) => {
         return Modifier.removeInlineStyle(contentState, selection, color)
       }, editorState.getCurrentContent());
 
+    console.log('NEXT', nextContentState)
+
+
+
     let nextEditorState = EditorState.push(
       editorState,
       nextContentState,
       'change-inline-style'
     );
 
+
+
     const currentStyle = editorState.getCurrentInlineStyle();
 
     // Unset style override for current color.
     if (selection.isCollapsed()) {
       nextEditorState = currentStyle.reduce((state, color) => {
+
         return RichUtils.toggleInlineStyle(state, color);
       }, nextEditorState);
     };
@@ -358,7 +445,11 @@ export default ({ children }: Props) => {
       );
     }
 
+
+
     onChange(nextEditorState);
+
+
   }
 
   const toggleBold = (e: MouseEvent) => {
@@ -567,7 +658,15 @@ export default ({ children }: Props) => {
         toggleFontSizeStyle,
         test12,
         focusEditor,
-        toggleTextColor
+        toggleTextColor,
+        handleChangeComplete,
+        state,
+        openFsDropDown,
+        setOpenFsDropDown,
+        openColorPicker,
+        setOpenColorPicker,
+        color,
+        selectedIndex, setSelectedIndex
 
       }}
     >

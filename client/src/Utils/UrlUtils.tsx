@@ -5,7 +5,15 @@ export default {
   isYoutube: (url: string) => YOUTUBEMATCH_URL.test(url),
   isVimeo: (url: string) => VIMEOMATCH_URL.test(url),
   getYoutubeSrc: (url: string) => {
-    const id = url && url.match(YOUTUBEMATCH_URL)![1];
+    let id = "";
+    if (url.match(YOUTUBEMATCH_URL!) != null) {
+      id = url && url.match(YOUTUBEMATCH_URL)![1];
+    }
+
+
+    else if (url.match(YOUTUBEMATCH_URL!) === null) {
+      return console.log('UNDEFFINED')
+    }
     return {
       srcID: id,
       srcType: "youtube",
