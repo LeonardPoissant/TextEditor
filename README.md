@@ -9,7 +9,7 @@ It is a rich text-editor meant to create content that you can share (eventually)
 
 ## Motivation
 
--'Why make a text-editor Leonard ? There's plenty of better options out there...'
+-'Why make a text-editor-- Leonard ? There's plenty of better options out there...'
 
 The idea behind this project was to fill a gap between my previous career as a screenwriter and this new journey as a web dev I set my path on... so code a text-editor of my own that will allow for content publication :) As a junior dev, it was fun to translate everything into functional components. That furthered my comprehension of React a lot.
 
