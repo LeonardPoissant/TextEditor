@@ -33,7 +33,7 @@ app.use(morgan("tiny"));
 app.use(express.static("./server"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use("/", express.static(__dirname + "/"));
+app.use("/", express.static(__dirname + "../../client/build"));
 app.use(function (req, res, next) {
   req.db = db;
   next();
