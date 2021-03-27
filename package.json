@@ -4,7 +4,7 @@
   "description": "Littera-Clipv1 was developped using the draft.js framework from facebook. It is a rich text-editor meant to create content that you can share (eventually).",
   "main": "index.js",
   "scripts": {
-    "heroku-postbuild": "concurrently \"cd server && npm start \" \"cd client && npm build\"",
+    "heroku-postbuild": "concurrently \"cd server && npm install \" \"cd client && npm install && npm build\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
