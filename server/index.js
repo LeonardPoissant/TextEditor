@@ -38,6 +38,9 @@ app.use(function (req, res, next) {
   req.db = db;
   next();
 });
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname + "../../client/build/index.html"));
+})
 
 app.post("/test", CreatePost)
 app.get("/testGet", getPost)
