@@ -1,0 +1,23 @@
+{
+  "name": "texteditor",
+  "version": "1.0.0",
+  "description": "Littera-Clipv1 was developped using the draft.js framework from facebook. It is a rich text-editor meant to create content that you can share (eventually).",
+  "main": "index.js",
+  "scripts": {
+    "heroku-postbuild": "concurrently \"cd server && yarn \" \"cd client && yarn && yarn build\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LeonardPoissant/TextEditor.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LeonardPoissant/TextEditor/issues"
+  },
+  "homepage": "https://github.com/LeonardPoissant/TextEditor#readme",
+  "dependencies": {
+    "concurrently": "^6.0.0"
+  }
+}

@@ -203,6 +203,7 @@ const ToolBar = (props) => {
             {openColorPicker ? <ColorPickerV2 onToggle={toggleTextColor} /> : <></>}
           </DropDownWrapper>
         </StylesWrapper>
+        <ObliqueLeft></ObliqueLeft>
       </Wrapper>
     </ParentWrapper>
   );
@@ -334,6 +335,22 @@ const DropDownWrapper = styled.div`
 display:flex;
 flex-direction:column;
 `;
+
+const ObliqueLeft = styled.div`
+width: 6px;
+  
+margin-left: -518px;
+    margin-top: 126px;
+
+
+border-bottom: 1px solid  rgb(161, 161, 161);;
+-webkit-transform:
+            translateY(-20px)
+            translateX(5px)
+            rotate(2deg); 
+        position: absolute;
+`;
+
 
 
 export default ToolBar;
