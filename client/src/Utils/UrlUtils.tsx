@@ -6,21 +6,26 @@ export default {
   isVimeo: (url: string) => VIMEOMATCH_URL.test(url),
   getYoutubeSrc: (url: string) => {
     let id = "";
+    if (!url.match(YOUTUBEMATCH_URL) === undefined) {
+      return console.log("NOT YOUTUBE")
+    }
+
     if (url.match(YOUTUBEMATCH_URL!) != null) {
       id = url && url.match(YOUTUBEMATCH_URL)![1];
+
+      return {
+        srcID: id,
+        srcType: "youtube",
+        url,
+      };
     }
 
 
-    else if (url.match(YOUTUBEMATCH_URL!) === null) {
-      return console.log('UNDEFFINED')
-    }
-    return {
-      srcID: id,
-      srcType: "youtube",
-      url,
-    };
   },
   getVimeoSrc: (url: string) => {
+    if (!url.match(VIMEOMATCH_URL)) {
+      return
+    }
     const id = url.match(VIMEOMATCH_URL)![3];
     return {
       srcID: id,

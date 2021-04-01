@@ -65,7 +65,7 @@ const TextEditor = () => {
 
       <ToolBar focusEditor={() => getFocus()} editor={editor} />
       {okToDisplay ? (
-        <TextArea onClick={() => getFocus()} >
+        <TextArea onClick={() => getFocus()}  >
           <StyledEditor
             blockRendererFn={mediaBlockRenderer}
             customStyleMap={customStylemap}
@@ -83,8 +83,8 @@ const TextEditor = () => {
           ></StyledEditor>
         </TextArea>
       ) : (
-          <> </>
-        )}
+        <> </>
+      )}
 
       <LinksToPreviewAndPostDiv>
         <SeePreview to={{ pathname: "/Preview" }}>PREVIEW</SeePreview>
@@ -114,13 +114,13 @@ const Wrapper = styled.div<WrapperProps>`
 `;
 
 const StyledEditor = styled(Editor) <EditorProps>`
-  width: 500px;
+max-width:fit-content;
 `;
 
 const TextArea = styled.div`
   height: 250px;
   overflow-y: auto;
-  width: 500px;
+  width: 1000px;
   border-style: solid;
   border-color: rgb(161, 161, 161);
   border-width: 1px;

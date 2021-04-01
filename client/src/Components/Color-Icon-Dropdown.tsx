@@ -4,7 +4,6 @@ import styled from "styled-components";
 
 const ColorIconDropDown = (props) => {
 
-    console.log(props)
 
     const [color, setColor] = useState([]);
 
@@ -12,7 +11,7 @@ const ColorIconDropDown = (props) => {
         setColor(props.onChooseColor)
     }, [props.onChooseColor])
 
-    console.log('COLOR', color)
+
 
 
     let outerDiameter = 30;

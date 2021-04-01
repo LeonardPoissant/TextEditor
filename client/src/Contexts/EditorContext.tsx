@@ -438,25 +438,10 @@ export default ({ children }: Props) => {
 
     if (color.length < max_array_length) {
       color.unshift(colorStyle)
-    }
-
-    else if (color.length === max_array_length) {
-
-      /*console.log('here', color.length)
-      function arraymove(color, fromIndex, toIndex) {
-        var element = color[fromIndex];
-        color.splice(fromIndex, 1);
-        color.splice(toIndex, 0, element);
-      }*/
+    } else if (color.length === max_array_length) {
       color.pop();
       color.unshift(colorStyle);
-    }
-
-
-    console.log('COLOR', color)
-
-
-
+    };
 
     const selection = editorState.getSelection();
 
@@ -640,7 +625,6 @@ export default ({ children }: Props) => {
     setEditorState(editorState);
     setURLValue("");
     setURLType(type);
-    console.log(type);
   };
 
   const addImage = () => {
@@ -663,12 +647,40 @@ export default ({ children }: Props) => {
     setURLType(URLType);
 
     if (URLType === "VIDEOTYPE") {
+      console.log('HERE1')
       const getYouTubeId = getVideo.getYoutubeSrc(URLValue);
+      console.log('HERE2', getYouTubeId)
+      const getVimeoId = getVideo.getVimeoSrc(URLValue)
+      console.log('HERE6', getVimeoId)
       const contentState = editorState.getCurrentContent();
+      let videoId = "";
+      let src = ""
+
+      if (!getYouTubeId && !getVimeoId) {
+        return console.log('NOT VALID')
+      }
+
+      if (getYouTubeId && !getVimeoId) {
+
+        console.log('hereGET YOUTUBE')
+        src = "https://www.youtube.com/embed/"
+        videoId = getYouTubeId.srcID
+      }
+
+      if (getVimeoId && !getYouTubeId) {
+        console.log('hereGET VIEMO')
+        src = "https://player.vimeo.com/video/";
+        videoId = getVimeoId.srcID;
+      }
+
+      console.log('VIDEOID', src + videoId)
+
+
+
       const contentStateWithEntity = contentState.createEntity(
         URLType,
         "IMMUTABLE",
-        { src: "https://www.youtube.com/embed/" + getYouTubeId.srcID }
+        { src: src + videoId }
       );
       const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
       const newEditorState = EditorState.set(
@@ -679,6 +691,7 @@ export default ({ children }: Props) => {
       setEditorState(
         AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, " ")
       );
+
     } else if (URLType === "image") {
       const contentState = editorState.getCurrentContent();
       const contentStateWithEntity = contentState.createEntity(
