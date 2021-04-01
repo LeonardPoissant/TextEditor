@@ -3,6 +3,18 @@
 
 const customStyleMap = {
 
+    left: {
+        textAlign: "left"
+    },
+    center: {
+        textAlign: "center"
+    },
+    right: {
+        textAlign: "right"
+    },
+
+
+
     font_size_9: {
         fontSize: "12px"
     },

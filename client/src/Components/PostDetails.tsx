@@ -2,6 +2,8 @@
 import React, { useContext, useState } from "react";
 import { EditorContext } from "../Contexts/EditorContext";
 
+import StyledInput from "./Input";
+
 import styled from "styled-components";
 
 const PostDetails = () => {
@@ -13,14 +15,20 @@ const PostDetails = () => {
         setCategory
     } = useContext(EditorContext);
 
-    return (<Wrapper className="postdetails-wrapper">
 
-        <input
+    /*  placeholder="Choose a title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}*/
+
+    // <MyStyledInput />
+    return (<Wrapper >
+        <StyledInput
             placeholder="Choose a title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
 
-        ></input>
+
+        />
 
         <textarea
             placeholder="Write a small description"
@@ -41,4 +49,8 @@ const PostDetails = () => {
 
 export default PostDetails;
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+display:flex;
+flex-direction:column;
+max-width: 400px;
+`;

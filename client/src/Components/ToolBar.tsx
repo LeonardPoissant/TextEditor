@@ -10,9 +10,11 @@ import IconButton from "@material-ui/core/IconButton";
 import Collapse from "@material-ui/core/Collapse";
 import FontSizeDropDown from "./FontSizeDropDown";
 import ColorDropDown from "./ColorPicker";
-
+import ColorIconDropDown from "./Color-Icon-Dropdown";
+import TextAlignButtons from "./Text-align-botton"
 import ColorPicker from "./ReactColor";
 import ColorPickerV2 from "./ColorPicker/ColorPickerV2"
+
 
 import styled from "styled-components";
 
@@ -53,7 +55,9 @@ const ToolBar = (props) => {
     setOpenFsDropDown,
     openColorPicker,
     setOpenColorPicker,
-    color
+    color,
+    iconColor,
+    toggleTextAlignement
 
   } = useContext(EditorContext);
 
@@ -87,6 +91,7 @@ const ToolBar = (props) => {
   }
 
   const handleOpenColorPicker = () => {
+    console.log('here')
     if (openFsDropDown) {
       setOpenFsDropDown(!openFsDropDown)
     }
@@ -145,7 +150,7 @@ const ToolBar = (props) => {
         </EmbedButton>
 
         <div onClick={() => handleOpenFsDropDown()}>T</div>
-        <div onClick={() => handleOpenColorPicker()} style={{ color: color }}>C</div>
+        <ColorIconDropDown onClick={() => handleOpenColorPicker()} onChangeColor={iconColor} onChooseColor={color} />
 
         {promptForURL ? (
           <AddMediaWindow active={active}>
@@ -175,8 +180,8 @@ const ToolBar = (props) => {
           </Message>
           </AddMediaWindow>
         ) : (
-            <></>
-          )}
+          <></>
+        )}
 
         <CollapseWarning in={open}>
           <WarningMessage
@@ -221,6 +226,7 @@ position:relative;
   border-left: solid;
   border-top: solid;
   border-right: solid;
+ 
   border-color: rgb(161, 161, 161);
   border-width: 1px;
   @media (max-width: 736px) {

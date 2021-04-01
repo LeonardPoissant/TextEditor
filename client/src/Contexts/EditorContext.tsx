@@ -135,8 +135,9 @@ export default ({ children }: Props) => {
   const [test, setTest] = useState(false)
   const [openFsDropDown, setOpenFsDropDown] = useState(false)
   const [openColorPicker, setOpenColorPicker] = useState(false)
-  const [color, setColor] = useState("")
+  const [color, setColor] = useState([])
   const [selectedIndex, setSelectedIndex] = useState(0)
+  const [iconColor, setIconColor] = useState("");
 
 
   const [state, setState] = useState({
@@ -318,6 +319,8 @@ export default ({ children }: Props) => {
 
   }
 
+
+
   //OnChange, content is stored on the sessionStorage, editorState is updated.
   const onChange = (editorState: EditorState) => {
     const contentState = editorState.getCurrentContent();
@@ -326,18 +329,41 @@ export default ({ children }: Props) => {
     const isItalic = inlineStyle.has("ITALIC");
     const isUnderline = inlineStyle.has("UNDERLINE");
 
+    //const isColorStyle = inlineStyle.has(colorStyle)
+
+    //console.log('CONTENTSTATE', editorState)
+
+
+    const selection = editorState.getSelection();
+    /*const test = Object.keys(customStyleMap).reduce((contentState, color) => {
+
+      return inlineStyle.has(color)
+
+    })*/
+    const colors = (Object.values(customStyleMap))
+    const getColors = colors.map(styles => {
+      if (inlineStyle.has(styles.color)) {
+        return styles.color
+      }
+    });
+
+    getColors.map(color => {
+      if (color != undefined) {
+        setIconColor(color)
+      }
+    });
 
 
 
-
-    if (inlineStyle._map._map._root != undefined) {
-
+    /*if (inlineStyle._map._map._root != undefined) {
       let arrayOfStyles = inlineStyle._map._map._root.entries
 
-      //arrayOfStyles.map(style => console.log(style[0]))
-
-
-    }
+      arrayOfStyles.map(style => {
+        if (style[0].charAt(0) === "#") {
+          setIconColor(style[0])
+        }
+      })
+    }*/
 
 
 
@@ -347,6 +373,7 @@ export default ({ children }: Props) => {
     setIsBold(isBold);
     setIsItalic(isItalic);
     setIsUnderline(isUnderline);
+
 
   };
 
@@ -362,19 +389,18 @@ export default ({ children }: Props) => {
 
 
 
+
+
   const toggleFontSizeStyle = (e, fontSize) => {
     e.preventDefault();
-
-
-
     const selection = editorState.getSelection();
 
     // allow one fontSize at a time. Turn off all active fontSizes.
-    const nextContentState = Object.keys(customStyleMap)
+    /*const nextContentState = Object.keys(customStyleMap)
       .reduce((contentState, fontSize) => {
         return Modifier.removeInlineStyle(contentState, selection, fontSize)
-      }, editorState.getCurrentContent());
-
+      }, editorState.getCurrentContent());*/
+    const nextContentState = editorState.getCurrentContent();
     let nextEditorState = EditorState.push(
       editorState,
       nextContentState,
@@ -397,25 +423,52 @@ export default ({ children }: Props) => {
         fontSize
       );
     }
-    onChange(nextEditorState);
+
+    onChange(RichUtils.toggleInlineStyle(editorState, fontSize))
+    // onChange(nextEditorState);
     setOpenFsDropDown(!openFsDropDown)
   };
 
+
+
   const toggleTextColor = async (e, colorStyle) => {
     e.preventDefault();
-    setColor(colorStyle)
+
+    let max_array_length = 3
+
+    if (color.length < max_array_length) {
+      color.unshift(colorStyle)
+    }
+
+    else if (color.length === max_array_length) {
+
+      /*console.log('here', color.length)
+      function arraymove(color, fromIndex, toIndex) {
+        var element = color[fromIndex];
+        color.splice(fromIndex, 1);
+        color.splice(toIndex, 0, element);
+      }*/
+      color.pop();
+      color.unshift(colorStyle);
+    }
+
+
+    console.log('COLOR', color)
+
 
 
 
     const selection = editorState.getSelection();
 
     // Let's just allow one color at a time. Turn off all active colors.
-    const nextContentState = Object.keys(customStyleMap)
+    /*const nextContentState = Object.keys(customStyleMap)
       .reduce((contentState, color) => {
         return Modifier.removeInlineStyle(contentState, selection, color)
-      }, editorState.getCurrentContent());
+      }, editorState.getCurrentContent());*/
 
-    console.log('NEXT', nextContentState)
+
+
+    const nextContentState = editorState.getCurrentContent();
 
 
 
@@ -444,12 +497,62 @@ export default ({ children }: Props) => {
         colorStyle
       );
     }
+    console.log('NEXT', nextEditorState)
 
 
-
+    //onChange(RichUtils.toggleInlineStyle(editorState, colorStyle))
     onChange(nextEditorState);
 
 
+  }
+
+  const toggleTextAlignement = (e, textAlignement) => {
+    e.preventDefault();
+
+    const selection = editorState.getSelection();
+
+    // Let's just allow one color at a time. Turn off all active colors.
+    /*const nextContentState = Object.keys(customStyleMap)
+      .reduce((contentState, color) => {
+        return Modifier.removeInlineStyle(contentState, selection, color)
+      }, editorState.getCurrentContent());*/
+
+
+
+    const nextContentState = editorState.getCurrentContent();
+
+
+
+    let nextEditorState = EditorState.push(
+      editorState,
+      nextContentState,
+      'change-inline-style'
+    );
+
+
+
+    const currentStyle = editorState.getCurrentInlineStyle();
+
+    // Unset style override for current color.
+    if (selection.isCollapsed()) {
+      nextEditorState = currentStyle.reduce((state, textAlignement) => {
+
+        return RichUtils.toggleInlineStyle(state, textAlignement);
+      }, nextEditorState);
+    };
+
+    // If the color is being toggled on, apply it.
+    if (!currentStyle.has(textAlignement)) {
+      nextEditorState = RichUtils.toggleInlineStyle(
+        nextEditorState,
+        textAlignement
+      );
+    }
+    console.log('NEXT', nextEditorState)
+
+
+    onChange(RichUtils.toggleInlineStyle(editorState, 'center'))
+    //onChange(nextEditorState);
   }
 
   const toggleBold = (e: MouseEvent) => {
@@ -666,7 +769,7 @@ export default ({ children }: Props) => {
         openColorPicker,
         setOpenColorPicker,
         color,
-        selectedIndex, setSelectedIndex
+        selectedIndex, setSelectedIndex, iconColor, toggleTextAlignement
 
       }}
     >

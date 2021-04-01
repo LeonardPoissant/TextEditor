@@ -76,6 +76,7 @@ const TextEditor = () => {
             onFocus={getFocus}
 
 
+
             ref={editor}
 
 
