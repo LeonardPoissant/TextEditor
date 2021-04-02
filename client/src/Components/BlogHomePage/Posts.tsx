@@ -70,7 +70,7 @@ const Posts = () => {
                 </StyledLink>
 
 
-            )) : <div></div>}
+            )) : <div>Looks like something went wrong</div>}
         </Wrapper>
     )
 

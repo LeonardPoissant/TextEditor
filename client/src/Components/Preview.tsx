@@ -84,7 +84,7 @@ const Preview = () => {
       <BackToeditorForDesktop to={{ pathname: "/Editor" }}>
         BACK TO EDITOR
       </BackToeditorForDesktop>
-      <div></div>
+
 
       <EditorWrapper className="EDIWRAP">
         {okToDisplay ? (
@@ -96,8 +96,8 @@ const Preview = () => {
             customStyleMap={customStylemap}
           />
         ) : (
-            <div>Loading... </div>
-          )}
+          <div>Loading... </div>
+        )}
       </EditorWrapper>
       <LinksToPreviewAndPostDiv>
         <BackToEditor className="BACKTO EDI" to={{ pathname: "/Editor" }}>
@@ -108,7 +108,6 @@ const Preview = () => {
           PUBLISH{" "}
         </PostContent>
       </LinksToPreviewAndPostDiv>
-      <div></div>
       <PostContentForDesktop to={{ pathname: "/", state: { publish: true } }}>
         PUBLISH
       </PostContentForDesktop>
@@ -119,10 +118,10 @@ const Preview = () => {
 
 const Wrapper = styled.div`
   display: flex;
+
   justify-content: space-around;
   align-items: center;
   height: 80vh;
-  padding: 20px;
   @media (max-width: 736px) {
     display: flex;
     flex-direction: column;
@@ -132,12 +131,8 @@ const Wrapper = styled.div`
 `;
 
 const EditorWrapper = styled.div`
-  height: 250px;
-  overflow-y: auto;
   width: 500px;
-  margin: 40px 0px 40px 0px;
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12),
-    0 3px 1px -2px rgba(0, 0, 0, 0.2);
+  height: 250px;
   & {
     ${draftJsCss}
   }
@@ -149,8 +144,8 @@ const EditorWrapper = styled.div`
 
 const BackToEditor = styled(Link)`
   text-decoration: none;
-  margin-right: 900px;
-  position: fixed;
+
+ 
   color: black;
   border-style: solid;
   border-width: 1px;
@@ -175,8 +170,6 @@ const BackToEditor = styled(Link)`
 
 const BackToeditorForDesktop = styled(Link)`
   text-decoration: none;
-  margin-right: 900px;
-  position: fixed;
   color: black;
   border-style: solid;
   border-width: 1px;
@@ -211,8 +204,8 @@ const PostContent = styled(Link)`
 `;
 
 const PostContentForDesktop = styled(Link)`
-  position: fixed;
-  margin-left: 900px;
+
+
   text-decoration: none;
   color: black;
   border-style: solid;

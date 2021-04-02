@@ -4,7 +4,7 @@
 const express = require("express");
 const morgan = require("morgan");
 const path = require("path");
-
+require('dotenv').config();
 
 
 const { CreatePost, getPost, getPostMetaData, getSinglePost, getNextPostsPage, getNumOfDocuments } = require(path.join(
@@ -51,9 +51,10 @@ app.get("/post/:id/:title", getSinglePost)
 
 var MongoClient = require('mongodb').MongoClient;
 var db;
+let connectionString = process.env.MONGO_URL;
 
 // Initialize connection once
-MongoClient.connect("mongodb+srv://Leonard:d1234567@cluster0.owjm6.mongodb.net/test?retryWrites=true&w=majority", {
+MongoClient.connect(connectionString, {
   useUnifiedTopology: true,
   useNewUrlParser: true
 }, function (err, database) {

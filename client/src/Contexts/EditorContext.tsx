@@ -134,6 +134,7 @@ export default ({ children }: Props) => {
 
   const [test, setTest] = useState(false)
   const [openFsDropDown, setOpenFsDropDown] = useState(false)
+
   const [openColorPicker, setOpenColorPicker] = useState(false)
   const [color, setColor] = useState([])
   const [selectedIndex, setSelectedIndex] = useState(0)
@@ -487,7 +488,7 @@ export default ({ children }: Props) => {
 
     //onChange(RichUtils.toggleInlineStyle(editorState, colorStyle))
     onChange(nextEditorState);
-
+    setOpenColorPicker(!openColorPicker)
 
   }
 
@@ -782,7 +783,10 @@ export default ({ children }: Props) => {
         openColorPicker,
         setOpenColorPicker,
         color,
-        selectedIndex, setSelectedIndex, iconColor, toggleTextAlignement
+        selectedIndex,
+        setSelectedIndex,
+        iconColor,
+        toggleTextAlignement
 
       }}
     >
