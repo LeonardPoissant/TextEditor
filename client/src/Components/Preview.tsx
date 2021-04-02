@@ -133,6 +133,7 @@ const Wrapper = styled.div`
 const EditorWrapper = styled.div`
   width: 500px;
   height: 250px;
+  hyphens: auto;
   & {
     ${draftJsCss}
   }

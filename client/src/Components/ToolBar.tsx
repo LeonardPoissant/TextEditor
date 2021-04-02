@@ -148,8 +148,9 @@ const ToolBar = (props) => {
             }}
           />
         </EmbedButton>
-
-        <div onClick={() => handleOpenFsDropDown()}>T</div>
+        <ChangeStyleButton>
+          <div onClick={() => handleOpenFsDropDown()}>T</div>
+        </ChangeStyleButton>
         <ColorIconDropDown onClick={() => handleOpenColorPicker()} onChangeColor={iconColor} onChooseColor={color} />
 
         {promptForURL ? (

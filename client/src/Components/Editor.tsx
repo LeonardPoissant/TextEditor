@@ -61,7 +61,7 @@ const TextEditor = () => {
 
 
   return (
-    <Wrapper active={active as any}>
+    <Wrapper active={active as any} className="RichEditor-root">
 
       <ToolBar focusEditor={() => getFocus()} editor={editor} />
       {okToDisplay ? (
@@ -74,12 +74,9 @@ const TextEditor = () => {
             handleKeyCommand={handleKeyCommand}
             decorators={customDecorator}
             onFocus={getFocus}
-
-
-
+            placeholder="Tell a story..."
             ref={editor}
-
-
+            spellCheck={true}
           ></StyledEditor>
         </TextArea>
       ) : (
@@ -110,21 +107,25 @@ const Wrapper = styled.div<WrapperProps>`
     background: rgb(242, 242, 242);
     pointer-events: none;
   `};
+ 
   padding: 20px;
 `;
 
 const StyledEditor = styled(Editor) <EditorProps>`
-max-width:fit-content;
+width:min-content;
+
+
 `;
 
 const TextArea = styled.div`
   height: 250px;
   overflow-y: auto;
-  width: 1000px;
+ width:500px;
+//overflow-wrap: anywhere ;
+hyphens:auto;
   border-style: solid;
   border-color: rgb(161, 161, 161);
   border-width: 1px;
-  display: flex;
   & {
     ${draftJsCss}
   }
