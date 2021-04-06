@@ -8,10 +8,13 @@ import { EditorContext } from "../../Contexts/EditorContext"
 const ColorPickerV2 = (props) => {
     const {
         selectedIndex,
-        setSelectedIndex
-    } = useContext(EditorContext);
 
+        handleChoosePrimaryColor
+    } = useContext(EditorContext);
+    const [isVisible, setIsVisible] = useState(false)
     const onToggle = props.onToggle
+
+    console.log('ISVISIBLE', isVisible)
 
     return (
         <Wrapper>
@@ -23,14 +26,16 @@ const ColorPickerV2 = (props) => {
                         <Circle
                             key={i}
                             style={{ backgroundColor: c.shade }}
-                            onClick={() => setSelectedIndex(i)}
+                            onClick={() => handleChoosePrimaryColor(i, setIsVisible(true))}
                         > </Circle>
                     </ColorWrapper>
                 ))}
-            </PrimaryColorsWrapper >
+            </PrimaryColorsWrapper  >
+            <div>IM AN ANIMATION</div>
             <SecondaryPicker
                 onToggle={onToggle}
                 secondaryKey={primaries[selectedIndex].id}
+                isVisible={isVisible}
             />
         </Wrapper>
     );
@@ -56,6 +61,8 @@ display: flex;
 flex-wrap: wrap;
 justify-content:space-around;
 width:104px;
+margin-top:-10px;
+
 
 `;
 
@@ -66,6 +73,7 @@ width:15px;
 height:15px;
 border:solid;
 border-width:1px;
+cursor:pointer;
 
 `;
 

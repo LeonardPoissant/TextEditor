@@ -139,6 +139,7 @@ export default ({ children }: Props) => {
   const [color, setColor] = useState([])
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [iconColor, setIconColor] = useState("");
+  const [animateColor, setAnimateColor] = useState(false)
 
 
   const [state, setState] = useState({
@@ -147,6 +148,12 @@ export default ({ children }: Props) => {
 
 
 
+
+  const handleChoosePrimaryColor = (i) => {
+    setSelectedIndex(i)
+
+
+  }
 
 
   const handleChangeComplete = (colors, e) => {
@@ -786,7 +793,8 @@ export default ({ children }: Props) => {
         selectedIndex,
         setSelectedIndex,
         iconColor,
-        toggleTextAlignement
+        toggleTextAlignement,
+        handleChoosePrimaryColor
 
       }}
     >

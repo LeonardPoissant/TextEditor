@@ -39,7 +39,7 @@ const ColorIconDropDown = (props) => {
 
 
         <Wrapper className="ICON WRAPPER" onClick={() => props.onClick()}>
-            < StyledSVG width={outerDiameter} height={outerDiameter} >
+            < StyledSVG width={outerDiameter} height={outerDiameter} stroke="black" strokeWidth="0.5" >
                 {arrayOfPaths.map((path, index) => (
                     <path d={path.props.d} fill={path.props.fill} key={index} />
                 ))}

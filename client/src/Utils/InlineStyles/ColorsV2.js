@@ -171,12 +171,12 @@ const gray = {
 const black = {
     defaultIndex: 12,
     hidePalette: true,
-    palettes: [...gray.palettes, { id: '#000000', shade: '#000000' }]
+    palettes: [...gray.palettes]
 };
 const white = {
     defaultIndex: 12,
     hidePalette: true,
-    palettes: [...gray.palettes, { id: '#FFFFFF', shade: '#FFFFFF' }]
+    palettes: [...gray.palettes]
 };
 
 export const secondaries = {

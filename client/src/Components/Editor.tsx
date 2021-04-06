@@ -1,6 +1,7 @@
 // @ts-nocheck
 
 import React, { useEffect, useRef, useContext } from "react";
+import { useSpring, animated, config } from 'react-spring'
 
 import { Link } from "react-router-dom";
 import { Editor } from "draft-js";
@@ -11,6 +12,7 @@ import ToolBar from "./ToolBar";
 import mediaBlockRenderer from "../entities/mediaBlockRenderer";
 import draftJsCss from "../Utils/EditorCss";
 import customStylemap from "../Utils/CustomStyleMap"
+
 
 
 interface WrapperProps {
@@ -61,6 +63,7 @@ const TextEditor = () => {
 
 
   return (
+
     <Wrapper active={active as any} className="RichEditor-root">
 
       <ToolBar focusEditor={() => getFocus()} editor={editor} />
@@ -74,7 +77,7 @@ const TextEditor = () => {
             handleKeyCommand={handleKeyCommand}
             decorators={customDecorator}
             onFocus={getFocus}
-            placeholder="Tell a story..."
+            placeholder="Write something nice..."
             ref={editor}
             spellCheck={true}
           ></StyledEditor>
@@ -91,7 +94,12 @@ const TextEditor = () => {
         </PostContent>
       </LinksToPreviewAndPostDiv>
       <button onClick={() => PostTest()}>TESTTTT</button>
+      <a class="twitter-share-button"
+        href="https://twitter.com/intent/tweet?"
+      >
+        Tweet</a>
     </Wrapper>
+
   );
 };
 
@@ -112,7 +120,7 @@ const Wrapper = styled.div<WrapperProps>`
 `;
 
 const StyledEditor = styled(Editor) <EditorProps>`
-width:min-content;
+
 
 
 `;
@@ -132,6 +140,22 @@ hyphens:auto;
   @media (max-width: 736px) {
     width: 100%;
   }
+  @keyframes drawing {
+    0% {border-bottom-color: #19f6e8};
+    25%{border-right-color: #19f6e8;
+      border-left-color: #19f6e8}
+      50% {border-top-color: #19f6e8};
+      75%{border-top-color: #19f6e8;
+        border-right-color: #19f6e8
+      }
+      80%{
+        border-left-color: #19f6e8;
+        border-bottom-color:#19f6e8;
+      }
+    
+}
+animation:  drawing  1s linear forwards;
+
 `;
 
 const LinksToPreviewAndPostDiv = styled.div`

@@ -149,7 +149,7 @@ const ToolBar = (props) => {
           />
         </EmbedButton>
         <ChangeStyleButton>
-          <div onClick={() => handleOpenFsDropDown()}>T</div>
+          <div onClick={() => handleOpenFsDropDown()} style={{ fontFamily: "serif" }}>T</div>
         </ChangeStyleButton>
         <ColorIconDropDown onClick={() => handleOpenColorPicker()} onChangeColor={iconColor} onChooseColor={color} />
 
@@ -211,7 +211,7 @@ const ToolBar = (props) => {
         </StylesWrapper>
         <ObliqueLeft></ObliqueLeft>
       </Wrapper>
-    </ParentWrapper>
+    </ParentWrapper >
   );
 };
 
@@ -224,12 +224,10 @@ position:relative;
   flex-direction: row;
   padding: 6px;
   justify-content: space-around;
-  border-left: solid;
-  border-top: solid;
-  border-right: solid;
- 
-  border-color: rgb(161, 161, 161);
-  border-width: 1px;
+  border-top: 1px  solid grey;
+  border-left:1px  solid grey;
+  border-right:1px  solid grey;
+
   @media (max-width: 736px) {
     display: flex;
     flex-direction: row;
@@ -242,6 +240,15 @@ position:relative;
     border-width: 1px;
     -webkit-overflow-scrolling: touch;
   }
+
+  @keyframes draw {
+    0% {border-bottom-color: #19f6e8};
+    50%{border-right-color: #19f6e8;
+      border-left-color: #19f6e8}
+    75% {border-top-color: #19f6e8;}
+}
+animation:  draw  1s linear forwards;
+animation-delay: 1s;
 `;
 
 const ParentWrapper = styled.div`

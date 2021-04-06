@@ -3,7 +3,7 @@ import React, { useContext, useState } from "react";
 import { EditorContext } from "../Contexts/EditorContext";
 
 import StyledInput from "./Input";
-
+import MetaTags from "./Helmet"
 import styled from "styled-components";
 
 const PostDetails = () => {
@@ -43,6 +43,7 @@ const PostDetails = () => {
             <option value="random">random</option>
         </select>
 
+        <MetaTags title={title} description={description}></MetaTags>
 
     </Wrapper>)
 };

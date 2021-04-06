@@ -17,7 +17,10 @@ const HomePage = (props: any) => {
 
   return (
     <Wrapper>
-
+      <a className="twitter-share-button"
+        href="https://twitter.com/intent/tweet?text=Hello%20world"
+      >
+        Tweet</a>
 
       {publish === undefined ? (
         <>
@@ -31,19 +34,19 @@ const HomePage = (props: any) => {
           </p>
         </>
       ) : (
-          <EditorWrapper className="EDIWRAP">
-            {okToDisplay ? (
-              <Editor
-                readOnly={true}
-                editorState={editorState}
-                blockRendererFn={mediaBlockRenderer}
-                onChange={onChange}
-              />
-            ) : (
-                <div>Loading... </div>
-              )}
-          </EditorWrapper>
-        )}
+        <EditorWrapper className="EDIWRAP">
+          {okToDisplay ? (
+            <Editor
+              readOnly={true}
+              editorState={editorState}
+              blockRendererFn={mediaBlockRenderer}
+              onChange={onChange}
+            />
+          ) : (
+            <div>Loading... </div>
+          )}
+        </EditorWrapper>
+      )}
     </Wrapper>
   );
 };

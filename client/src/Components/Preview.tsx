@@ -121,7 +121,7 @@ const Wrapper = styled.div`
 
   justify-content: space-around;
   align-items: center;
-  height: 80vh;
+
   @media (max-width: 736px) {
     display: flex;
     flex-direction: column;
@@ -132,7 +132,7 @@ const Wrapper = styled.div`
 
 const EditorWrapper = styled.div`
   width: 500px;
-  height: 250px;
+
   hyphens: auto;
   & {
     ${draftJsCss}
