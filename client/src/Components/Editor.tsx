@@ -60,12 +60,11 @@ const TextEditor = () => {
   }
 
 
-
-
   return (
 
-    <Wrapper active={active as any} className="RichEditor-root">
 
+
+    <Wrapper active={active as any} className="RichEditor-root">
       <ToolBar focusEditor={() => getFocus()} editor={editor} />
       {okToDisplay ? (
         <TextArea onClick={() => getFocus()}  >

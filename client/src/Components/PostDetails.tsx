@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { EditorContext } from "../Contexts/EditorContext";
 
 import StyledInput from "./Input";
@@ -15,6 +15,8 @@ const PostDetails = () => {
         setCategory
     } = useContext(EditorContext);
 
+    const [test, setTest] = useState(false)
+
 
     /*  placeholder="Choose a title"
             value={title}
@@ -22,6 +24,7 @@ const PostDetails = () => {
 
     // <MyStyledInput />
     return (<Wrapper >
+        <button onClick={() => setTest(!test)}></button>
         <StyledInput
             placeholder="Choose a title"
             value={title}

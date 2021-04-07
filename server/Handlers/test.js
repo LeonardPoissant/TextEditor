@@ -38,6 +38,8 @@ const getPostMetaData = async (req, res) => {
   const pageNumber = req.params.page;
   const nPerPage = 5;
 
+
+
   try {
     const projection = { ObjectId: 1, title: 1, description: 1, category: 1, date: 1 };
     const posts = await db
@@ -84,7 +86,7 @@ const getNumOfDocuments = async (req, res) => {
       arrayOfPages = [...Array(numOfDocuments % n).keys('a')]
     }
 
-    console.log(arrayOfPages)
+
 
 
 
@@ -129,7 +131,14 @@ const getNextPostsPage = async (req, res) => {
 const getPost = async (req, res) => {
   const db = req.db.db('test');
 
-  try {
+
+
+  res.status(201).json({
+    status: 201,
+    data: 'createDB'
+  });
+
+  /*try {
     const createDB = await db
       .collection("Post")
       .find().toArray()
@@ -146,7 +155,7 @@ const getPost = async (req, res) => {
       err: err,
     });
     console.log(err);
-  }
+  }*/
 
 
 }

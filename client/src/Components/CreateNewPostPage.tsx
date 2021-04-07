@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-import React from "react";
+import React, { useEffect } from "react";
 
 import TextEditor from "./Editor";
 import PostDetails from "./PostDetails";
@@ -9,7 +9,7 @@ import ColorIconDropDown from "./Color-Icon-Dropdown"
 import styled from "styled-components"
 
 const CreateNewPost = () => {
-    //  
+
     return (
         <Wrapper>
             <div></div>

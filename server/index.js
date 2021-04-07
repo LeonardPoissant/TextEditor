@@ -4,6 +4,7 @@
 const express = require("express");
 const morgan = require("morgan");
 const path = require("path");
+const fs = require("fs")
 require('dotenv').config();
 
 
@@ -12,7 +13,7 @@ const { CreatePost, getPost, getPostMetaData, getSinglePost, getNextPostsPage, g
   "./Handlers/test"
 ));
 
-const PORT = 4000
+const PORT = 5000
 
 let app = express();
 
@@ -64,6 +65,25 @@ MongoClient.connect(connectionString, {
   // Start the application after the database connection is ready
   app.listen(PORT, () => console.info(`Listening on port ${PORT}`))
 });
+
+
+app.get("/Editor", (req, res) => {
+  console.log('test', test)
+  const filePath = path.resolve(__dirname, "../client/build/index.html")
+
+  fs.readFile(filePath, "utf8", (err, data) => {
+    if (err) {
+      console.log(err)
+    }
+    data = data
+      .replace(/__TWITTER-TITLE__/g, "sdfsdf")
+      .replace(/__TWITTER-DESCRIPTION__/g, "sdfsdf")
+
+    console.log('data', data)
+
+    res.send(data)
+  })
+})
 
 
 

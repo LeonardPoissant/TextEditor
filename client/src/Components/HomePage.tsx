@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { EditorContext } from "../Contexts/EditorContext";
 import mediaBlockRenderer from "../entities/mediaBlockRenderer";
 import draftJsCss from "../Utils/EditorCss";
+import MetaTags from "./Helmet"
 
 const HomePage = (props: any) => {
   const { editorState, okToDisplay, onChange } = useContext(EditorContext);
@@ -17,6 +18,7 @@ const HomePage = (props: any) => {
 
   return (
     <Wrapper>
+      <MetaTags></MetaTags>
       <a className="twitter-share-button"
         href="https://twitter.com/intent/tweet?text=Hello%20world"
       >

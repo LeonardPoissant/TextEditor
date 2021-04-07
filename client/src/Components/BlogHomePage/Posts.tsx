@@ -28,7 +28,7 @@ const Posts = () => {
 
 
     useEffect(() => {
-
+        console.log('HERE')
         fetch(`/posts/${page}`)
             .then((res) => res.json())
             .then((data) => {

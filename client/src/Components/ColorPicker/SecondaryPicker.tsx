@@ -39,7 +39,8 @@ const SecondaryPicker = (props) => {
 export default SecondaryPicker;
 
 const Wrapper = styled.div`
-
+position:absolute;
+margin-left:300px;
 display: flex;
 flex-wrap: wrap;
 justify-content:space-around;

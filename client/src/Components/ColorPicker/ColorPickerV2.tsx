@@ -4,6 +4,7 @@ import { primaries } from '../../Utils/InlineStyles/ColorsV2';
 import styled from "styled-components"
 import SecondaryPicker from './SecondaryPicker';
 import { EditorContext } from "../../Contexts/EditorContext"
+import Animation from "./Animation"
 
 const ColorPickerV2 = (props) => {
     const {
@@ -31,7 +32,7 @@ const ColorPickerV2 = (props) => {
                     </ColorWrapper>
                 ))}
             </PrimaryColorsWrapper  >
-            <div>IM AN ANIMATION</div>
+            <Animation color={primaries[selectedIndex].id} isVisible={isVisible} />
             <SecondaryPicker
                 onToggle={onToggle}
                 secondaryKey={primaries[selectedIndex].id}
@@ -58,6 +59,8 @@ margin-top:47px;
 
 const PrimaryColorsWrapper = styled.div`
 display: flex;
+position:absolute;
+margin-left: -300px;
 flex-wrap: wrap;
 justify-content:space-around;
 width:104px;
