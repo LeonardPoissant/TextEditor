@@ -34,14 +34,16 @@ app.use(morgan("tiny"));
 app.use(express.static("./server"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use("/", express.static(__dirname + "../../client/build"));
+app.use("/", express.static(__dirname + "/"));
+
+//"../../client/build"
 app.use(function (req, res, next) {
   req.db = db;
   next();
 });
-app.get("/*", (req, res) => {
+/*app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname + "../../client/build/index.html"));
-})
+})*/
 
 app.post("/test", CreatePost)
 app.get("/testGet", getPost)

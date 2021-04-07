@@ -26,22 +26,21 @@ I recommend watching this very interesting introduction:
 " target="_blank"><img src="http://img.youtube.com/vi/feUYwoLhE_4/0.jpg" 
 alt="Rich Text Editing with React" width="240" height="180" border="10" /></a>
 
-The app is strictly FE. The EditorState, an Immutable Record that represents the entire state of a Draft editor, is saved on sessionStorage for now.
+ The EditorState, an Immutable Record that represents the entire state of a Draft editor, is saved on sessionStorage to let users test it.
 
-![Alt Text](https://i.gyazo.com/abd9ff74c521798b1b94336858885306.gif)
+![Alt Text](https://i.gyazo.com/e79907c4682c9f602f073bb3f3ee053c.gif)
 
 More on immutable records here : https://web.archive.org/web/20150623131347/http://facebook.github.io:80/immutable-js/docs/#/Record
 
-Developed using React, TypeScript, draft.js and styled-components.
+FE developed using React, TypeScript, draft.js and styled-components.
 
 ---
+I started implementing a BE that runs with node and express, for the db I am using MongoDB.
 
-## Installation
+![Alt Text](https://i.gyazo.com/77f1ef3978f827d27a236e9813f16544.gif)
 
-```bash
-yarn install
 
-```
+
 
 ---
 
@@ -49,7 +48,7 @@ yarn install
 
 ### What is to come ?
 
-In futur iterations, I will be implementing a BE and adding more editing options.
+In futur iterations, Because  I will be implementing a LogIn that will make use of jwt.
 
 ### Is Littera-Clip mobile friendly ?
 
