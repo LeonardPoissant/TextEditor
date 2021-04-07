@@ -48,7 +48,7 @@ I started implementing a BE that runs with node and express, for the db I am usi
 
 ### What is to come ?
 
-In futur iterations, Because  I will be implementing a LogIn that will make use of jwt.
+In futur iterations,  I will be implementing a LogIn that will make use of jwt.
 
 ### Is Littera-Clip mobile friendly ?
 
