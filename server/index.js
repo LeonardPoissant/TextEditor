@@ -69,37 +69,7 @@ MongoClient.connect(connectionString, {
 });
 
 
-app.get("/Editor", (req, res) => {
-  console.log('test', test)
-  const filePath = path.resolve(__dirname, "../client/build/index.html")
-
-  fs.readFile(filePath, "utf8", (err, data) => {
-    if (err) {
-      console.log(err)
-    }
-    data = data
-      .replace(/__TWITTER-TITLE__/g, "sdfsdf")
-      .replace(/__TWITTER-DESCRIPTION__/g, "sdfsdf")
-
-    console.log('data', data)
-
-    res.send(data)
-  })
-})
 
 
 
-// Reuse database object in request handlers
-app.get("/", async function (req, res) {
-
-  const count = await req.db.db('test').collection("Post").estimatedDocumentCount()
-
-  console.log('count----', count)
-
-
-  res.json({
-    count: count
-
-  })
-});
 

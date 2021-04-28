@@ -33,10 +33,10 @@ const App = () => {
         <Route path="/Profile">
           <Profile />
         </Route>
-        <Route path="Post/:id/:title" component={BlogPostPage}></Route>
+
+        <Route path="/Post/:id/:title" component={BlogPostPage}></Route>
         <Route path="/About">
           <About />
-
         </Route>
         <Route path="/test">
           <Test />

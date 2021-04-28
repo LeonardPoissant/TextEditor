@@ -17,7 +17,7 @@ const PostDetails = () => {
 
     const [test, setTest] = useState(false)
 
-
+    console.log('title', description)
     /*  placeholder="Choose a title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}*/
@@ -25,13 +25,10 @@ const PostDetails = () => {
     // <MyStyledInput />
     return (<Wrapper >
         <button onClick={() => setTest(!test)}></button>
-        <StyledInput
-            placeholder="Choose a title"
+
+        <input placeholder="Choose a title"
             value={title}
-            onChange={(e) => setTitle(e.target.value)}
-
-
-        />
+            onChange={(e) => setTitle(e.target.value)}></input>
 
         <textarea
             placeholder="Write a small description"

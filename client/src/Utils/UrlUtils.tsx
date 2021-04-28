@@ -8,7 +8,7 @@ export default {
     let id = "";
     if (!url.match(YOUTUBEMATCH_URL) === undefined) {
       return console.log("NOT YOUTUBE")
-    }
+    };
 
     if (url.match(YOUTUBEMATCH_URL!) != null) {
       id = url && url.match(YOUTUBEMATCH_URL)![1];

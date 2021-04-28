@@ -10,6 +10,8 @@ const CreatePost = async (req, res) => {
   const post = req.body
   const id = new ObjectID
 
+  console.log('post', post)
+
   try {
     const createDB = await db
       .collection("Post")
@@ -39,14 +41,17 @@ const getPostMetaData = async (req, res) => {
   const nPerPage = 5;
 
 
+  console.log('here')
 
   try {
     const projection = { ObjectId: 1, title: 1, description: 1, category: 1, date: 1 };
     const posts = await db
       .collection("Post")
-      .find({}, { projection }).skip(pageNumber > 0 ? ((pageNumber - 1) * nPerPage) : 0).limit(5).sort({ 'date': 1 }).toArray()
+      .find().toArray()
+    // .find({}, { projection }).skip(pageNumber > 0 ? ((pageNumber - 1) * nPerPage) : 0).limit(5).sort({ 'date': 1 }).toArray()
 
     //.limit(5).sort({ 'date': 1 }).toArray()
+    console.log(posts)
 
     res.status(201).json({
       status: 201,
@@ -85,6 +90,8 @@ const getNumOfDocuments = async (req, res) => {
     } else {
       arrayOfPages = [...Array(numOfDocuments % n).keys('a')]
     }
+
+
 
 
 
@@ -133,12 +140,7 @@ const getPost = async (req, res) => {
 
 
 
-  res.status(201).json({
-    status: 201,
-    data: 'createDB'
-  });
-
-  /*try {
+  try {
     const createDB = await db
       .collection("Post")
       .find().toArray()
@@ -155,7 +157,7 @@ const getPost = async (req, res) => {
       err: err,
     });
     console.log(err);
-  }*/
+  }
 
 
 }
@@ -163,9 +165,21 @@ const getPost = async (req, res) => {
 const getSinglePost = async (req, res) => {
   const db = req.db.db('test');
   const get = req.params
-  console.log(get)
+  console.log('TITLE', get)
 
   try {
+
+    const post = await db
+      .collection("Post")
+      .findOne({ _id: ObjectID(get.id) })
+
+    console.log('post-----, ', post)
+
+
+    res.status(201).json({
+      status: 201,
+      data: post
+    });
 
   } catch (err) {
     console.log('er0', err)

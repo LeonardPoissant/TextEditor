@@ -2,6 +2,8 @@ import React, { useContext } from "react";
 import { Editor } from "draft-js";
 import styled from "styled-components";
 
+import { Link } from "react-router-dom";
+
 import { EditorContext } from "../Contexts/EditorContext";
 import mediaBlockRenderer from "../entities/mediaBlockRenderer";
 import draftJsCss from "../Utils/EditorCss";
@@ -18,6 +20,9 @@ const HomePage = (props: any) => {
 
   return (
     <Wrapper>
+
+      <a href="http://localhost:3000/test">IM A LINK</a>
+
       <MetaTags></MetaTags>
       <a className="twitter-share-button"
         href="https://twitter.com/intent/tweet?text=Hello%20world"

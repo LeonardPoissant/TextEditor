@@ -45,7 +45,16 @@ const Video = (props) => {
 };
 
 const Media = (props) => {
-  const entity = props.contentState.getEntity(props.block.getEntityAt(0));
+  let entity;
+  if (props.contentState.getEntity(props.block.getEntityAt(0)) === null) {
+    console.log('NULL')
+  }
+  else if (props.contentState.getEntity(props.block.getEntityAt(0)) != null) {
+    console.log('NOT NULL')
+    entity = props.contentState.getEntity(props.block.getEntityAt(0));
+  }
+
+
   const { src } = entity.getData();
   getSrc(src);
   const type = entity.getType();

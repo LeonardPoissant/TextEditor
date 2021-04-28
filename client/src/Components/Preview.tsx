@@ -33,50 +33,7 @@ import customStylemap from "../Utils/CustomStyleMap"
 const Preview = () => {
   const { editorState, okToDisplay, onChange, PostTest } = useContext(EditorContext);
 
-  /*const PostTest = ()=>{
-    const convertedContent =  JSON.stringify(convertToRaw(e))
-    fetch("/test", {
-      method:"POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify({
-       Post: convertedContent
-      }),
-    })
-    .then((res) => res.json())
-        .then((db) => {
-          console.log(db);
 
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-
-  }*/
-
-  /*const Test =(=>{
-   
-    fetch("/test", {
-      method:"POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify({
-       Post: convertedContent
-      }),
-    })
-    .then((res) => res.json())
-        .then((db) => {
-          console.log(db);
-
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-  }*/
 
 
   return (

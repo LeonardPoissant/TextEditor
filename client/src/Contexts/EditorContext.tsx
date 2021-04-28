@@ -691,10 +691,11 @@ export default ({ children }: Props) => {
         { src: src + videoId }
       );
       const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
+      console.log("entitityKey", entityKey)
       const newEditorState = EditorState.set(
         editorState,
-        { currentContent: contentStateWithEntity }
-        // "create-entity"
+        { currentContent: contentStateWithEntity },
+        "create-entity"
       );
       setEditorState(
         AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, " ")
@@ -711,8 +712,8 @@ export default ({ children }: Props) => {
       const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
       const newEditorState = EditorState.set(
         editorState,
-        { currentContent: contentStateWithEntity }
-        // "create-entity"
+        { currentContent: contentStateWithEntity },
+        "create-entity"
       );
       setEditorState(
         AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, " ")
@@ -794,7 +795,8 @@ export default ({ children }: Props) => {
         setSelectedIndex,
         iconColor,
         toggleTextAlignement,
-        handleChoosePrimaryColor
+        handleChoosePrimaryColor,
+        decorator
 
       }}
     >
