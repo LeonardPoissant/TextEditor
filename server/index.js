@@ -8,7 +8,7 @@ const fs = require("fs")
 require('dotenv').config();
 
 
-const { CreatePost, getPost, getPostMetaData, getSinglePost, getNextPostsPage, getNumOfDocuments } = require(path.join(
+const { CreatePost, getPost, getPostMetaData, getSinglePost, getNextPostsPage, numOfPages } = require(path.join(
   __dirname,
   "./Handlers/test"
 ));
@@ -27,6 +27,7 @@ app.use((req, res, next) => {
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept"
   );
+  res.header("Access-Control-Allow-Origin", "*");
   next();
 });
 
@@ -47,7 +48,7 @@ app.use(function (req, res, next) {
 
 app.post("/test", CreatePost)
 app.get("/testGet", getPost)
-app.get("/posts", getNumOfDocuments)
+app.get("/posts", numOfPages)
 app.get("/posts/:page", getPostMetaData)
 app.get("posts/:page", getNextPostsPage)
 app.get("/post/:id/:title", getSinglePost)

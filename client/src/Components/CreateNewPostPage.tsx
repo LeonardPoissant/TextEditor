@@ -1,17 +1,20 @@
 // @ts-nocheck
 
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 
 import TextEditor from "./Editor";
 import PostDetails from "./PostDetails";
-import ColorIconDropDown from "./Color-Icon-Dropdown"
+import { EditorContext } from "../Contexts/EditorContext";
 
 import styled from "styled-components"
 
 const CreateNewPost = () => {
+    const {
+        postArticle,
+    } = useContext(EditorContext);
 
     return (
-        <Wrapper>
+        <Wrapper onSubmit={(e) => postArticle(e)} >
             <div></div>
             <TextEditor />
             <PostDetails />
@@ -20,7 +23,7 @@ const CreateNewPost = () => {
 
 const Wrapper = styled.div`
 display:flex;
-justify-content: space-around;
+justify-content: space-between;
 `;
 
 

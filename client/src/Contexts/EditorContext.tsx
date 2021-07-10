@@ -123,7 +123,7 @@ export default ({ children }: Props) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
-  const [date, setDate] = useState("")
+  //const [date, setDate] = useState("")
   const [pageNumber, setPageNumber] = useState(1);
   const [fontSizes, setFontSizes] = useState([fontSizeStyle])
   const [currentColor, setCurrentColor] = useState("")
@@ -140,6 +140,7 @@ export default ({ children }: Props) => {
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [iconColor, setIconColor] = useState("");
   const [animateColor, setAnimateColor] = useState(false)
+  const [loading, setIsLoading] = useState(false)
 
 
   const [state, setState] = useState({
@@ -151,8 +152,6 @@ export default ({ children }: Props) => {
 
   const handleChoosePrimaryColor = (i) => {
     setSelectedIndex(i)
-
-
   }
 
 
@@ -202,20 +201,6 @@ export default ({ children }: Props) => {
     setEditorState(newState)
   };
 
-  useEffect(() => {
-
-  }, [state])
-
-  const aTest = () => {
-    setPage(page + 1)
-  }
-
-  useEffect(() => {
-
-    setTest(true)
-  }, [])
-
-  let abc = "testset"
 
 
 
@@ -280,27 +265,24 @@ export default ({ children }: Props) => {
 
 
 
-  useEffect(() => {
-    let current = new Date();
-    setDate(current.getDate().toString() + "/" + (current.getMonth() + 1).toString() + "/" + current.getFullYear().toString())
-  }, [])
+  /* useEffect(() => {
+     let current = new Date();
+     setDate(current.getDate().toString() + "/" + (current.getMonth() + 1).toString() + "/" + current.getFullYear().toString())
+   }, [])*/
 
 
 
 
 
-  const PostTest = () => {
-    const contentState = editorState.getCurrentContent();
+  const postArticle = (e) => {
+    e.stopPropagation();
+    setIsLoading(!loading)
+    sessionStorage.clear();
 
+    let contentState = editorState.getCurrentContent();
+    let convertedContent = convertToRaw(contentState);
+    let date = new Date()
 
-    const convertedContent = convertToRaw(contentState)
-    setTitle(title)
-    setDescription(description)
-    setCategory(category)
-
-    const convertedTitle = JSON.stringify(title)
-    console.log('CONTENT', convertedContent)
-    console.log('TITLE', convertedTitle)
     fetch("/test", {
       method: "POST",
       headers: {
@@ -318,8 +300,7 @@ export default ({ children }: Props) => {
     })
       .then((res) => res.json())
       .then((db) => {
-        console.log('DB HERE', db);
-
+        setIsLoading(false)
       })
       .catch((err) => {
         console.log(err);
@@ -655,11 +636,11 @@ export default ({ children }: Props) => {
     setURLType(URLType);
 
     if (URLType === "VIDEOTYPE") {
-      console.log('HERE1')
+
       const getYouTubeId = getVideo.getYoutubeSrc(URLValue);
-      console.log('HERE2', getYouTubeId)
+
       const getVimeoId = getVideo.getVimeoSrc(URLValue)
-      console.log('HERE6', getVimeoId)
+
       const contentState = editorState.getCurrentContent();
       let videoId = "";
       let src = ""
@@ -670,18 +651,16 @@ export default ({ children }: Props) => {
 
       if (getYouTubeId && !getVimeoId) {
 
-        console.log('hereGET YOUTUBE')
         src = "https://www.youtube.com/embed/"
         videoId = getYouTubeId.srcID
       }
 
       if (getVimeoId && !getYouTubeId) {
-        console.log('hereGET VIEMO')
         src = "https://player.vimeo.com/video/";
         videoId = getVimeoId.srcID;
       }
 
-      console.log('VIDEOID', src + videoId)
+
 
 
 
@@ -698,7 +677,7 @@ export default ({ children }: Props) => {
         "create-entity"
       );
       setEditorState(
-        AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, " ")
+        AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, "  ")
       );
 
     } else if (URLType === "image") {
@@ -767,7 +746,7 @@ export default ({ children }: Props) => {
         link,
         open,
         setOpen,
-        PostTest,
+        postArticle,
         title,
         setTitle,
         description,
@@ -776,10 +755,10 @@ export default ({ children }: Props) => {
         setCategory,
         pageNumber,
         page,
-        aTest,
+
         setPage,
         test,
-        abc,
+
         toggleFontSizeStyle,
         test12,
         focusEditor,
@@ -796,7 +775,8 @@ export default ({ children }: Props) => {
         iconColor,
         toggleTextAlignement,
         handleChoosePrimaryColor,
-        decorator
+        decorator,
+        loading
 
       }}
     >

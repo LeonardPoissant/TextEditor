@@ -36,22 +36,21 @@ const CreatePost = async (req, res) => {
 };
 
 const getPostMetaData = async (req, res) => {
-  const db = req.db.db('test');
   const pageNumber = req.params.page;
+  const db = req.db.db('test');
+
   const nPerPage = 5;
 
 
-  console.log('here')
-
   try {
-    const projection = { ObjectId: 1, title: 1, description: 1, category: 1, date: 1 };
+    const projection = { ObjectId: 1, "post.title": 1, "post.description": 1, "post.category": 1, "post.date": 1 };
     const posts = await db
       .collection("Post")
-      .find().toArray()
-    // .find({}, { projection }).skip(pageNumber > 0 ? ((pageNumber - 1) * nPerPage) : 0).limit(5).sort({ 'date': 1 }).toArray()
+      .find({}, { projection })
+      .skip(pageNumber > 0 ? ((pageNumber - 1) * nPerPage) : 0).limit(5)
+      .sort({ 'post.date': -1 }).toArray()
 
-    //.limit(5).sort({ 'date': 1 }).toArray()
-    console.log(posts)
+    console.log('POSTS--------', posts)
 
     res.status(201).json({
       status: 201,
@@ -68,33 +67,18 @@ const getPostMetaData = async (req, res) => {
   }
 }
 
-const getNumOfDocuments = async (req, res) => {
+const numOfPages = async (req, res) => {
   const db = req.db.db('test');
-
-  let n = 5
-
-  let arrayOfPages;
-
-  /*if (numOfPages % n != 0) {
-    arrayOfPages = [...Array(numOfPages % n + 1).keys()]
-  } else {
-    arrayOfPages = [...Array(numOfPages % n).keys()]
-  }*/
-
+  let maxBlogPostsPerPage = 5;
+  let arrayOfPages = [];
 
   try {
-    const numOfDocuments = await db.collection("Post").estimatedDocumentCount()
-
-    if (numOfDocuments % n != 0) {
-      arrayOfPages = [...Array(numOfDocuments % n + 1).keys('a')]
+    const numOfBlogPosts = await db.collection("Post").estimatedDocumentCount();
+    if (numOfBlogPosts % maxBlogPostsPerPage != 0) {
+      arrayOfPages = [...Array(Math.ceil(numOfBlogPosts / maxBlogPostsPerPage)).keys('a')];
     } else {
-      arrayOfPages = [...Array(numOfDocuments % n).keys('a')]
+      arrayOfPages = [...Array(numOfBlogPosts / maxBlogPostsPerPage).keys('a')];
     }
-
-
-
-
-
 
 
 
@@ -103,6 +87,7 @@ const getNumOfDocuments = async (req, res) => {
       data: arrayOfPages
     });
   } catch (err) {
+    console.log('ERR', err)
     res.status(500).json({
       data: "post,",
       message: "Something went wrong",
@@ -192,5 +177,5 @@ module.exports = {
   getPostMetaData,
   getSinglePost,
   getNextPostsPage,
-  getNumOfDocuments
+  numOfPages
 }

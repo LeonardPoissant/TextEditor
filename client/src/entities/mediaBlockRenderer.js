@@ -46,8 +46,9 @@ const Video = (props) => {
 
 const Media = (props) => {
   let entity;
+  console.log('ENTITY', props.contentState.getEntity(props.block.getEntityAt(0)))
   if (props.contentState.getEntity(props.block.getEntityAt(0)) === null) {
-    console.log('NULL')
+    entity = undefined
   }
   else if (props.contentState.getEntity(props.block.getEntityAt(0)) != null) {
     console.log('NOT NULL')
@@ -62,9 +63,9 @@ const Media = (props) => {
   let media;
 
   if (type === "image") {
-    media = <Image src={src} />;
+    media = <div><Image src={src} /> </div>;
   } else if (type === "VIDEOTYPE") {
-    media = <Video src={src} crossorigin="anonymous" />;
+    media = <div><Video src={src} crossorigin="anonymous" /></div>;
   }
   return media;
 };

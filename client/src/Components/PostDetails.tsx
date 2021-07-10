@@ -12,46 +12,112 @@ const PostDetails = () => {
         setTitle,
         description,
         setDescription,
-        setCategory
+        setCategory,
+        postArticle,
+        category,
+        loading
     } = useContext(EditorContext);
 
-    const [test, setTest] = useState(false)
+    console.log('LOADING', loading)
 
-    console.log('title', description)
-    /*  placeholder="Choose a title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}*/
+    return (<Wrapper onSubmit={(e) => postArticle(e)} >
 
-    // <MyStyledInput />
-    return (<Wrapper >
-        <button onClick={() => setTest(!test)}></button>
+        <InputWrapper>
+            <Input placeholder="Choose a title"
+                value={title}
+                required
+                onChange={(e) => setTitle(e.target.value)}>
 
-        <input placeholder="Choose a title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}></input>
+            </Input>
+        </InputWrapper>
+        <InputWrapper>
+            <TextArea
+                placeholder="Write a small description"
+                value={description}
+                rows="10"
+                cols="33"
+                required
+                onChange={(e) => setDescription(e.target.value)}
+            >
+            </TextArea>
+        </InputWrapper>
+        <SelectWrapper>
 
-        <textarea
-            placeholder="Write a small description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-        >
-        </textarea>
+            <Label >Select a category:</Label >
 
+            <Select required onChange={(e) => setCategory(e.target.value)}>
+                <option></option>
+                <option value="coding">coding</option>
+                <option value="random">random</option>
 
-        <select onChange={(e) => setCategory(e.target.value)}>
-            <option value="coding">coding</option>
-            <option value="random">random</option>
-        </select>
+            </Select>
 
-        <MetaTags title={title} description={description}></MetaTags>
-
+        </SelectWrapper>
+        <ButtonWrapper>
+            <Button type="submit" disabled={loading} value="PUBLISH"></Button>
+        </ButtonWrapper>
     </Wrapper>)
 };
 
 export default PostDetails;
 
-const Wrapper = styled.div`
+const Wrapper = styled.form`
 display:flex;
 flex-direction:column;
 max-width: 400px;
+justify-content: center;
+margin-right: 80px
 `;
+
+const TextArea = styled.textarea`
+width:105%;
+
+
+`;
+
+const Label = styled.label`
+width: 50%;
+`;
+
+
+const Select = styled.select`
+width: 50%;
+height: 35px;
+`;
+
+
+const InputWrapper = styled.div`
+padding:8px;
+
+
+`;
+
+const SelectWrapper = styled.div`
+width:100%;
+padding:8px;
+display: flex;
+    justify-content: space-between;
+    align-items: center;
+`;
+
+
+const Input = styled.input`
+padding:8px;
+width:100%;
+`;
+
+const ButtonWrapper = styled.div`
+width:100%;
+padding:8px
+`;
+
+
+const Button = styled.input`
+width:100%;
+height:35px;
+&:hover{
+    cursor: pointer;
+}
+`;
+
+

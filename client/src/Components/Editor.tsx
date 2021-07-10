@@ -59,12 +59,16 @@ const TextEditor = () => {
 
   }
 
+  window.__DRAFT_GKX = {
+    draft_killswitch_allow_nontextnodes: true,
+  }
+
 
   return (
 
 
 
-    <Wrapper active={active as any} className="RichEditor-root">
+    <Wrapper active={active as any} className="RichEditor-root" required>
       <ToolBar focusEditor={() => getFocus()} editor={editor} />
       {okToDisplay ? (
         <TextArea onClick={() => getFocus()}  >
@@ -86,23 +90,16 @@ const TextEditor = () => {
       )}
 
       <LinksToPreviewAndPostDiv>
-        <SeePreview to={{ pathname: "/Preview" }}>PREVIEW</SeePreview>
         <ClearContent onClick={() => clearLocalStorage()}>CLEAR</ClearContent>
-        <PostContent to={{ pathname: "/", state: { publish: true } }}>
-          PUBLISH{" "}
-        </PostContent>
+        <SeePreview to={{ pathname: "/Preview" }}>PREVIEW</SeePreview>
       </LinksToPreviewAndPostDiv>
-      <button onClick={() => PostTest()}>TESTTTT</button>
-      <a class="twitter-share-button"
-        href="https://twitter.com/intent/tweet?"
-      >
-        Tweet</a>
     </Wrapper>
 
   );
 };
 
 const Wrapper = styled.div<WrapperProps>`
+margin-left: 420px;
   height: 80vh;
   display: flex;
   flex-direction: column;

@@ -65,10 +65,7 @@ const Preview = () => {
           PUBLISH{" "}
         </PostContent>
       </LinksToPreviewAndPostDiv>
-      <PostContentForDesktop to={{ pathname: "/", state: { publish: true } }}>
-        PUBLISH
-      </PostContentForDesktop>
-      <button onClick={() => PostTest()}>TESTTTT</button>
+      <div></div>
     </Wrapper>
   );
 };
@@ -78,6 +75,7 @@ const Wrapper = styled.div`
 
   justify-content: space-around;
   align-items: center;
+  min-height:100vh;
 
   @media (max-width: 736px) {
     display: flex;
@@ -88,15 +86,19 @@ const Wrapper = styled.div`
 `;
 
 const EditorWrapper = styled.div`
-  width: 500px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+hyphens:auto;
+  border-style: solid;
+  border-color: rgb(161, 161, 161);
+  border-width: 1px;
+  min-height: fit-content;
 
   hyphens: auto;
   & {
     ${draftJsCss}
   }
-  @media (max-width: 736px) {
-    width: 100%;
-    height: 75%;
+  @media (min-width: 736px) {
+    min-width: 600px;
   }
 `;
 
